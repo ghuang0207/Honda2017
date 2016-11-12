@@ -1,0 +1,6 @@
+c:\ng2lab\azHonda\azHonda\bin\azHonda.dll.config
+c:\ng2lab\azHonda\azHonda\bin\azHonda.dll
+c:\ng2lab\azHonda\azHonda\bin\azHonda.pdb
+c:\ng2lab\azHonda\azHonda\obj\Debug\azHonda.csprojResolveAssemblyReference.cache
+c:\ng2lab\azHonda\azHonda\obj\Debug\azHonda.dll
+c:\ng2lab\azHonda\azHonda\obj\Debug\azHonda.pdb
