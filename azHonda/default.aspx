@@ -14,7 +14,7 @@
             <div layout="row" layout-wrap>
                 <div flex="20" ng-repeat="s in states">
                     <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="showDialog($event, s)">
-                        {{s.name}}
+                        {{s.State}}
                     </md-button>
                 </div>
             </div>
@@ -29,7 +29,7 @@
 
             <div layout="row" layout-wrap>
                 <div flex="20" ng-repeat="s in states">
-                    <a>{{s.name}}</a>
+                    <a>{{s.State}}</a>
                 </div>
             </div>
               

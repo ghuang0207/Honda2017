@@ -2,10 +2,17 @@
     'use strict';
     var app = angular.module("hondaApp");
 
-    app.controller("MainCtrl", function ($scope, $mdDialog, $sce) {
+    app.controller("MainCtrl", function ($scope, $mdDialog, $sce, SrvData) {
         $scope.author = "Dawn";
         
         // get all states
+        SrvData.getAllStates().then(function (response) {
+            $scope.states = response.data;
+        }, function (err) {
+            console.log(err);
+        });
+
+        /*
         $scope.states = [
                             {
                                 "name": "Alabama",
@@ -244,7 +251,7 @@
                                 "name": "Wyoming",
                                 "abbreviation": "WY"
                             }
-        ];
+        ]; */
 
 
         $scope.topics = [
