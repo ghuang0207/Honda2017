@@ -44,12 +44,25 @@
 
             });
 
+
+            $scope.stateTopics = [];
             // this is for the popup
             function DialogController($scope, $mdDialog, stateInfo, categoryId) {
+               
+                $scope.options = {
+                    height: 150,
+                    toolbar: [
+                      ['style', ['bold', 'italic', 'underline', 'clear']],
+                      ['color', ['color']],
+                      ['para', ['ul', 'ol', 'paragraph']],
+                      ['height', ['height']]
+                    ]
+                };
+
                 $scope.stateInfo = stateInfo;
-                SrvData.GetTopics_by_State(stateObj.StateCode, categoryId).then(function (response) {
+                SrvData.GetTopics_by_State(stateInfo.StateCode, categoryId).then(function (response) {
                     $scope.stateTopics = response.data;
-                    alert($scope.stateTopics);
+                    //alert($scope.stateTopics);
                 }, function (err) {
                     console.log(err);
                 });
@@ -58,14 +71,37 @@
                 };
 
                 $scope.answer = function (answer) {
-                    alert("This function will let the authorized users to add a new topic to this document.")
+                    //alert("This function will let the authorized users to add a new topic to this document.")
                     //$mdDialog.hide(answer);
+                    
+                    $scope.addNewTopic();
                 };
                 $scope.print = function () {
                     alert("Print this document.")
                     //$mdDialog.hide(answer);
                 };
+
+                $scope.addNewTopic = function () {
+
+                    console.log('add new entity');
+                    var newTopic = { 'TopicId': 0, 'StateCode': stateObj.StateCode, 'CategoryId': categoryId };
+
+                    $scope.stateTopics.push(newTopic);
+
+                    console.log(newTopic);
+
+                };
+
+                $scope.removeTopic = function (index) {
+
+                    //var lastItem = $scope.States.length - 1;
+                    $scope.stateTopics.splice(index, 1);
+                    //$scope.GetTotal();
+                };
+
             }
+
+            
 
 
         }

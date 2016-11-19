@@ -60,13 +60,27 @@
             <div class="md-dialog-content" style="text-align:center">
                 <md-content>
                     <md-list>
-                        <md-list-item class="md-3-line" ng-repeat="stateTopic in stateTopics">
+                        <md-list-item class="md-3-line" ng-repeat="stateTopic in stateTopics" ng-if="stateTopic.TopicId!=0">
                         <div class="md-list-item-text">
                             <h3>{{stateTopic.Subject}}</h3>
                             <p ng-bind-html="stateTopic.Content"></p>
                         </div>
+                        
                         <%--<md-button class="md-secondary">Edit</md-button>--%>
                         <md-divider ng-if="!$last"></md-divider>
+                        </md-list-item>
+                        <md-list-item class="md-3-line" ng-repeat="stateTopic in stateTopics" ng-if="stateTopic.TopicId==0">
+                        <div class="md-list-item-text">
+                            <md-input-container class="md-block">
+                                <label>Subject</label>
+                                <input ng-model="stateTopic.Subject">
+                            </md-input-container>
+                            
+                               
+                            <summernote ng-model="stateTopic.Content" ><span style="font-weight: bold;">This is initial text.</span></summernote>
+                            
+                            <md-button>Save</md-button><md-button>Cancel</md-button>
+                        </div>
                         </md-list-item>
                     </md-list>
                 </md-content>
