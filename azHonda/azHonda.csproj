@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,7 +84,9 @@
     <Compile Include="default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="objects\CategoryVO.cs" />
     <Compile Include="objects\StateVO.cs" />
+    <Compile Include="objects\TopicVO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\SrvTools.cs" />
     <Compile Include="Site1.Master.cs">
