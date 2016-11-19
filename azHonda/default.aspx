@@ -7,43 +7,28 @@
      
   <md-content>
     <md-tabs md-dynamic-height md-border-bottom>
-      <md-tab label="Marine">
+      <md-tab label="{{c.Category}}" ng-repeat="c in categories">
         <md-content class="md-padding">
-          <h4 class="md-display">Marine Summaries</h4>
+          <h4 class="md-display">{{c.Category}}</h4>
 
             <div layout="row" layout-wrap>
                 <div flex="20" ng-repeat="s in states">
-                    <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="showDialog($event, s)">
+                    <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="showDialog($event, s, c.CategoryId)">
                         {{s.State}}
-                    </md-button>
+                    </md-button> 
                 </div>
             </div>
 
-
         </md-content>
       </md-tab>
-      <md-tab label="Power Equipment">
-        <md-content class="md-padding">
-        
-            <h4 class="md-display">Power Equipment</h4>
 
-            <div layout="row" layout-wrap>
-                <div flex="20" ng-repeat="s in states">
-                    <a>{{s.State}}</a>
-                </div>
-            </div>
-              
-        </md-content>
-      </md-tab>
       <md-tab label="Multi-State by Topic">
         <md-content class="md-padding">
           
         <h4 class="md-display">Multi-State by Topic</h4>
 
             <ul>
-
                 <li ng-repeat="t in topics"><div>{{t.name}}</div>
-
                     <div layout="row" layout-wrap>
                         <div flex="20" ng-repeat="s in t.states">
                             <a>{{s.name}}</a>
@@ -51,10 +36,10 @@
                     </div>
                 </li>
             </ul>
-            
 
         </md-content>
       </md-tab>
+
     </md-tabs>
   </md-content>
 
@@ -63,23 +48,32 @@
 
     <!-- html -->
     <script type="text/ng-template" id="myModalContent.html">
-        <md-dialog aria-label="Mango (Fruit)" flex="50"> <!-- use flex to control dialog size -->
+        <md-dialog aria-label="{{stateInfo.State}}" flex="50"> <!-- use flex to control dialog size -->
         <form ng-cloak>
         <md-toolbar>
             <div class="md-toolbar-tools" >
-            <h2 style="color:white !important">{{input.name}}</h2>
+                <h2 style="color:white !important">{{stateInfo.State}}</h2>
             </div>
         </md-toolbar>
 
         <md-dialog-content>
             <div class="md-dialog-content" style="text-align:center">
-            <img width="740" height="760" ng-src="images/honda.JPG">
+                <md-content>
+                    <md-list>
+                        <md-list-item class="md-3-line" ng-repeat="stateTopic in stateTopics">
+                        <div class="md-list-item-text">
+                            <h3>{{stateTopic.Subject}}</h3>
+                            <p ng-bind-html="stateTopic.Content"></p>
+                        </div>
+                        <%--<md-button class="md-secondary">Edit</md-button>--%>
+                        <md-divider ng-if="!$last"></md-divider>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
             </div>
-        
         </md-dialog-content>
         
         <md-dialog-actions layout="row">
-       
             <md-button ng-click="print()">
             Print Document
             </md-button>
@@ -92,7 +86,6 @@
         </md-dialog-actions>
         </form>
     </md-dialog>
-
 
                    
     </script>

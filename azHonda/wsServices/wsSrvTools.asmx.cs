@@ -1,4 +1,5 @@
-﻿using azHonda.services;
+﻿using azHonda.objects;
+using azHonda.services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,26 +17,106 @@ namespace azHonda.wsSrvTools
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-    // [System.Web.Script.Services.ScriptService]
+    [System.Web.Script.Services.ScriptService]
     public class wsSrvTools : System.Web.Services.WebService
     {
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
-        public void GetAllStates()
+        public void ListAllStates()
         {
             try
             {
-                string result = new JavaScriptSerializer().Serialize(SrvTools.GetAllStates());
-
+                string result = new JavaScriptSerializer().Serialize(SrvTools.ListAllStates());
                 Context.Response.Write(result);
-
             }
             catch (Exception ex)
             {
                 Context.Response.Write(ex.Message);
             }
+        }
 
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public void ListAllSubjects()
+        {
+            try
+            {
+                string result = new JavaScriptSerializer().Serialize(SrvTools.ListAllSubjects());
+                Context.Response.Write(result);
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public void ListAllCategories()
+        {
+            try
+            {
+                string result = new JavaScriptSerializer().Serialize(SrvTools.ListAllCategories());
+                Context.Response.Write(result);
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public void GetTopics_by_State(string stateCode, string categoryId)
+        {
+            try
+            {
+                string result = new JavaScriptSerializer().Serialize(SrvTools.GetTopics_by_State(stateCode, categoryId));
+                Context.Response.Write(result);
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public void GetStates_by_Subject(string subject)
+        {
+            try
+            {
+                string result = new JavaScriptSerializer().Serialize(SrvTools.GetStates_by_Subject(subject));
+                Context.Response.Write(result);
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string AddUpdateTopic(string topicId, string subject, string content, string state, string category)
+        {
+            int updatedTopicId = (string.IsNullOrEmpty(topicId)) ? -1 : Convert.ToInt32(topicId);
+            try
+            {
+                TopicVO topic = new TopicVO() {
+                    TopicId = updatedTopicId,
+                    Subject = subject,
+                    Content = content,
+                    StateCode = state,
+                    CategoryId = category
+                };
+                updatedTopicId = SrvTools.Add_Update_Topic(topic);
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+            return updatedTopicId.ToString();
         }
     }
 }
