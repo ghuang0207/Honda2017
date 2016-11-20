@@ -9,6 +9,6 @@ namespace azHonda.objects
     {
         public string StateCode { get; set; }
 
-        public string State { get; set; }
+        public string StateName { get; set; }
     }
 }

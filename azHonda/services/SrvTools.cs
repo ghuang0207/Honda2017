@@ -25,8 +25,8 @@ namespace azHonda.services
             cmd.Parameters.AddWithValue("@topicId", topic.TopicId);
             cmd.Parameters.AddWithValue("@subject", topic.Subject);
             cmd.Parameters.AddWithValue("@content", topic.Content);
-            cmd.Parameters.AddWithValue("@stateCode", topic.StateCode);
-            cmd.Parameters.AddWithValue("@categoryId", topic.CategoryId);
+            cmd.Parameters.AddWithValue("@stateCode", topic.State.StateCode);
+            cmd.Parameters.AddWithValue("@categoryId", topic.Category.CategoryId);
 
             int topicId = 0;
             try
@@ -72,7 +72,7 @@ namespace azHonda.services
                         states.Add(new StateVO
                         {
                             StateCode = reader["stateCode"].ToString(),
-                            State = reader["stateName"].ToString()
+                            StateName = reader["stateName"].ToString()
                         });
                     }
                 }
@@ -179,38 +179,44 @@ namespace azHonda.services
                 conn.Close();
             }
         }
-        
-        /// <summary>
-        /// 3rd Tab Display: Get all subject - states (List of StateVO)
-        /// </summary>
-        /// <param name="topicId"></param>
-        /// <returns>StateVO</returns>
-        public static List<StateVO> GetStates_by_Subject(string subject)
+
+        public static List<TopicVO> ListAllTopics()
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
-            SqlCommand cmd = new SqlCommand("get_states_by_subject", conn);
+            SqlCommand cmd = new SqlCommand("list_all_topics", conn);
             cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.AddWithValue("@subject", subject);
 
             try
             {
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
-                List<StateVO> states = null;
+
+                List<TopicVO> allTopics = null;
                 if (reader.HasRows)
                 {
+                    allTopics = new List<TopicVO>();
                     while (reader.Read())
                     {
-                        states.Add(new StateVO
+                        allTopics.Add(new TopicVO
                         {
-                            StateCode = reader["StateCode"].ToString(),
-                            State = reader["StateName"].ToString()
+                            TopicId = Convert.ToInt16(reader["topicId"]),
+                            Subject = reader["subject"].ToString(),
+                            Content = reader["content"].ToString(),
+                            State = new StateVO()
+                            {
+                                StateCode = reader["StateCode"].ToString(),
+                                StateName = reader["stateName"].ToString()
+                            },
+                            Category = new CategoryVO()
+                            {
+                                CategoryId = reader["categoryId"].ToString(),
+                                Category = reader["name"].ToString()
+                            }
                         });
                     }
                 }
-
-                return states;
+                
+                return allTopics;
             }
             catch (Exception ex)
             {
@@ -223,19 +229,24 @@ namespace azHonda.services
             }
         }
 
-        public static Dictionary<string, List<StateVO>> Get_subjectStatesDict(string subject)
+        /// <summary>
+        /// State Detail: Get topics by state and category
+        /// </summary>
+        /// <param name="stateCode"></param>
+        /// <returns>list topicVO</returns>
+        public static List<TopicVO> GetTopics_by_State(string stateCode, string categoryId)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
-            SqlCommand cmd = new SqlCommand("get_states_by_subject", conn);
+            SqlCommand cmd = new SqlCommand("get_topics_by_state", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@subject", subject);
+            cmd.Parameters.AddWithValue("@stateCode", stateCode);
+            cmd.Parameters.AddWithValue("@categoryId", Convert.ToInt16(categoryId));
 
             try
             {
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
-                Dictionary<string, List<StateVO>> subjectDict = new Dictionary<string, List<StateVO>>();
                 List<TopicVO> topics = null;
                 if (reader.HasRows)
                 {
@@ -246,26 +257,22 @@ namespace azHonda.services
                         {
                             TopicId = Convert.ToInt16(reader["topicId"]),
                             Subject = reader["subject"].ToString(),
-                            Content = reader["content"].ToString()
+                            Content = reader["content"].ToString(),
+                            State = new StateVO()
+                            {
+                                StateCode = reader["StateCode"].ToString(),
+                                StateName = reader["stateName"].ToString()
+                            },
+                            Category = new CategoryVO()
+                            {
+                                CategoryId = reader["categoryId"].ToString(),
+                                Category = reader["name"].ToString()
+                            }
                         });
                     }
                 }
 
-                List<TopicVO> uniqueSubjects = topics.Distinct(new SubjectCompare()).ToList();
-                foreach (TopicVO uniqueSubject in uniqueSubjects)
-                {
-                    List<StateVO> states = new List<StateVO>();
-                    List<TopicVO> subjectTopics = topics.FindAll(t => t.Subject == uniqueSubject.Subject).ToList();
-                    foreach (TopicVO item in subjectTopics)
-                    {
-                        states.Add(new StateVO()
-                        {
-                            StateCode = item.StateCode
-                        });
-                    }
-                }
-
-                return subjectDict;
+                return topics;
             }
             catch (Exception ex)
             {
@@ -283,7 +290,7 @@ namespace azHonda.services
         /// </summary>
         /// <param name="topicId"></param>
         /// <returns></returns>
-        public static TopicVO GetTopics_by_TopicId(int topicId)
+        public static TopicVO GetTopic_by_TopicId(int topicId)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
             SqlCommand cmd = new SqlCommand("get_topic_by_topicId", conn);
@@ -320,39 +327,103 @@ namespace azHonda.services
         }
 
         /// <summary>
-        /// State Topic: Get topics by state and category
+        /// Subject Detail - get list of StateVO
         /// </summary>
-        /// <param name="stateCode"></param>
-        /// <returns>list topicVO</returns>
-        public static List<TopicVO> GetTopics_by_State(string stateCode, string categoryId)
+        /// <param name="topicId"></param>
+        /// <returns>StateVO</returns>
+        public static List<StateVO> GetStates_by_Subject(string subject)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
-            SqlCommand cmd = new SqlCommand("get_topics_by_state", conn);
+            SqlCommand cmd = new SqlCommand("get_states_by_subject", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@stateCode", stateCode);
-            cmd.Parameters.AddWithValue("@categoryId", Convert.ToInt16(categoryId));
+            cmd.Parameters.AddWithValue("@subject", subject);
 
             try
             {
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
-                List<TopicVO> topics = null;
+                List<StateVO> states = null;
                 if (reader.HasRows)
                 {
-                    topics = new List<TopicVO>();
                     while (reader.Read())
                     {
-                        topics.Add(new TopicVO
+                        states.Add(new StateVO
                         {
-                            TopicId = Convert.ToInt16(reader["topicId"]),
-                            Subject = reader["subject"].ToString(),
-                            Content = reader["content"].ToString()
+                            StateCode = reader["StateCode"].ToString(),
+                            StateName = reader["StateName"].ToString()
                         });
                     }
                 }
 
-                return topics;
+                return states;
+            }
+            catch (Exception ex)
+            {
+                string debug = ex.Message;
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        /// <summary>
+        /// Get list of unique subjects and each subject's Topics
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <returns></returns>
+        public static Dictionary<string, List<TopicVO>> Get_subjectStatesDict(string subject)
+        {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
+            SqlCommand cmd = new SqlCommand("get_unique_subjects_and_all_topics", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@subject", subject);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                
+                List<TopicVO> allTopics = null;
+                if (reader.HasRows)
+                {
+                    allTopics = new List<TopicVO>();
+                    while (reader.Read())
+                    {
+                        allTopics.Add(new TopicVO
+                        {
+                            TopicId = Convert.ToInt16(reader["topicId"]),
+                            Subject = reader["subject"].ToString(),
+                            Content = reader["content"].ToString(),
+                            State = new StateVO()
+                            {
+                                StateCode = reader["StateCode"].ToString(),
+                                StateName = reader["stateName"].ToString()
+                            },
+                            Category = new CategoryVO()
+                            {
+                                CategoryId = reader["categoryId"].ToString(),
+                                Category = reader["name"].ToString()
+                            }
+                        });
+                    }
+                }
+
+                reader.NextResult();
+                Dictionary<string, List<TopicVO>> subjectDict = new Dictionary<string, List<TopicVO>>();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        string s = reader["subject"].ToString();
+                        subjectDict[s] = allTopics.FindAll(t => t.Subject == s).ToList();
+                    }
+                }
+
+                return subjectDict;
             }
             catch (Exception ex)
             {

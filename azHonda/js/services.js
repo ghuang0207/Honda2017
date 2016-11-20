@@ -20,6 +20,14 @@
                     headers: { 'Content-Type': 'application/json' }
                 });
             },
+            ListAllTopics: function () {
+                return $http(
+                {
+                    method: 'Get',
+                    url: 'wsServices/wsSrvTools.asmx/ListAllTopics',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            },
             ListAllSubjects: function () {
                 return $http(
                 {
@@ -45,10 +53,10 @@
                 });
             },
             addUpdateTopic: function (topicId, subject, content, state, category) {
-                var parameter = JSON.stringify({'topicId': topicId, 'subject': subject, 'content': content, 'state': state, 'category': category});
+                var parameter = JSON.stringify({ 'topicId': topicId, 'subject': subject, 'content': content, 'stateCode': state, 'category': category });
                 return $http(
                     {
-                        method: 'Post',
+                        method: 'POST',
                         url: 'wsServices/wsSrvTools.asmx/AddUpdateTopic',
                         data: parameter,
                         headers: { 'Content-Type': 'application/json' }

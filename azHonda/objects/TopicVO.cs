@@ -10,8 +10,9 @@ namespace azHonda.objects
         public int TopicId { get; set; }
         public string Subject { get; set; }
         public string Content { get; set; }
-        public string StateCode { get; set; }
-        public string CategoryId { get; set; }
+        public StateVO State { get; set; }
+        public CategoryVO Category { get; set; }
+
     }
 
     public class SubjectCompare : IEqualityComparer<TopicVO>

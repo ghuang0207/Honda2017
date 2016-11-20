@@ -68,6 +68,21 @@ namespace azHonda.wsSrvTools
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public void ListAllTopics()
+        {
+            try
+            {
+                string result = new JavaScriptSerializer().Serialize(SrvTools.ListAllTopics());
+                Context.Response.Write(result);
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
         public void GetTopics_by_State(string stateCode, string categoryId)
         {
             try
@@ -79,6 +94,35 @@ namespace azHonda.wsSrvTools
             {
                 Context.Response.Write(ex.Message);
             }
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string AddUpdateTopic(string topicId, string subject, string content, string stateCode, string category)
+        {
+            int updatedTopicId = (string.IsNullOrEmpty(topicId)) ? -1 : Convert.ToInt32(topicId);
+            try
+            {
+                TopicVO topic = new TopicVO() {
+                    TopicId = updatedTopicId,
+                    Subject = subject,
+                    Content = content,
+                    State = new StateVO()
+                    {
+                        StateCode = stateCode
+                    },
+                    Category = new CategoryVO()
+                    {
+                        CategoryId = category
+                    }
+                };
+                updatedTopicId = SrvTools.Add_Update_Topic(topic);
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+            return updatedTopicId.ToString();
         }
 
         [WebMethod]
@@ -96,27 +140,5 @@ namespace azHonda.wsSrvTools
             }
         }
 
-        [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public string AddUpdateTopic(string topicId, string subject, string content, string state, string category)
-        {
-            int updatedTopicId = (string.IsNullOrEmpty(topicId)) ? -1 : Convert.ToInt32(topicId);
-            try
-            {
-                TopicVO topic = new TopicVO() {
-                    TopicId = updatedTopicId,
-                    Subject = subject,
-                    Content = content,
-                    StateCode = state,
-                    CategoryId = category
-                };
-                updatedTopicId = SrvTools.Add_Update_Topic(topic);
-            }
-            catch (Exception ex)
-            {
-                Context.Response.Write(ex.Message);
-            }
-            return updatedTopicId.ToString();
-        }
     }
 }
