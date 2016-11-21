@@ -127,6 +127,23 @@ namespace azHonda.wsSrvTools
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public void DeleteTopic_by_TopicId(string topicId)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(topicId))
+                {
+                    SrvTools.DeleteTopic_by_TopicId(Convert.ToInt32(topicId));
+                }
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
         public void GetStates_by_Subject(string subject)
         {
             try

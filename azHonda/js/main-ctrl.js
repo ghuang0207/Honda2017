@@ -92,10 +92,8 @@
                 }
             })
             .then(function (answer) {
-                alert('answer');
                 $scope.ListAllTopics();
             }, function () {
-                alert('');
                 $scope.ListAllTopics();
             });
 
@@ -144,7 +142,14 @@
                     changedTopic.isEdit = true;
                 };
                 $scope.DeleteTopic = function (changedTopic) {
-                    alert('This will delete the selected topic.')
+                    if (confirm('Are you sure to delete the topic?')){
+                        SrvData.DeleteTopic_by_TopicId(changedTopic.TopicId).then(function (response) {
+                            var index = $scope.stateTopics.indexOf(changedTopic);
+                            $scope.stateTopics.splice(index, 1);
+                        }, function (err) {
+                            console.log(err);
+                        });
+                    }
                 };
                 $scope.CancelChange = function (index) {
                     $scope.stateTopics.splice(index, 1);

@@ -285,6 +285,30 @@ namespace azHonda.services
             }
         }
 
+        public static void DeleteTopic_by_TopicId(int topicId)
+        {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
+            SqlCommand cmd = new SqlCommand("delete_topic_by_topicId", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@topicId", Convert.ToInt32(topicId));
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                string debug = ex.Message;
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         /// <summary>
         /// Single Topic Detail: Get Topic by TopicId
         /// </summary>
@@ -296,7 +320,7 @@ namespace azHonda.services
             SqlCommand cmd = new SqlCommand("get_topic_by_topicId", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@topicId", topicId);
+            cmd.Parameters.AddWithValue("@topicId", Convert.ToInt32(topicId));
 
             try
             {

@@ -87,7 +87,7 @@
 
                         <div class="md-list-item-text" ng-if="stateTopic.TopicId=='' || stateTopic.isEdit">
                             <md-input-container md-no-float class="md-block">
-                              <input ng-model="stateTopic.Subject" placeholder="Topic">
+                              <input ng-model="stateTopic.Subject" placeholder="Topic" md-autofocus>
                             </md-input-container>
                             <summernote ng-model="stateTopic.Content"><span style="font-weight: bold;"></span></summernote>
                             
