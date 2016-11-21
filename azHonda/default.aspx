@@ -98,7 +98,7 @@
                                     </button>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn btn-default btn-sm" ng-click="CancelChange($index)">
+                                    <button type="button" class="btn btn-default btn-sm" ng-click="CancelChange(stateTopic)">
                                       Cancel
                                     </button>
                                 </div>       
