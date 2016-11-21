@@ -4,3 +4,9 @@ c:\ng2lab\azHonda\azHonda\bin\azHonda.pdb
 c:\ng2lab\azHonda\azHonda\obj\Release\azHonda.csprojResolveAssemblyReference.cache
 c:\ng2lab\azHonda\azHonda\obj\Release\azHonda.dll
 c:\ng2lab\azHonda\azHonda\obj\Release\azHonda.pdb
+D:\Dawn_Projects\Honda2017\azHonda\bin\azHonda.dll.config
+D:\Dawn_Projects\Honda2017\azHonda\bin\azHonda.dll
+D:\Dawn_Projects\Honda2017\azHonda\bin\azHonda.pdb
+D:\Dawn_Projects\Honda2017\azHonda\obj\Release\azHonda.csprojResolveAssemblyReference.cache
+D:\Dawn_Projects\Honda2017\azHonda\obj\Release\azHonda.dll
+D:\Dawn_Projects\Honda2017\azHonda\obj\Release\azHonda.pdb

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="azHonda2017" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\Dawn_Projects\\Honda2017\\azHonda\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^D:\\Dawn_Projects\\Honda2017\\azHonda\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="conn-Web.config Connection String" description="conn Connection String used in web.config by the application to access the database." value="Server=tcp:dbfoley.database.windows.net,1433;Initial Catalog=dbHonda;Persist Security Info=False;User ID=userHonda;Password=user_Honda;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Dawn_Projects\\Honda2017\\azHonda\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='conn']/@connectionString" />
+  </parameter>
+</parameters>

@@ -1,6 +1,6 @@
 ﻿(function () {
     'use strict';
-    var app = angular.module("hondaApp", ['ngMaterial', 'ngAnimate', 'ngSanitize']);
+    var app = angular.module("hondaApp", ['ngMaterial', 'ngAnimate', 'ngSanitize', 'summernote']);
 
     // gch: for using iFrame in a dialogs
     app.filter('trustAsResourceUrl', ['$sce', function ($sce) {
@@ -14,7 +14,6 @@
         return function (input) {
             return $sce.trustAsHtml(input);
         }
-    })
-
+    });
 
 }());
