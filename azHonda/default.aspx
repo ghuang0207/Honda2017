@@ -9,7 +9,7 @@
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="{{c.Category}}" ng-repeat="c in categories">
         <md-content class="md-padding">
-          <h4 class="md-display">{{c.Category}}</h4>
+          <h3 class="md-display">{{c.Category}}</h3>
 
             <div layout="row" layout-wrap>
                 <div flex="20" ng-repeat="s in states">
@@ -80,7 +80,7 @@
                                 </button>
                               </div>
                             </div>
-                            <h1>{{stateTopic.Subject}}</h1>
+                            <h3>{{stateTopic.Subject}}</h3>
                             <p ng-bind-html="stateTopic.Content"></p>
                         </div>
                         <md-divider ng-if="!$last"></md-divider>
