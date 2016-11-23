@@ -58,7 +58,17 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="js\services.js" />
+    <Content Include="js\controllers\summary.js" />
+    <Content Include="js\filters\unique.js" />
+    <Content Include="js\filters\utilities.js" />
+    <Content Include="js\services\services.js" />
+    <Content Include="views\dialogs\topics-modal.html" />
+    <Content Include="views\home.html" />
+    <Content Include="views\main.html" />
+    <Content Include="views\news.html" />
+    <Content Include="views\profile.html" />
+    <Content Include="views\statutes.html" />
+    <Content Include="views\summary.html" />
     <Content Include="wsServices\wsSrvTools.asmx" />
     <None Include="Properties\PublishProfiles\azHonda2017.pubxml" />
     <Content Include="Site1.Master" />
@@ -73,7 +83,7 @@
     <Content Include="default.aspx" />
     <Content Include="images\honda.JPG" />
     <Content Include="js\app.js" />
-    <Content Include="js\main-ctrl.js" />
+    <Content Include="js\controllers\main-ctrl.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +110,9 @@
       <DependentUpon>wsSrvTools.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="css\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

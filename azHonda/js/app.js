@@ -1,19 +1,52 @@
 ﻿(function () {
     'use strict';
-    var app = angular.module("hondaApp", ['ngMaterial', 'ngAnimate', 'ngSanitize', 'summernote']);
+    $rootScope.$on('$routeChangeSuccess', function (event, current) {
+        $scope.currentLink = getCurrentLinkFromRoute(current);
+    });
+});
+'use strict';
 
-    // gch: for using iFrame in a dialogs
-    app.filter('trustAsResourceUrl', ['$sce', function ($sce) {
-        return function (val) {
-            return $sce.trustAsResourceUrl(val);
-        };
-    }]);
 
-    // gch: to display special characters(&#8220;) from rss feed
-    app.filter('html', function ($sce) {
-        return function (input) {
-            return $sce.trustAsHtml(input);
-        }
+var app = angular.module("hondaApp", ['ui.router', 'ngMaterial', 'ngAnimate', 'ngSanitize', 'summernote'])
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+
+        $urlRouterProvider.otherwise('');
+
+        $stateProvider
+        .state('hondaWeb', {
+            url: '',
+            controller: 'MainCtrl',
+            templateUrl: 'views/main.html'
+        })
+        .state('hondaWeb.home', {
+            url: '/home',
+            controller: 'MainCtrl',
+            templateUrl: 'views/home.html'
+        })
+        .state('hondaWeb.statutes', {
+            url: '/statutes',
+            controller: 'MainCtrl',
+            templateUrl: 'views/statutes.html'
+        })
+        .state('hondaWeb.news', {
+            url: '/news',
+            controller: 'MainCtrl',
+            templateUrl: 'views/news.html'
+        })
+        .state('hondaWeb.profile', {
+            url: '/profile',
+            controller: 'MainCtrl',
+            templateUrl: 'views/profile.html'
+        })
+
+
+    }])
+    .config(function ($mdThemingProvider) {
+        $mdThemingProvider.theme('default')
+            .primaryPalette('grey')
+            .accentPalette('orange');
+        $mdThemingProvider.theme('input', 'default')
+            .primaryPalette('grey')
     });
 
-}());
+

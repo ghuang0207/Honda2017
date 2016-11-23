@@ -1,0 +1,36 @@
+﻿
+<div>
+    <!--header></header>--> 
+    <div>
+        <!--<div layout-gt-xs="row">
+            <md-input-container flex="40" style="margin-left:60vw; margin-top:30px;">
+                <label>Search</label>
+                <input ng-model="user.title">
+            </md-input-container>
+        </div>-->
+
+        <md-content class="md-padding" style="background-color:transparent;">
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+                        <md-nav-item md-nav-sref="hondaWeb.statutes" name="Statutes">Statutes</md-nav-item>
+                        <md-nav-item md-nav-sref="hondaWeb.home" name="Summaries">Summaries</md-nav-item>
+                        <md-nav-item md-nav-sref="hondaWeb.news" name="News">News</md-nav-item>
+                        <md-nav-item md-nav-sref="hondaWeb.profile" name="Profile">My Profile</md-nav-item>
+                        <!--<md-nav-item md-nav-sref="hondaWeb.home" name="Account">Change Password</md-nav-item>-->
+                    </md-nav-bar>
+                    <span flex></span>
+                    <md-input-container md-no-float class="md-block" style="padding-top: 10px;">
+                        <input placeholder="Search full site" ng-model="user.title">
+                    </md-input-container>
+                </div>
+            </md-toolbar>
+            <div style="padding:10px 5px;">
+                <h2>{{currentNavItem}}</h2>
+            </div>
+            <ui-view></ui-view>
+        </md-content>
+
+    </div>
+    <!--footer></footer>-->
+</div>
