@@ -1,1 +1,272 @@
-﻿<h1>Statutes Page</h1>
+﻿
+<style>
+      /**
+    * For the correct positioning of the placeholder element, the dnd-list and
+    * it's children must have position: relative
+    */
+      .typesDemo ul[dnd-list],
+      .typesDemo ul[dnd-list] > li {
+          position: relative;
+      }
+
+      /**
+    * The dnd-list should always have a min-height,
+    * otherwise you can't drop to it once it's empty
+    */
+      .typesDemo ul[dnd-list] {
+          min-height: 42px;
+          padding-left: 0px;
+      }
+
+          /**
+    * The dndDraggingSource class will be applied to
+    * the source element of a drag operation. It makes
+    * sense to hide it to give the user the feeling
+    * that he's actually moving it.
+    */
+          .typesDemo ul[dnd-list] .dndDraggingSource {
+              display: none;
+          }
+
+          /**
+    * An element with .dndPlaceholder class will be
+    * added to the dnd-list while the user is dragging
+    * over it.
+    */
+          .typesDemo ul[dnd-list] .dndPlaceholder {
+              display: block;
+              background-color: #ddd;
+              min-height: 42px;
+          }
+
+          /**
+    * The dnd-lists's child elements currently MUST have
+    * position: relative. Otherwise we can not determine
+    * whether the mouse pointer is in the upper or lower
+    * half of the element we are dragging over. In other
+    * browsers we can use event.offsetY for this.
+    */
+    .typesDemo ul[dnd-list] li {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+        display: block;
+        padding: 5px 15px;
+        margin-bottom: -1px;
+        /* Disable text selection if item is not draggable */
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+      .Topic {
+          color: #4070A0;
+      }
+
+      .Subsection {
+          color: #FA4D40;
+      }
+
+      .Question {
+          color: #76975A;
+      }
+
+      .Command {
+          color: #F7AB29;
+      }
+
+      .typesDemo ul[dnd-list] li {
+          max-width: 98%;
+          border-color: transparent;
+          background-color: transparent;
+      }
+
+      .typesDemo ul[dnd-list] li.Topic {
+          border-color: #9DC4EA;
+      }
+
+      .typesDemo ul[dnd-list] li.Subsection {
+          border-color: #FE9189;
+      }
+
+      .typesDemo ul[dnd-list] li.Question {
+          border-color: #B1D790;
+      }
+
+      .typesDemo ul[dnd-list] li.Command {
+          border-color: #FFDA97;
+      }
+
+      .glyphicon-plus-sign {
+          margin-left: 3px;
+      }
+
+      .glyphicon {
+          cursor: pointer;
+      }
+      /**
+    * Handle positioning
+    */
+      .typesDemo .handle {
+          cursor: move;
+          position: absolute;
+          top: 14px;
+      }
+
+      .typesDemo .content {
+          margin-left: 15px;
+      }
+
+      /**
+    * delete sign positioning
+    */
+      .typesDemo .deleteSign {
+          cursor: pointer;
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          font-size: large;
+      }
+
+      a {
+          cursor: pointer;
+      }
+
+    .typesDemo .deleteSign > span {
+        background-color: white;
+    }
+</style>
+
+
+<!--Topics Test-->
+<div class="container-fluid" style="max-width:80vw;">
+    <md-content class="md-padding">
+        <div ng-repeat="Topic in Topics" class="typesDemo" layout="column">
+                
+            <div layout="column" layout-fill>
+                <div layout="row">
+                    <a ng-click="toggleExpand(Topic)" ng-if="!Topic.IsEdit">
+                        <span ng-class="{'glyphicon glyphicon-menu-right': !Topic.IsExpand, 'glyphicon glyphicon-menu-down': Topic.IsExpand}"></span>
+                        {{Topic.Subject}}
+                    </a>
+                    <span ng-if="!Topic.IsEdit" class="glyphicon glyphicon-edit" ng-click="Topic.IsEdit = true" style="margin-left: 3px;"></span>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" ng-if="Topic.IsEdit" flex="90">
+                        <label>Topic</label>
+                        <textarea ng-model="Topic.Subject" md-maxlength="200" rows="2"></textarea>
+                    </md-input-container>
+                    <div ng-if="Topic.IsEdit" ng-click="SaveTopicTree(Topic)" flex="10" style="text-align: right;">
+                        <span style="background-color:#337ab7;opacity: 0.8; border-radius:3px 4px; padding:5px;">
+                            <span class="glyphicon glyphicon-floppy-save"></span>Save
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div ng-if="Topic.IsExpand || Topic.IsEdit">
+                <md-subheader class="md-no-sticky Subsection" ng-if="Topic.IsEdit">
+                    Subsections
+                    <span id="btnAddSubsection" class="glyphicon glyphicon-plus-sign" ng-click="addSubsection(Topic.Subsections)"></span>
+                </md-subheader>
+
+                <ul dnd-list="Topic.Subsections"
+                    dnd-allowed-types="Subsection">
+                    <li ng-repeat="Subsection in Topic.Subsections"
+                        dnd-draggable="Subsection"
+                        dnd-type="'Subsection'"
+                        dnd-moved="Topic.Subsections.splice($index, 1)"
+                        dnd-disable-if="!Topic.IsEdit"
+                        dnd-effect-allowed="move"
+                        ng-class="{'Subsection': Topic.IsEdit}">
+                        <div class="handle" ng-if="Topic.Subsections.length > 1 && Topic.IsEdit">
+                            <span class="glyphicon glyphicon-move"></span>
+                        </div>
+
+                        <div class="content" dnd-nodrag>
+                            <div layout="column">
+                                <div flex>
+                                    <a ng-click="toggleExpand(Subsection)" ng-if="!Topic.IsEdit">
+                                        <span ng-class="{'glyphicon glyphicon-menu-right': !Subsection.IsExpand, 'glyphicon glyphicon-menu-down': Subsection.IsExpand}"></span>
+                                        {{Subsection.Name}}
+                                    </a>
+                                    <md-input-container class="md-block" ng-if="Topic.IsEdit" flex-gt-sm>
+                                        <label>Subsection</label>
+                                        <textarea ng-model="Subsection.Name" md-maxlength="200" rows="2"></textarea>
+                                    </md-input-container>
+                                </div>
+                                <!-- Subsection Node-->
+                                <div flex style="padding-left:20px;" ng-if="(Subsection.IsExpand && Subsection.Value) || (Topic.IsEdit &&  Subsection.Value)">
+                                    <p ng-if="!Topic.IsEdit">{{Subsection.Value}}</p>
+                                    <summernote height="100" ng-if="Topic.IsEdit" ng-model="Subsection.Value"></summernote>
+                                </div>
+                            </div>
+
+                            <div class="content" ng-if="Subsection.IsExpand || Topic.IsEdit">
+                                <md-subheader class="md-no-sticky" style="color:darkseagreen" ng-if="Topic.IsEdit && !Subsection.Value">
+                                    Questions
+                                    <span id="btnAddQuestion" class="glyphicon glyphicon-plus-sign" ng-click="addQuestion(Subsection.Questions)"></span>
+                                </md-subheader>
+
+                                <ul dnd-list="Subsection.Questions" 
+                                    dnd-allowed-types="Question">
+                                    <li ng-repeat="Question in Subsection.Questions"
+                                        dnd-draggable="Question"
+                                        dnd-type="Question"
+                                        dnd-moved="Subsection.Questions.splice($index, 1)"
+                                        dnd-disable-if="!Topic.IsEdit"
+                                        dnd-effect-allowed="move"
+                                        ng-class="{'Question': Topic.IsEdit}">
+                                        <div class="handle" ng-if="Subsection.Questions.length > 1 && Topic.IsEdit">
+                                            <span class="glyphicon glyphicon-move"></span>
+                                        </div>
+
+                                        <div class="content" dnd-nodrag>
+                                            <div layout="column" style="color:darkseagreen">
+                                                <div>
+                                                    <a ng-click="toggleExpand(Question)" ng-if="!Topic.IsEdit">
+                                                        <span ng-class="{'glyphicon glyphicon-menu-right': !Question.IsExpand, 'glyphicon glyphicon-menu-down': Question.IsExpand}"></span>
+                                                        {{Question.Name}}
+                                                    </a>
+                                                    <md-input-container class="md-block" ng-if="Topic.IsEdit" flex-gt-sm>
+                                                        <label>Question</label>
+                                                        <textarea ng-model="Question.Name" md-maxlength="200" rows="2"></textarea>
+                                                    </md-input-container>
+                                                </div>
+
+                                                <!--Question Node-->
+                                                <div ng-if="Question.IsExpand || Topic.IsEdit">
+                                                    <p ng-if="!Topic.IsEdit">{{Question.Value}}</p>
+                                                    <!--<div summernote ng-model="Question.Value"></div>-->
+                                                    <summernote height="100" ng-if="Topic.IsEdit" ng-model="Question.Value"></summernote>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="deleteSign">
+                                            <span ng-if="Topic.IsEdit" ng-click="Subsection.Questions.splice($index, 1)" class="glyphicon glyphicon-remove-sign hand"></span>
+                                        </div>
+                                    </li>
+                                    <li class="dndPlaceholder Question">
+                                        Drop any <strong>Question</strong> here
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="deleteSign">
+                            <span ng-if="Topic.IsEdit" ng-click="Topic.Subsections.splice($index, 1)" class="glyphicon glyphicon-remove-sign hand"></span>
+                        </div>
+                    </li>
+                    <li class="dndPlaceholder Subsection">
+                        Drop any <strong>Subsection</strong> here
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </md-content>
+</div >
+<!-- -->

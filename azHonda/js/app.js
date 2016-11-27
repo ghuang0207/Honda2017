@@ -7,13 +7,20 @@
 'use strict';
 
 
-var app = angular.module("hondaApp", ['ui.router', 'ngMaterial', 'ngAnimate', 'ngSanitize', 'summernote'])
+var app = angular.module("hondaApp", [
+    'ui.router',
+    'ngMaterial',
+    'ngAnimate',
+    'ngSanitize',
+    'summernote',
+    'dndLists'
+    ])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('');
+        $urlRouterProvider.otherwise('/statutes');
 
         $stateProvider
-        .state('hondaWeb', {
+        .state('hondaWeb', { //base page
             url: '',
             controller: 'MainCtrl',
             templateUrl: 'views/main.html'
@@ -25,7 +32,7 @@ var app = angular.module("hondaApp", ['ui.router', 'ngMaterial', 'ngAnimate', 'n
         })
         .state('hondaWeb.statutes', {
             url: '/statutes',
-            controller: 'MainCtrl',
+            controller: 'StatutesCtrl',
             templateUrl: 'views/statutes.html'
         })
         .state('hondaWeb.news', {

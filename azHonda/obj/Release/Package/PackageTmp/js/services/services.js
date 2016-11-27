@@ -61,6 +61,14 @@
                         data: parameter,
                         headers: { 'Content-Type': 'application/json' }
                     });
+            },
+            DeleteTopic_by_TopicId: function (topicId) {
+                return $http(
+                {
+                    method: 'Get',
+                    url: 'wsServices/wsSrvTools.asmx/DeleteTopic_by_TopicId?topicId=' + topicId,
+                    headers: { 'Content-Type': 'application/json' }
+                });
             }
         }
     });

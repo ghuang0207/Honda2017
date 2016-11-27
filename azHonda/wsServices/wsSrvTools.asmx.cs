@@ -20,7 +20,6 @@ namespace azHonda.wsSrvTools
     [System.Web.Script.Services.ScriptService]
     public class wsSrvTools : System.Web.Services.WebService
     {
-
         [WebMethod]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
         public void ListAllStates()
@@ -157,5 +156,18 @@ namespace azHonda.wsSrvTools
             }
         }
 
+        //Test
+        /// <summary>
+        /// application/json raw
+        /// </summary>
+        /// <param name="obj">{"obj":'[{"StateCode":"VT","StateName":"Vermont"}, {"StateCode":"CA","StateName":"California"}]'}</param>
+        /// <returns></returns>
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        [WebMethod]
+        public string PushJson(string obj)
+        {
+            List<StateVO> st = new JavaScriptSerializer().Deserialize<List<StateVO>>(obj);
+            return obj.ToString();
+        }
     }
 }
