@@ -1,9 +1,9 @@
-﻿<md-dialog aria-label="{{StateInfo.StateName}}">
+﻿<md-dialog aria-label="title">
     <!-- use flex to control dialog size  flex="50" -->
     <form ng-cloak>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2 style="color:white !important">{{StateInfo.StateName}}</h2>
+                <h2 style="color:white !important">{{title}}</h2>
             </div>
         </md-toolbar>
 
@@ -11,7 +11,7 @@
             <div class="md-dialog-content" style="text-align:left">
                 <md-content>
                     <md-list>
-                        <md-list-item class="md-3-line" ng-repeat="stateTopic in stateTopics">
+                        <md-list-item class="md-3-line" ng-repeat="stateTopic in Topics">
                             <div class="md-list-item-text" ng-if="stateTopic.TopicId!='' && !stateTopic.isEdit">
                                 <div layout="row" layout-wrap layout-align="end center">
                                     <div>
@@ -50,8 +50,8 @@
                                 </div>
                             </div>
                         </md-list-item>
-                        <div ng-if="stateTopics.length == 0">
-                            {{StateInfo.StateName}} has enacted no statute specifically regulating distributor relationships for marine engines.
+                        <div ng-if="isAllowEdit && stateTopics.length == 0">
+                            {{title}} has enacted no statute specifically regulating distributor relationships for marine engines.
                         </div>
                     </md-list>
                 </md-content>
@@ -62,7 +62,7 @@
             <md-button ng-click="print()">
                 Print Document
             </md-button>
-            <md-button ng-click="AddNewTopic('topic')">
+            <md-button ng-if="isAllowEdit" ng-click="AddNewTopic('topic')">
                 Add Topic
             </md-button>
             <md-button ng-click="cancel()">

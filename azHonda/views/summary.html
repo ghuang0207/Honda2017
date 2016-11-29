@@ -9,7 +9,7 @@
 
                     <div layout="column" layout-wrap style="max-height: 500px;">
                         <div flex="40" ng-repeat="s in states">
-                            <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="showDialog($event, s, c.CategoryId)">
+                            <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStateTopicsDialog($event, s, c.CategoryId)">
                                 {{s.StateName}}
                             </md-button>
                         </div>
@@ -30,7 +30,7 @@
                                 <div style="padding-left:50;">
                                     <div layout="row" layout-wrap>
                                         <div flex="20" ng-repeat="t in allTopics | filter:s.Subject:true | unique: 'State'">
-                                            <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="showDialog($event, t.State, '-1')">
+                                            <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowSubjectTopicsDialog($event, allTopics, s.Subject, t.State.StateCode)">
                                                 {{t.State.StateName}}
                                             </md-button>
                                         </div>
