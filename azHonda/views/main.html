@@ -1,32 +1,31 @@
 ﻿
+<style>
+    md-nav-bar .md-nav-bar {
+      border-top: 2px solid darkgrey;
+    }
+</style>
+
 <div>
     <!--header></header>--> 
-    <div>
         
-        <md-content class="md-padding" style="background-color:transparent;">
-            <!--<md-toolbar>-->
-            <div layout="column" layout-fill>
-                <div class="md-primary md-hue-1">
-                    <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-                        <md-nav-item md-nav-sref="hondaWeb.statutes" name="Statutes" value="Statutes">Statutes</md-nav-item>
-                        <md-nav-item md-nav-sref="hondaWeb.home" name="Summaries" value="Summaries">Summaries</md-nav-item>
-                        <md-nav-item md-nav-sref="hondaWeb.news" name="News" value="News">News</md-nav-item>
-                        <md-nav-item md-nav-sref="hondaWeb.profile" name="Profile" value="Profile">My Profile</md-nav-item>
-                        <!--<md-nav-item md-nav-sref="hondaWeb.home" name="Account">Change Password</md-nav-item>-->
-                    </md-nav-bar>
-                    <!--<span flex></span>
-            <md-input-container md-no-float class="md-block" style="padding-top: 10px;">
-                <input placeholder="Search full site" ng-model="user.title">
-            </md-input-container>-->
-                </div>
-                <!--</md-toolbar>-->
-                <div style="padding:10px 5px;">
-                    <h2>{{currentNavItem}}</h2>
-                </div>
-                <ui-view></ui-view>
+    <md-content class="md-padding" style="background-color:transparent;">
+        <div layout-fill layout="column">
+            <div layout-align="center">
+                <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+                    <md-nav-item md-nav-sref="hondaWeb.statutes" name="Statutes" value="Statutes" flex>Statutes</md-nav-item>
+                    <md-nav-item md-nav-sref="hondaWeb.home" name="Summaries" value="Summaries" flex>Summaries</md-nav-item>
+                    <md-nav-item md-nav-sref="hondaWeb.news" name="News" value="News" flex>News</md-nav-item>
+                    <md-nav-item md-nav-sref="hondaWeb.profile" name="Profile" value="Profile" flex>My Profile</md-nav-item>
+                </md-nav-bar>
+                <!--<md-input-container md-no-float class="md-block" style="padding-top: 10px;">
+                    <input placeholder="Search full site" ng-model="user.title">
+                </md-input-container>-->
             </div>
-        </md-content>
-
-    </div>
+            <div style="padding:20px 5px;">
+                <h5>{{currentNavItem}}</h5>
+            </div>
+            <ui-view></ui-view>
+        </div>
+    </md-content>
     <!--footer></footer>-->
 </div>

@@ -148,14 +148,18 @@
         <div ng-repeat="Topic in Topics" class="typesDemo" layout="column">
                 
             <div layout="column" layout-fill>
-                <div layout="row">
-                    <a ng-click="toggleExpand(Topic)" ng-if="!Topic.IsEdit">
-                        <span ng-class="{'glyphicon glyphicon-menu-right': !Topic.IsExpand, 'glyphicon glyphicon-menu-down': Topic.IsExpand}"></span>
-                        {{Topic.Subject}}
-                    </a>
-                    <span ng-if="!Topic.IsEdit" class="glyphicon glyphicon-edit" ng-click="Topic.IsEdit = true" style="margin-left: 3px;"></span>
+                <div layout="row" layout-wrap>
+                    <div flex="95">
+                        <a ng-click="toggleExpand(Topic)" ng-if="!Topic.IsEdit">
+                            <span ng-class="{'glyphicon glyphicon-menu-right': !Topic.IsExpand, 'glyphicon glyphicon-menu-down': Topic.IsExpand}"></span>
+                            {{Topic.Subject}}
+                        </a>
+                    </div>
+                    <div flex="5">
+                        <span ng-if="!Topic.IsEdit" class="glyphicon glyphicon-edit" ng-click="Topic.IsEdit = true" style="margin-left: 3px;"></span>
+                    </div>
                 </div>
-                <div layout="row">
+                <div layout="row" layout-wrap>
                     <md-input-container class="md-block" ng-if="Topic.IsEdit" flex="90">
                         <label>Topic</label>
                         <textarea ng-model="Topic.Subject" md-maxlength="200" rows="2"></textarea>
@@ -201,7 +205,7 @@
                                 </div>
                                 <!-- Subsection Node-->
                                 <div flex style="padding-left:20px;" ng-if="(Subsection.IsExpand && Subsection.Value) || (Topic.IsEdit &&  Subsection.Value)">
-                                    <p ng-if="!Topic.IsEdit">{{Subsection.Value}}</p>
+                                    <div ng-if="!Topic.IsEdit" ng-bind-html="Subsection.Value"></div>
                                     <summernote height="100" ng-if="Topic.IsEdit" ng-model="Subsection.Value"></summernote>
                                 </div>
                             </div>
@@ -213,7 +217,7 @@
                                 </md-subheader>
 
                                 <ul dnd-list="Subsection.Questions" 
-                                    dnd-allowed-types="Question">
+                                    dnd-allowed-types="Question" ng-if="Subsection.Questions.length > 0 && Topic.IsEdit">
                                     <li ng-repeat="Question in Subsection.Questions"
                                         dnd-draggable="Question"
                                         dnd-type="Question"
@@ -221,7 +225,7 @@
                                         dnd-disable-if="!Topic.IsEdit"
                                         dnd-effect-allowed="move"
                                         ng-class="{'Question': Topic.IsEdit}">
-                                        <div class="handle" ng-if="Subsection.Questions.length > 1 && Topic.IsEdit">
+                                        <div class="handle" ng-if="Subsection.Questions.length > 0 && Topic.IsEdit">
                                             <span class="glyphicon glyphicon-move"></span>
                                         </div>
 

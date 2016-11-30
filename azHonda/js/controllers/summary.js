@@ -53,7 +53,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                 locals: {
                     DisplayTopics: stateTopics,
                     Info: {
-                        StateInfo: StateInfo.StateName,
+                        StateInfo: StateInfo,
                         categoryId: categoryId
                     }
                 }
@@ -98,24 +98,27 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         });
     };
 
+
     // Dialog scope directive
     function DialogController($scope, $mdDialog, DisplayTopics, Info) {
         $scope.Topics = DisplayTopics;
-        if ("categoryId" in Info) {
+        if (Info.hasOwnProperty("categoryId")) {
             $scope.isAllowEdit = true;
             $scope.StateInfo = Info.StateInfo;
             $scope.categoryId = Info.categoryId;
             $scope.title = $scope.StateInfo.StateName;
+            console.log($scope)
         }
-        if ("subject" in Info) {
+        if (Info.hasOwnProperty("subject")) {
             $scope.isAllowEdit = false;
             $scope.subject = Info.subject
             $scope.title = $scope.subject;
+            console.log($scope)
         }
-        
+
         $scope.AddNewTopic = function () {
             var newTopic = { 'TopicId': '', 'State': { 'StateCode': $scope.StateInfo.StateCode }, 'Category': { 'CategoryId': $scope.categoryId } };
-            $scope.stateTopics.push(newTopic);
+            $scope.Topics.push(newTopic);
             console.log(newTopic);
         };
         $scope.EditTopic = function (changedTopic) {
@@ -125,8 +128,8 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         $scope.DeleteTopic = function (changedTopic) {
             if (confirm('Are you sure to delete the topic?')) {
                 SrvData.DeleteTopic_by_TopicId(changedTopic.TopicId).then(function (response) {
-                    var index = $scope.stateTopics.indexOf(changedTopic);
-                    $scope.stateTopics.splice(index, 1);
+                    var index = $scope.Topics.indexOf(changedTopic);
+                    $scope.Topics.splice(index, 1);
                 }, function (err) {
                     console.log(err);
                 });
@@ -135,8 +138,8 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         $scope.CancelChange = function (changedTopic) {
             debugger;
             if (changedTopic.TopicId == '') {
-                var index = $scope.stateTopics.indexOf(changedTopic);
-                $scope.stateTopics.splice(index, 1);
+                var index = $scope.Topics.indexOf(changedTopic);
+                $scope.Topics.splice(index, 1);
             }
             else {
                 changedTopic.isEdit = false;
@@ -144,8 +147,8 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         };
         $scope.SaveChange = function (changedTopic) {
             SrvData.addUpdateTopic(changedTopic.TopicId, changedTopic.Subject, changedTopic.Content, changedTopic.State.StateCode, changedTopic.Category.CategoryId).then(function (response) {
-                //updatedTopicId = response.data
-                $scope.getStateTopics();
+                debugger;
+                changedTopic.isEdit = false;
             }, function (err) {
                 console.log(err);
             });

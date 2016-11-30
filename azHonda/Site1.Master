@@ -54,7 +54,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div class="container-fluid" style="max-width:85vw;">
+    <div class="container-fluid" style="max-width:80vw;">
         <!--<div layout-gt-xs="row">
             <md-input-container flex="40" style="margin-left:60vw; margin-top:30px;">
                 <label>Search</label>
