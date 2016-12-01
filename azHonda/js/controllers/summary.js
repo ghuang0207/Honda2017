@@ -41,7 +41,18 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             var stateTopics = []
             if (response.data != "null") {
                 stateTopics = response.data;
+                // format for tree
+                angular.forEach(stateTopics, function (topic) {
+                    try {
+                        topic.Subsections = JSON.parse(topic.Content).Subsections;
+                    }
+                    catch (e) {
+                        topic.Subsections = [];
+                    }
+                });
+                console.log(stateTopics);
             }
+            
             //Dialog Control Init
             $mdDialog.show({
                 controller: DialogController,
@@ -75,6 +86,18 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         //Dialog Control Init
         var SubjectTopics = $filter('filter')(AllTopics, subject, true, 'Subject');
         SubjectTopics = $filter('unique')(SubjectTopics, 'State');
+        if (SubjectTopics.length > 0) {
+            //format for tree
+            angular.forEach(SubjectTopics, function (topic) {
+                try {
+                    topic.Subsections = JSON.parse(topic.Content).Subsections;
+                }
+                catch (e) {
+                    topic.Subsections = [];
+                }
+            });
+            console.log(SubjectTopics);
+        }
         $mdDialog.show({
             controller: DialogController,
             templateUrl: 'views/dialogs/topics-modal.html',
@@ -98,64 +121,133 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         });
     };
 
+    function isJson(str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
 
-    // Dialog scope directive
+
+    // Dialog scope directive ----------------------
     function DialogController($scope, $mdDialog, DisplayTopics, Info) {
+        // Populate past-in topics to scope
         $scope.Topics = DisplayTopics;
+        $scope.$watch('Topics', function (Topics) {
+            $scope.modelAsJson = angular.toJson(Topics, true);
+        }, true);
+        debugger;
         if (Info.hasOwnProperty("categoryId")) {
             $scope.isAllowEdit = true;
             $scope.StateInfo = Info.StateInfo;
             $scope.categoryId = Info.categoryId;
             $scope.title = $scope.StateInfo.StateName;
             console.log($scope)
+            //Format Topic Tree with IsEdit/ctrl_IsExpand  //Or Just save raw tree without any change
         }
         if (Info.hasOwnProperty("subject")) {
             $scope.isAllowEdit = false;
             $scope.subject = Info.subject
             $scope.title = $scope.subject;
             console.log($scope)
+            //Format Topic Tree with IsEdit/ctrl_IsExpand  //Or Just save raw tree without any change
         }
 
+        // Expand All/Collapse All
+
         $scope.AddNewTopic = function () {
-            var newTopic = { 'TopicId': '', 'State': { 'StateCode': $scope.StateInfo.StateCode }, 'Category': { 'CategoryId': $scope.categoryId } };
+            var newTopic = {
+                'TopicId': -1,
+                'State': { 'StateCode': $scope.StateInfo.StateCode },
+                'Category': { 'CategoryId': $scope.categoryId },
+                'Subject': '',
+                'Subsections': [],
+                'ctrl_IsEdit': true,
+                'ctrl_IsExpand': true
+            };
             $scope.Topics.push(newTopic);
             console.log(newTopic);
         };
         $scope.EditTopic = function (changedTopic) {
             console.log(changedTopic)
-            changedTopic.isEdit = true;
-        };
-        $scope.DeleteTopic = function (changedTopic) {
-            if (confirm('Are you sure to delete the topic?')) {
-                SrvData.DeleteTopic_by_TopicId(changedTopic.TopicId).then(function (response) {
-                    var index = $scope.Topics.indexOf(changedTopic);
-                    $scope.Topics.splice(index, 1);
-                }, function (err) {
-                    console.log(err);
-                });
-            }
-        };
-        $scope.CancelChange = function (changedTopic) {
-            debugger;
-            if (changedTopic.TopicId == '') {
-                var index = $scope.Topics.indexOf(changedTopic);
-                $scope.Topics.splice(index, 1);
-            }
-            else {
-                changedTopic.isEdit = false;
-            }
+            changedTopic.ctrl_IsEdit = true;
         };
         $scope.SaveChange = function (changedTopic) {
-            SrvData.addUpdateTopic(changedTopic.TopicId, changedTopic.Subject, changedTopic.Content, changedTopic.State.StateCode, changedTopic.Category.CategoryId).then(function (response) {
+            debugger;
+            changedTopic.Content = JSON.stringify(changedTopic) // if need special format before hit Server
+            SrvData.addUpdateTopic(changedTopic).then(function (response) {
                 debugger;
-                changedTopic.isEdit = false;
+                changedTopic.TopicId = response.data;
+                changedTopic.ctrl_IsEdit = false;
             }, function (err) {
                 console.log(err);
             });
         };
+        $scope.CancelChange = function (changedTopic) {
+            debugger;
+            if (changedTopic.TopicId == -1) {
+                changedTopic.Subject.trim() == ""; //only delete those with topicId == -1 and empty Subject
+                var index = $scope.Topics.indexOf(changedTopic);
+                $scope.Topics.splice(index, 1);
+                changedTopic.ctrl_IsEdit = false;
+            } else {
+                SrvData.GetTopic_by_TopicId(changedTopic.TopicId).then(function (response) {
+                    var OriginalTopic = response.data;
+                    //replace editable parts with original data pulled from db.
+                    try {
+                        changedTopic.Subsections = JSON.parse(OriginalTopic.Content).Subsections;
+                    }
+                    catch (e) {
+                        changedTopic.Subsections = [];
+                    }
+                    changedTopic.Subject = OriginalTopic.Subject;
+                    changedTopic.ctrl_IsExpand = true;
+                    changedTopic.ctrl_IsEdit = false;
+                }, function (err) {
+                    console.log(err);
+                });
+            }
+            
+        };
+        $scope.DeleteTopic = function (changedTopic) {
+            if (changedTopic.TopicId == '') {
+                // empty/new topic, just delete. No need for confirming.
+                var index = $scope.Topics.indexOf(changedTopic);
+                $scope.Topics.splice(index, 1);
+            }
+            else {
+                if (confirm('Are you sure to delete the entire topic and its sub-items?')) {
+                    SrvData.DeleteTopic_by_TopicId(changedTopic.TopicId).then(function (response) {
+                        var index = $scope.Topics.indexOf(changedTopic);
+                        $scope.Topics.splice(index, 1);
+                    }, function (err) {
+                        console.log(err);
+                        alert('Something went wrong when deleting. Please try again.');
+                    });
+                }
+            }
+        };
+
+        //In-Tree functions:
+        $scope.toggleExpand = function (targetObj) {
+            targetObj.ctrl_IsExpand = !targetObj.ctrl_IsExpand
+        }
+
+        $scope.addSubsection = function (Subsections) {
+            Subsections.push({
+                Questions: []
+            });
+        };
+
+        $scope.addQuestion = function (Questions) {
+            Questions.push({
+            });
+        };
 
         //Dialog controls
-        $scope.cancel = function () {
+        $scope.CancelDialog = function () {
             $mdDialog.cancel();
         };
         $scope.print = function () {

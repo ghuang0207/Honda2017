@@ -143,7 +143,7 @@
 
 
 <!--Topics Test-->
-<div class="container-fluid" style="max-width:80vw;">
+<!--<div class="container-fluid" style="max-width:80vw;">
     <md-content class="md-padding">
         <div ng-repeat="Topic in Topics" class="typesDemo" layout="column">
                 
@@ -203,7 +203,7 @@
                                         <textarea ng-model="Subsection.Name" md-maxlength="200" rows="2"></textarea>
                                     </md-input-container>
                                 </div>
-                                <!-- Subsection Node-->
+                                
                                 <div flex style="padding-left:20px;" ng-if="(Subsection.IsExpand && Subsection.Value) || (Topic.IsEdit &&  Subsection.Value)">
                                     <div ng-if="!Topic.IsEdit" ng-bind-html="Subsection.Value"></div>
                                     <summernote height="100" ng-if="Topic.IsEdit" ng-model="Subsection.Value"></summernote>
@@ -242,10 +242,10 @@
                                                     </md-input-container>
                                                 </div>
 
-                                                <!--Question Node-->
+                                                
                                                 <div ng-if="Question.IsExpand || Topic.IsEdit">
                                                     <p ng-if="!Topic.IsEdit">{{Question.Value}}</p>
-                                                    <!--<div summernote ng-model="Question.Value"></div>-->
+                                                
                                                     <summernote height="100" ng-if="Topic.IsEdit" ng-model="Question.Value"></summernote>
                                                 </div>
                                             </div>
@@ -272,5 +272,9 @@
             </div>
         </div>
     </md-content>
-</div >
+</div >-->
 <!-- -->
+
+<div>
+    <h1>Statutes Page</h1>
+</div>

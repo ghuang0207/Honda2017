@@ -52,8 +52,8 @@
                     headers: { 'Content-Type': 'application/json' }
                 });
             },
-            addUpdateTopic: function (topicId, subject, content, state, category) {
-                var parameter = JSON.stringify({ 'topicId': topicId, 'subject': subject, 'content': content, 'stateCode': state, 'category': category });
+            addUpdateTopic: function (Topic) {
+                var parameter = { 'TopicObj': JSON.stringify(Topic) };
                 return $http(
                     {
                         method: 'POST',
@@ -67,6 +67,14 @@
                 {
                     method: 'Get',
                     url: 'wsServices/wsSrvTools.asmx/DeleteTopic_by_TopicId?topicId=' + topicId,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            },
+            GetTopic_by_TopicId: function (topicId) {
+                return $http(
+                {
+                    method: 'Get',
+                    url: 'wsServices/wsSrvTools.asmx/GetTopic_by_TopicId?topicId=' + topicId,
                     headers: { 'Content-Type': 'application/json' }
                 });
             }

@@ -211,7 +211,9 @@ namespace azHonda.services
                             {
                                 CategoryId = reader["categoryId"].ToString(),
                                 Category = reader["name"].ToString()
-                            }
+                            },
+                            ctrl_IsEdit = false,
+                            ctrl_IsExpand = true
                         });
                     }
                 }
@@ -327,13 +329,23 @@ namespace azHonda.services
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 TopicVO topic = null;
-                if (reader.HasRows)
+                if (reader.Read())
                 {
                     topic = new TopicVO
                     {
                         TopicId = Convert.ToInt16(reader["topicId"]),
                         Subject = reader["subject"].ToString(),
-                        Content = reader["content"].ToString()
+                        Content = reader["content"].ToString(),
+                        State = new StateVO()
+                        {
+                            StateCode = reader["StateCode"].ToString(),
+                            StateName = reader["stateName"].ToString()
+                        },
+                        Category = new CategoryVO()
+                        {
+                            CategoryId = reader["categoryId"].ToString(),
+                            Category = reader["name"].ToString()
+                        }
                     };
                 }
 

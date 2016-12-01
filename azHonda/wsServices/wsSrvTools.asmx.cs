@@ -97,31 +97,21 @@ namespace azHonda.wsSrvTools
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public string AddUpdateTopic(string topicId, string subject, string content, string stateCode, string category)
+        public string AddUpdateTopic(string TopicObj)
         {
-            int updatedTopicId = (string.IsNullOrEmpty(topicId)) ? -1 : Convert.ToInt32(topicId);
+            int updatedTopicId = 0;
+            TopicVO Topic = null;
             try
             {
-                TopicVO topic = new TopicVO() {
-                    TopicId = updatedTopicId,
-                    Subject = subject,
-                    Content = content,
-                    State = new StateVO()
-                    {
-                        StateCode = stateCode
-                    },
-                    Category = new CategoryVO()
-                    {
-                        CategoryId = category
-                    }
-                };
-                updatedTopicId = SrvTools.Add_Update_Topic(topic);
+                Topic = new JavaScriptSerializer().Deserialize<TopicVO>(TopicObj);
+                
+                updatedTopicId = SrvTools.Add_Update_Topic(Topic);
             }
             catch (Exception ex)
             {
                 Context.Response.Write(ex.Message);
             }
-            return updatedTopicId.ToString();
+            return Topic.TopicId.ToString();
         }
 
         [WebMethod]
@@ -134,6 +124,21 @@ namespace azHonda.wsSrvTools
                 {
                     SrvTools.DeleteTopic_by_TopicId(Convert.ToInt32(topicId));
                 }
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public void GetTopic_by_TopicId(string topicId)
+        {
+            try
+            {
+                string result = new JavaScriptSerializer().Serialize(SrvTools.GetTopic_by_TopicId(Convert.ToInt32(topicId)));
+                Context.Response.Write(result);
             }
             catch (Exception ex)
             {
