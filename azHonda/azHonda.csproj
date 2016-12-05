@@ -91,6 +91,7 @@
     <Content Include="views\summary.html" />
     <Content Include="wsServices\wsSrvTools.asmx" />
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\azHonda2017 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\azHonda2017.pubxml" />
     <Content Include="Site1.Master" />
     <None Include="Web.Debug.config">
