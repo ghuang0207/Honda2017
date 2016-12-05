@@ -157,8 +157,6 @@
 
         <md-dialog-content>
             <div class="md-dialog-content" style="text-align:left">
-                <!--<md-content>-->
-                    
                     <div ng-repeat="Topic in Topics" class="typesDemo" layout="column">
 
                         <div layout="column" layout-fill>
@@ -172,6 +170,18 @@
                                 <div ng-if="!Topic.ctrl_IsEdit && isAllowEdit" flex="5" layout="row">
                                     <span class="glyphicon glyphicon-edit" ng-click="EditTopic(Topic)" style="margin-left: 3px;"></span>
                                     <span class="glyphicon glyphicon-trash" ng-click="DeleteTopic(Topic)" style="margin-left: 5px;"></span>
+                                    <!--<md-button class="md-fab md-mini md-primary" aria-label="Edit Topic" ng-click="EditTopic(Topic)">
+                                        <md-tooltip md-direction="top">
+                                            Edit Topic
+                                        </md-tooltip>
+                                        <i class="material-icons">mode_edit</i>
+                                    </md-button>
+                                    <md-button class="md-fab md-mini md-warn" aria-label="Delete Topic" ng-click="DeleteTopic(Topic)">
+                                        <md-tooltip md-direction="top">
+                                            Delete Topic
+                                        </md-tooltip>
+                                        <i class="material-icons">delete_forever</i>
+                                    </md-button>-->
                                 </div>
                             </div>
                             <div layout="row" layout-wrap>
@@ -179,15 +189,19 @@
                                     <label>Topic</label>
                                     <textarea ng-model="Topic.Subject" md-maxlength="200" rows="2"></textarea>
                                 </md-input-container>
-                                <div ng-if="Topic.ctrl_IsEdit" flex="10" style="text-align: right;">
-                                    <span ng-click="SaveChange(Topic)" class="md-accent md-raised md-hue-1">
-                                        <i class="material-icons">save</i>
-                                        <!--<span style="vertical-align:central">Save</span>-->
-                                    </span>
-                                    <span ng-click="CancelChange(Topic)" class="md-accent md-raised md-hue-1" style="margin-left: 3px;">
-                                        <i class="material-icons">cancel</i>
-                                        <!--<span style="vertical-align:central">Save</span>-->
-                                    </span>
+                                <div ng-if="Topic.ctrl_IsEdit" flex="10">
+                                    <md-button class="md-fab md-mini" aria-label="Save Topic" ng-click="SaveChange(Topic)">
+                                        <md-tooltip md-direction="top">
+                                            Save Topic
+                                        </md-tooltip>
+                                        <md-icon class="material-icons">save</md-icon>
+                                    </md-button>
+                                    <md-button class="md-fab md-mini" aria-label="Cancel Topic" ng-click="CancelChange(Topic)">
+                                        <md-tooltip md-direction="top">
+                                            Cancel
+                                        </md-tooltip>
+                                        <md-icon class="material-icons">cancel</md-icon>
+                                    </md-button>
                                 </div>
                             </div>
                         </div>
@@ -195,19 +209,19 @@
                         <div ng-if="Topic.ctrl_IsExpand || Topic.ctrl_IsEdit">
                             <md-subheader class="md-no-sticky Subsection" ng-if="Topic.ctrl_IsEdit">
                                 Subsections
-                                <span id="btnAddSubsection" class="glyphicon glyphicon-plus-sign" ng-click="addSubsection(Topic.Subsections)"></span>
+                                <span id="btnAddSubsection" class="glyphicon glyphicon-plus-sign" ng-click="addSubsection(Topic.tree_Subsections)"></span>
                             </md-subheader>
 
                             <ul dnd-list="Topic.Subsections"
                                 dnd-allowed-types="Subsection">
-                                <li ng-repeat="Subsection in Topic.Subsections"
+                                <li ng-repeat="Subsection in Topic.tree_Subsections"
                                     dnd-draggable="Subsection"
                                     dnd-type="'Subsection'"
                                     dnd-moved="Topic.Subsections.splice($index, 1)"
                                     dnd-disable-if="!Topic.ctrl_IsEdit"
                                     dnd-effect-allowed="move"
                                     ng-class="{'Subsection': Topic.ctrl_IsEdit}">
-                                    <div class="handle" ng-if="Topic.Subsections.length > 1 && Topic.ctrl_IsEdit">
+                                    <div class="handle" ng-if="Topic.tree_Subsections.length > 1 && Topic.ctrl_IsEdit">
                                         <span class="glyphicon glyphicon-move"></span>
                                     </div>
 
@@ -216,36 +230,36 @@
                                             <div flex>
                                                 <a ng-click="toggleExpand(Subsection)" ng-if="!Topic.ctrl_IsEdit">
                                                     <span ng-class="{'glyphicon glyphicon-menu-right': !Subsection.ctrl_IsExpand, 'glyphicon glyphicon-menu-down': Subsection.ctrl_IsExpand}"></span>
-                                                    {{Subsection.Name}}
+                                                    {{Subsection.tree_Name}}
                                                 </a>
                                                 <md-input-container class="md-block" ng-if="Topic.ctrl_IsEdit" flex-gt-sm>
                                                     <label>Subsection</label>
-                                                    <textarea ng-model="Subsection.Name" md-maxlength="200" rows="2"></textarea>
+                                                    <textarea ng-model="Subsection.tree_Name" md-maxlength="200" rows="2"></textarea>
                                                 </md-input-container>
                                             </div>
                                             <!-- Subsection Node-->
-                                            <div flex style="padding-left:20px;" ng-if="(Subsection.ctrl_IsExpand && Subsection.Value) || (Topic.ctrl_IsEdit && Subsection.Questions.length == 0)">
-                                                <div ng-if="!Topic.ctrl_IsEdit" ng-bind-html="Subsection.Value"></div>
-                                                <summernote height="100" ng-if="Topic.ctrl_IsEdit" ng-model="Subsection.Value"></summernote>
+                                            <div flex style="padding-left:20px;" ng-if="(Subsection.ctrl_IsExpand && Subsection.tree_Value) || (Topic.ctrl_IsEdit && Subsection.tree_Questions.length == 0)">
+                                                <div ng-if="!Topic.ctrl_IsEdit" ng-bind-html="Subsection.tree_Value"></div>
+                                                <summernote height="100" ng-if="Topic.ctrl_IsEdit" ng-model="Subsection.tree_Value"></summernote>
                                             </div>
                                         </div>
 
                                         <div class="content" ng-if="Subsection.ctrl_IsExpand || Topic.ctrl_IsEdit">
-                                            <md-subheader class="md-no-sticky" style="color:darkseagreen" ng-if="Topic.ctrl_IsEdit && !Subsection.Value">
+                                            <md-subheader class="md-no-sticky" style="color:darkseagreen" ng-if="Topic.ctrl_IsEdit && !Subsection.tree_Value">
                                                 Questions
-                                                <span id="btnAddQuestion" class="glyphicon glyphicon-plus-sign" ng-click="addQuestion(Subsection.Questions)"></span>
+                                                <span id="btnAddQuestion" class="glyphicon glyphicon-plus-sign" ng-click="addQuestion(Subsection.tree_Questions)"></span>
                                             </md-subheader>
 
                                             <ul dnd-list="Subsection.Questions"
-                                                dnd-allowed-types="Question" ng-if="Subsection.Questions.length > 0"> <!-- Toggle Questions OR Subsection Value-->
-                                                <li ng-repeat="Question in Subsection.Questions"
+                                                dnd-allowed-types="Question" ng-if="Subsection.tree_Questions.length > 0"> <!-- Toggle Questions OR Subsection Value-->
+                                                <li ng-repeat="Question in Subsection.tree_Questions"
                                                     dnd-draggable="Question"
                                                     dnd-type="Question"
                                                     dnd-moved="Subsection.Questions.splice($index, 1)"
                                                     dnd-disable-if="!Topic.ctrl_IsEdit"
                                                     dnd-effect-allowed="move"
                                                     ng-class="{'Question': Topic.ctrl_IsEdit}">
-                                                    <div class="handle" ng-if="Subsection.Questions.length > 1 && Topic.ctrl_IsEdit">
+                                                    <div class="handle" ng-if="Subsection.tree_Questions.length > 1 && Topic.ctrl_IsEdit">
                                                         <span class="glyphicon glyphicon-move"></span>
                                                     </div>
 
@@ -254,25 +268,25 @@
                                                             <div>
                                                                 <a ng-click="toggleExpand(Question)" ng-if="!Topic.ctrl_IsEdit">
                                                                     <span ng-class="{'glyphicon glyphicon-menu-right': !Question.ctrl_IsExpand, 'glyphicon glyphicon-menu-down': Question.ctrl_IsExpand}"></span>
-                                                                    {{Question.Name}}
+                                                                    {{Question.tree_Name}}
                                                                 </a>
                                                                 <md-input-container class="md-block" ng-if="Topic.ctrl_IsEdit" flex-gt-sm>
                                                                     <label>Question</label>
-                                                                    <textarea ng-model="Question.Name" md-maxlength="200" rows="2"></textarea>
+                                                                    <textarea ng-model="Question.tree_Name" md-maxlength="200" rows="2"></textarea>
                                                                 </md-input-container>
                                                             </div>
 
                                                             <!--Question Node-->
                                                             <div ng-if="Question.ctrl_IsExpand || Topic.ctrl_IsEdit">
-                                                                <div style="padding: 5px 2px; margin-left: 10px;" ng-if="!Topic.ctrl_IsEdit" ng-bind-html="Question.Value"></div>
+                                                                <div style="padding: 5px 2px; margin-left: 10px;" ng-if="!Topic.ctrl_IsEdit" ng-bind-html="Question.tree_Value"></div>
                                                                 <!--<div summernote ng-model="Question.Value"></div>-->
-                                                                <summernote height="100" ng-if="Topic.ctrl_IsEdit" ng-model="Question.Value"></summernote>
+                                                                <summernote height="100" ng-if="Topic.ctrl_IsEdit" ng-model="Question.tree_Value"></summernote>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="deleteSign">
-                                                        <span ng-if="Topic.ctrl_IsEdit" ng-click="Subsection.Questions.splice($index, 1)" class="glyphicon glyphicon-remove-sign hand"></span>
+                                                        <span ng-if="Topic.ctrl_IsEdit" ng-click="Subsection.tree_Questions.splice($index, 1)" class="glyphicon glyphicon-remove-sign hand"></span>
                                                     </div>
                                                 </li>
                                                 <li class="dndPlaceholder Question">
@@ -282,7 +296,7 @@
                                         </div>
                                     </div>
                                     <div class="deleteSign">
-                                        <span ng-if="Topic.ctrl_IsEdit" ng-click="Topic.Subsections.splice($index, 1)" class="glyphicon glyphicon-remove-sign hand"></span>
+                                        <span ng-if="Topic.ctrl_IsEdit" ng-click="Topic.tree_Subsections.splice($index, 1)" class="glyphicon glyphicon-remove-sign hand"></span>
                                     </div>
                                 </li>
                                 <li class="dndPlaceholder Subsection">
@@ -297,7 +311,6 @@
                         {{title}} has enacted no statute specifically regulating distributor relationships for marine engines.
                     </div>
 
-                <!--</md-content>-->
             </div>
         </md-dialog-content>
 

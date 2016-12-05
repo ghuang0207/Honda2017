@@ -44,10 +44,14 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                 // format for tree
                 angular.forEach(stateTopics, function (topic) {
                     try {
-                        topic.Subsections = JSON.parse(topic.Content).Subsections;
+                        topic.tree_Subsections = JSON.parse(topic.Content).tree_Subsections;
                     }
                     catch (e) {
-                        topic.Subsections = [];
+                        console.log(e);
+                    }
+                    //catch-all: to initiate all topics with at least empty array for tree_Subsections to prevent error
+                    if (topic.tree_Subsections == undefined) {
+                        topic.tree_Subsections = [];
                     }
                 });
                 console.log(stateTopics);
@@ -90,10 +94,14 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             //format for tree
             angular.forEach(SubjectTopics, function (topic) {
                 try {
-                    topic.Subsections = JSON.parse(topic.Content).Subsections;
+                    topic.tree_Subsections = JSON.parse(topic.Content).tree_Subsections;
                 }
                 catch (e) {
-                    topic.Subsections = [];
+                    console.log(e);
+                }
+                //catch-all: to initiate all topics with at least empty array for tree_Subsections to prevent error
+                if (topic.tree_Subsections == undefined){
+                    topic.tree_Subsections = [];
                 }
             });
             console.log(SubjectTopics);
@@ -163,7 +171,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                 'State': { 'StateCode': $scope.StateInfo.StateCode },
                 'Category': { 'CategoryId': $scope.categoryId },
                 'Subject': '',
-                'Subsections': [],
+                'tree_Subsections': [],
                 'ctrl_IsEdit': true,
                 'ctrl_IsExpand': true
             };
@@ -176,7 +184,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         };
         $scope.SaveChange = function (changedTopic) {
             debugger;
-            changedTopic.Content = JSON.stringify(changedTopic) // if need special format before hit Server
+            changedTopic.Content = JSON.stringify({ tree_Subsections: changedTopic.tree_Subsections }) // if need special format before hit Server
             SrvData.addUpdateTopic(changedTopic).then(function (response) {
                 debugger;
                 changedTopic.TopicId = response.data;
@@ -197,10 +205,10 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                     var OriginalTopic = response.data;
                     //replace editable parts with original data pulled from db.
                     try {
-                        changedTopic.Subsections = JSON.parse(OriginalTopic.Content).Subsections;
+                        changedTopic.tree_Subsections = JSON.parse(OriginalTopic.Content).tree_Subsections;
                     }
                     catch (e) {
-                        changedTopic.Subsections = [];
+                        changedTopic.tree_Subsections = [];
                     }
                     changedTopic.Subject = OriginalTopic.Subject;
                     changedTopic.ctrl_IsExpand = true;
@@ -212,7 +220,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             
         };
         $scope.DeleteTopic = function (changedTopic) {
-            if (changedTopic.TopicId == '') {
+            if (changedTopic.TopicId == -1) {
                 // empty/new topic, just delete. No need for confirming.
                 var index = $scope.Topics.indexOf(changedTopic);
                 $scope.Topics.splice(index, 1);
@@ -237,12 +245,13 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
 
         $scope.addSubsection = function (Subsections) {
             Subsections.push({
-                Questions: []
+                tree_Questions: []
             });
         };
 
         $scope.addQuestion = function (Questions) {
             Questions.push({
+                //if has another child layer, need to add an empty array (refer to addSubsection)
             });
         };
 
