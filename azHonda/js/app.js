@@ -13,11 +13,13 @@ var app = angular.module("hondaApp", [
     'ngAnimate',
     'ngSanitize',
     'summernote',
-    'dndLists'
+    'dndLists',
+    'auth0.lock',
+    'angular-jwt'
     ])
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', 'lockProvider', function ($stateProvider, $urlRouterProvider, lockProvider) {
 
-        $urlRouterProvider.otherwise('/statutes');
+        $urlRouterProvider.otherwise('/login');
 
         $stateProvider
         .state('hondaWeb', { //base page
@@ -45,6 +47,17 @@ var app = angular.module("hondaApp", [
             controller: 'MainCtrl',
             templateUrl: 'views/profile.html'
         })
+        .state('login', {
+            url: '/login',
+            controller: 'LoginController',
+            templateUrl: 'views/login.html',
+            controllerAs: 'vm'
+        });
+
+        lockProvider.init({
+            clientID: 'KzGc1hs7551SZpNrTFlnRuFqdJZIq8kz',
+            domain: 'foley.auth0.com'
+        });
 
 
     }])
@@ -54,6 +67,26 @@ var app = angular.module("hondaApp", [
             .accentPalette('orange');
         $mdThemingProvider.theme('input', 'default')
             .primaryPalette('grey')
-    });
+    })
+    .run(run);
+
+    run.$inject = ['$rootScope', 'authService', 'lock'];
+
+    function run($rootScope, authService, lock) {
+        debugger;
+        
+        // Put the authService on $rootScope so its methods
+        // can be accessed from the nav bar
+        $rootScope.authService = authService;
+
+        // Register the authentication listener that is
+        // set up in auth.service.js
+        authService.registerAuthenticationListener();
+
+        // Register the synchronous hash parser
+        // when using UI Router
+        lock.interceptHash();
+    }
+
 
 
