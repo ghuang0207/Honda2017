@@ -10,7 +10,20 @@
         
     <md-content class="md-padding" style="background-color:transparent;">
         <div layout-fill layout="column">
-            <div layout-align="center">
+            <div flex="5" layout="row" layout-wrap">
+                <div flex="80" layout="row" style="padding:2px;">
+                    <img width="250" height="80" src="../images/Foley-Hoag-Logo-WWH_4_2015.png" style="padding: 0px 2px;"/>
+                    <img width="100" height="100" src="../images/honda_marine_logo.jpg" style="padding: 0px 2px;"/>
+                    <img width="100" height="100" src="../images/Power_Equipment_Logo_C1x1.JPG" style="padding: 0px 2px;"/>
+                </div>
+                <div flex style="padding:2px;">
+                    <md-input-container md-no-float class="md-block">
+                        <input placeholder="Search full site" ng-model="search">
+                    </md-input-container>
+                </div>
+            </div>
+
+            <div layout-align="center" flex="5">
                 <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
                     <md-nav-item md-nav-sref="hondaWeb.statutes" name="Statutes" value="Statutes" flex>Statutes</md-nav-item>
                     <md-nav-item md-nav-sref="hondaWeb.home" name="Summaries" value="Summaries" flex>Summaries</md-nav-item>
@@ -21,10 +34,12 @@
                     <input placeholder="Search full site" ng-model="user.title">
                 </md-input-container>-->
             </div>
-            <div style="padding:20px 5px;">
+            
+            <div style="padding:20px 5px;" flex="5">
                 <h5>{{currentNavItem}}</h5>
             </div>
-            <ui-view></ui-view>
+
+            <ui-view flex="5"></ui-view>
         </div>
     </md-content>
     <!--footer></footer>-->

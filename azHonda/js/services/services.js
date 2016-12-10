@@ -44,6 +44,14 @@
                     headers: { 'Content-Type': 'application/json' }
                 });
             },
+            GetTopics_by_Subject: function (subject, categoryId) {
+                return $http(
+                {
+                    method: 'Get',
+                    url: 'wsServices/wsSrvTools.asmx/GetTopics_by_Subject?subject=' + subject + '&categoryId=' + categoryId,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            },
             GetStates_by_Subject: function (subject) {
                 return $http(
                 {

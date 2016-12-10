@@ -287,6 +287,57 @@ namespace azHonda.services
             }
         }
 
+        public static List<TopicVO> GetTopics_by_Subject(string subject, string categoryId)
+        {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
+            SqlCommand cmd = new SqlCommand("get_topics_by_subject", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@subject", subject);
+            cmd.Parameters.AddWithValue("@categoryId", Convert.ToInt16(categoryId));
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                List<TopicVO> topics = null;
+                if (reader.HasRows)
+                {
+                    topics = new List<TopicVO>();
+                    while (reader.Read())
+                    {
+                        topics.Add(new TopicVO
+                        {
+                            TopicId = Convert.ToInt16(reader["topicId"]),
+                            Subject = reader["subject"].ToString(),
+                            Content = reader["content"].ToString(),
+                            State = new StateVO()
+                            {
+                                StateCode = reader["StateCode"].ToString(),
+                                StateName = reader["stateName"].ToString()
+                            },
+                            Category = new CategoryVO()
+                            {
+                                CategoryId = reader["categoryId"].ToString(),
+                                Category = reader["name"].ToString()
+                            }
+                        });
+                    }
+                }
+
+                return topics;
+            }
+            catch (Exception ex)
+            {
+                string debug = ex.Message;
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         public static void DeleteTopic_by_TopicId(int topicId)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);

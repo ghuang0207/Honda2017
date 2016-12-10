@@ -35,10 +35,10 @@
                     <hr />
 
                     <div layout="column">
-                        <md-radio-group ng-model="selectCategory" class="md-primary" layout="row">
+                        <md-radio-group ng-model="select_Category" class="md-primary" layout="row"  ng-model-options="{trackBy: '$value.CategoryId'}">
 
                             <md-radio-button ng-repeat="c in categories"
-                                             ng-value="c.CategoryId"
+                                             ng-value="c"
                                              class="md-align-top-left">
                                 {{ c.Category }}<br />
 
@@ -46,35 +46,33 @@
 
                         </md-radio-group>
 
-                        <md-input-container>
+                        <md-input-container ng-controller="SummaryCtrl">
                             <label>Subject</label>
-                            <md-select ng-model="selectSubject">
-                                <md-option ng-repeat="s in subjects" ng-value="s.Subject">
+                            <md-select ng-model="select_Subject" ng-model-options="{trackBy: '$value.Subject'}" ng-change="SearchTopics_by_Subject()">
+                                <md-option ng-repeat="s in subjects" ng-value="s">
                                     {{s.Subject}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
+                    
+                        <div layout="row" layout-wrap flex>
+                            <div flex-xs flex="50">
+                                <md-checkbox aria-label="Select All"
+                                             ng-checked="isChecked()"
+                                             md-indeterminate="isIndeterminate()"
+                                             ng-click="toggleAll()">
+                                    <span ng-if="isChecked()">Un-</span>Select All
+                                </md-checkbox>
+                            </div>
+                            <div class="demo-select-all-checkboxes" flex="100" ng-repeat="TopicState in subjectTopicStates">
+                                <md-checkbox ng-checked="exists(TopicState, selected_multi_states)" ng-click="toggle(TopicState, selected_multi_states)">
+                                    {{ TopicState }}
+                                </md-checkbox>
+                            </div>
+                        </div>
                     </div>
 
                     <hr />
-
-                    <!--<md-list>
-                        <md-list-item class="md-3-line" ng-repeat="s in subjects">
-                            <div class="md-list-item-text">
-                                <h3>{{s.Subject}}</h3>
-                                <div style="padding-left:50px;">
-                                    <div layout="row" layout-wrap>
-                                        <div flex="20" ng-repeat="t in allTopics | filter:s.Subject:true | unique: 'State'">
-                                            <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowSubjectTopicsDialog($event, allTopics, s.Subject, t.State.StateCode)">
-                                                {{t.State.StateName}}
-                                            </md-button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <md-divider md-inset ng-if="!$last"></md-divider>
-                        </md-list-item>
-                    </md-list>-->
 
                 </md-content>
             </md-tab>
