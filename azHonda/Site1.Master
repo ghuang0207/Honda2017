@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-<html ng-app="hondaApp">
+<html >
 <head runat="server">
     <title></title>
     
@@ -35,29 +35,35 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.16/angular-sanitize.js"></script>
 
     <%--angular auth0--%>
+    <script src="js/auth0-variables.js"></script>
     <script type="text/javascript" src="https://cdn.auth0.com/js/lock/10.6/lock.min.js"></script>
     <script src="node_modules/angular-lock/dist/angular-lock.js"></script>
     <script src="node_modules/angular-jwt/dist/angular-jwt.js"></script>
+    
 
     <!-- angular ui.router -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
 
     
     <script src="js/app.js" type="text/javascript"></script>
+    <script src="js/app.run.js" type="text/javascript"></script>
+
+    <!-- Services -->
+    <script src="js/services/services.js" type="text/javascript"></script>
+    <script src="js/services/auth.service.js"></script>
     
     <!-- js Lib -->
     <%--<script src="js/lib/angular-drag-and-drop-lists.min.js"></script>--%>
     <script src="js/lib/angular-drag-and-drop-lists.js"></script>
     <!-- Controllers-->
+    <script src="js/controllers/home-ctrl.js"></script>
     <script src="js/controllers/main-ctrl.js" type="text/javascript"></script>
     <script src="js/controllers/summary.js"></script>
-    
+    <script src="js/controllers/login-ctrl.js"></script>
     <script src="js/controllers/statutes.js"></script>
     <script src="js/controllers/topics-modal.js"></script>
-    <script src="js/controllers/login-ctrl.js"></script>
-    <!-- Services -->
-    <script src="js/services/services.js" type="text/javascript"></script>
-    <script src="js/services/auth.service.js"></script>
+    
+    
 
     <!-- Filters -->
     <script src="js/filters/unique.js"></script>
@@ -66,18 +72,20 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <form id="form1" runat="server">
-    <div class="container-fluid" style="max-width:80vw;">
-        <!--<div layout-gt-xs="row">
-            <md-input-container flex="40" style="margin-left:60vw; margin-top:30px;">
-                <label>Search</label>
-                <input ng-model="user.title">
-            </md-input-container>
-        </div>-->
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+    <div ng-app="hondaApp">
+        <form id="form1" runat="server">
+        <div class="container-fluid" style="max-width:80vw;">
+            <!--<div layout-gt-xs="row">
+                <md-input-container flex="40" style="margin-left:60vw; margin-top:30px;">
+                    <label>Search</label>
+                    <input ng-model="user.title">
+                </md-input-container>
+            </div>-->
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         
-        </asp:ContentPlaceHolder>
+            </asp:ContentPlaceHolder>
+        </div>
+        </form>
     </div>
-    </form>
 </body>
 </html>

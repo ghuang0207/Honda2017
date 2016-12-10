@@ -78,6 +78,9 @@
     <Content Include="images\Foley-Hoag-Logo-WWH_4_2015.png" />
     <Content Include="images\honda_marine_logo.jpg" />
     <Content Include="images\Power_Equipment_Logo_C1x1.JPG" />
+    <Content Include="js\app.run.js" />
+    <Content Include="js\auth0-variables.js" />
+    <Content Include="js\controllers\home-ctrl.js" />
     <Content Include="js\controllers\login-ctrl.js" />
     <Content Include="js\controllers\statutes.js" />
     <Content Include="js\controllers\summary.js" />

@@ -5,6 +5,8 @@
       .module('hondaApp')
       .controller('LoginController', LoginController);
 
+    LoginController.$inject = ['authService'];
+
     function LoginController(authService) {
         debugger;
         var vm = this;

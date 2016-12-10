@@ -16,10 +16,13 @@ var app = angular.module("hondaApp", [
     'dndLists',
     'auth0.lock',
     'angular-jwt'
-    ])
+])
     .config(['$stateProvider', '$urlRouterProvider', 'lockProvider', function ($stateProvider, $urlRouterProvider, lockProvider) {
 
-        $urlRouterProvider.otherwise('/login');
+        
+       
+
+
 
         $stateProvider
         .state('hondaWeb', { //base page
@@ -55,9 +58,33 @@ var app = angular.module("hondaApp", [
         });
 
         lockProvider.init({
-            clientID: 'KzGc1hs7551SZpNrTFlnRuFqdJZIq8kz',
-            domain: 'foley.auth0.com'
+            clientID: AUTH0_CLIENT_ID,
+            domain: AUTH0_DOMAIN
         });
+
+        $urlRouterProvider.otherwise('/home');
+       
+    /*
+        $stateProvider
+      .state('home', {
+          url: '/home',
+          controller: 'HomeController',
+          templateUrl: 'views/home.html',
+          controllerAs: 'vm'
+      })
+      .state('login', {
+          url: '/login',
+          controller: 'LoginController',
+          templateUrl: 'views/login.html',
+          controllerAs: 'vm'
+      });
+
+        lockProvider.init({
+            clientID: AUTH0_CLIENT_ID,
+            domain: AUTH0_DOMAIN
+        });
+
+        $urlRouterProvider.otherwise('/home'); */
 
 
     }])
@@ -67,26 +94,7 @@ var app = angular.module("hondaApp", [
             .accentPalette('orange');
         $mdThemingProvider.theme('input', 'default')
             .primaryPalette('grey')
-    })
-    .run(run);
-
-    run.$inject = ['$rootScope', 'authService', 'lock'];
-
-    function run($rootScope, authService, lock) {
-        debugger;
-        
-        // Put the authService on $rootScope so its methods
-        // can be accessed from the nav bar
-        $rootScope.authService = authService;
-
-        // Register the authentication listener that is
-        // set up in auth.service.js
-        authService.registerAuthenticationListener();
-
-        // Register the synchronous hash parser
-        // when using UI Router
-        lock.interceptHash();
-    }
-
+    });
+   
 
 

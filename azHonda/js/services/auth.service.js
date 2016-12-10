@@ -8,33 +8,39 @@
       .module('hondaApp')
       .service('authService', authService);
 
+    authService.$inject = ['lock', 'authManager'];
+
     function authService(lock, authManager) {
 
         function login() {
             debugger;
             lock.show();
-            authManager.signin({}, function (profile, token) {
-                debugger;
-                var s = token;
-            });
+
+            
         }
         function logout() {
             localStorage.removeItem('id_token');
+            localStorage.removeItem('profile');
             authManager.unauthenticate();
         }
 
         // Set up the logic for when a user authenticates
         // This method is called from app.run.js
         function registerAuthenticationListener() {
+            
             lock.on('authenticated', function (authResult) {
                 debugger;
                 localStorage.setItem('id_token', authResult.idToken);
+                localStorage.setItem('profile', authResult.profile);
                 authManager.authenticate();
+            }, function (err) {
+                console.log(err);
             });
         }
 
         return {
             login: login,
+            logout: logout,
             registerAuthenticationListener: registerAuthenticationListener
         }
     }
