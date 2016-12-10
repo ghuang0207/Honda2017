@@ -7,6 +7,11 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     $scope.subjects = [];
     $scope.allTopics = [];
 
+    $scope.select_Category = { CategoryId: '1' };
+    $scope.select_Subject = {Subject: 'Relocation'};
+    $scope.subjectTopicStates = []; //StateVO
+    $scope.selectedMultiStates = [];
+
     SrvData.ListAllCategories().then(function (response) {
         $scope.categories = response.data;
     }, function (err) {
@@ -17,6 +22,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     }, function (err) {
         console.log(err);
     });
+
     $scope.ListAllSubjects = function () {
         SrvData.ListAllSubjects().then(function (response) {
             $scope.subjects = response.data;
@@ -24,17 +30,76 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             console.log(err);
         });
     };
-    $scope.ListAllTopics = function () {
-        SrvData.ListAllTopics().then(function (response) {
-            $scope.allTopics = [];
-            $scope.allTopics = response.data;
-        }, function (err) {
-            console.log(err);
-        });
+    //$scope.ListAllTopics = function () {
+    //    SrvData.ListAllTopics().then(function (response) {
+    //        $scope.allTopics = [];
+    //        $scope.allTopics = response.data;
+    //    }, function (err) {
+    //        console.log(err);
+    //    });
+    //};
+
+    $scope.SearchTopics_by_Subject = function () {
+        
+        if ($scope.select_Category && $scope.select_Subject != "") {
+            SrvData.GetTopics_by_Subject($scope.select_Subject.Subject, $scope.select_Category.CategoryId).then(function (response) {
+                $scope.SubjectTopics = response.data;
+                debugger;
+                $scope.SubjectTopics = $filter('unique')($scope.SubjectTopics, 'State');
+                $scope.subjectTopicStates = [];
+                if ($scope.SubjectTopics != "null") {
+                    angular.forEach($scope.SubjectTopics, function (topic) {
+                        $scope.subjectTopicStates.push(topic.State.StateName); //Push only StateVO
+                    });
+                }
+            }, function (err) {
+                console.log(err);
+            });
+        }
+        else {
+            alert("please select a category and subject.");
+        }
     };
 
+
+    // multi-state by topics controls
+    
+    $scope.toggle = function (item, list) {
+        var idx = list.indexOf(item);
+        if (idx > -1) {
+            list.splice(idx, 1);
+        }
+        else {
+            list.push(item);
+        }
+    };
+
+    $scope.exists = function (item, list) {
+        return list.indexOf(item) > -1;
+    };
+
+    $scope.isIndeterminate = function () {
+        return ($scope.selectedMultiStates.length !== 0 &&
+            $scope.selectedMultiStates.length !== $scope.subjectTopicStates.length);
+    };
+
+    $scope.isChecked = function () {
+        return $scope.selectedMultiStates.length === $scope.subjectTopicStates.length;
+    };
+
+    $scope.toggleAll = function () {
+        if ($scope.selectedMultiStates.length === $scope.subjectTopicStates.length) {
+            //if checked all, uncheck all.
+            $scope.selectedMultiStates = [];
+        } else if ($scope.selectedMultiStates.length === 0 || $scope.selectedMultiStates.length > 0) {
+            //if none or have at least one checked, 
+                //select entire array to a new array object//
+            $scope.selectedMultiStates = $scope.subjectTopicStates.slice(0);
+        }
+    };
+
+    // page init load
     $scope.ListAllSubjects();
-    $scope.ListAllTopics();
 
     $scope.ShowStateTopicsDialog = function (ev, StateInfo, categoryId) {
         SrvData.GetTopics_by_State(StateInfo.StateCode, categoryId).then(function (response) {
@@ -53,6 +118,11 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                     if (topic.tree_Subsections == undefined) {
                         topic.tree_Subsections = [];
                     }
+                    //init ctrl_IsExpand
+                    topic.ctrl_IsExpand = true;
+                    angular.forEach(topic.tree_Subsections, function (Subsection) {
+                        Subsection.ctrl_IsExpand = true;
+                    });
                 });
                 console.log(stateTopics);
             }
@@ -74,10 +144,8 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                 }
             })
             .then(function (returnVal) {
-                $scope.ListAllTopics();
                 $scope.ListAllSubjects();
             }, function () {
-                $scope.ListAllTopics();
                 $scope.ListAllSubjects();
             });
 
@@ -86,10 +154,11 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         });
     };
 
-    $scope.ShowSubjectTopicsDialog = function (ev, AllTopics, subject, stateCode) {
+    $scope.ShowSubjectTopicsDialog = function (ev, subject, stateCode) {
         //Dialog Control Init
-        var SubjectTopics = $filter('filter')(AllTopics, subject, true, 'Subject');
-        SubjectTopics = $filter('unique')(SubjectTopics, 'State');
+        //var SubjectTopics = $filter('filter')(AllTopics, subject, true, 'Subject');
+        //SubjectTopics = $filter('unique')(SubjectTopics, 'State');
+
         if (SubjectTopics.length > 0) {
             //format for tree
             angular.forEach(SubjectTopics, function (topic) {
@@ -103,6 +172,11 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                 if (topic.tree_Subsections == undefined){
                     topic.tree_Subsections = [];
                 }
+                //init ctrl_IsExpand
+                topic.ctrl_IsExpand = true;
+                angular.forEach(topic.tree_Subsections, function (Subsection) {
+                    Subsection.ctrl_IsExpand = true;
+                });
             });
             console.log(SubjectTopics);
         }
@@ -128,15 +202,6 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             $scope.ListAllSubjects();
         });
     };
-
-    function isJson(str) {
-        try {
-            JSON.parse(str);
-        } catch (e) {
-            return false;
-        }
-        return true;
-    }
 
 
     // Dialog scope directive ----------------------
@@ -164,7 +229,6 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         }
 
         // Expand All/Collapse All
-
         $scope.AddNewTopic = function () {
             var newTopic = {
                 'TopicId': -1,
@@ -183,10 +247,8 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             changedTopic.ctrl_IsEdit = true;
         };
         $scope.SaveChange = function (changedTopic) {
-            debugger;
             changedTopic.Content = JSON.stringify({ tree_Subsections: changedTopic.tree_Subsections }) // if need special format before hit Server
             SrvData.addUpdateTopic(changedTopic).then(function (response) {
-                debugger;
                 changedTopic.TopicId = response.data;
                 changedTopic.ctrl_IsEdit = false;
             }, function (err) {
@@ -217,7 +279,6 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                     console.log(err);
                 });
             }
-            
         };
         $scope.DeleteTopic = function (changedTopic) {
             if (changedTopic.TopicId == -1) {
@@ -264,5 +325,5 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             //$mdDialog.hide(returnVal);
         };
     };
-
 });
+

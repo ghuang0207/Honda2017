@@ -46,12 +46,12 @@
     <script src="js/controllers/main-ctrl.js" type="text/javascript"></script>
     <script src="js/controllers/summary.js"></script>
     <script src="js/controllers/statutes.js"></script>
+    <script src="js/controllers/topics-modal.js"></script>
     <!-- Services -->
     <script src="js/services/services.js" type="text/javascript"></script>
     <!-- Filters -->
     <script src="js/filters/unique.js"></script>
     <script src="js/filters/utilities.js"></script>
-    
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>

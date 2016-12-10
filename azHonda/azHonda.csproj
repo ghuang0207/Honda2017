@@ -75,8 +75,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\Foley-Hoag-Logo-WWH_4_2015.png" />
+    <Content Include="images\honda_marine_logo.jpg" />
+    <Content Include="images\Power_Equipment_Logo_C1x1.JPG" />
     <Content Include="js\controllers\statutes.js" />
     <Content Include="js\controllers\summary.js" />
+    <Content Include="js\controllers\topics-modal.js" />
     <Content Include="js\filters\unique.js" />
     <Content Include="js\filters\utilities.js" />
     <Content Include="js\lib\angular-drag-and-drop-lists.js" />
@@ -102,7 +106,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="default.aspx" />
-    <Content Include="images\honda.JPG" />
     <Content Include="js\app.js" />
     <Content Include="js\controllers\main-ctrl.js" />
     <Content Include="Web.config" />

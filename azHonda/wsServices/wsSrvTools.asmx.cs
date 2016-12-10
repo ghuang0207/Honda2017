@@ -96,22 +96,35 @@ namespace azHonda.wsSrvTools
         }
 
         [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public void GetTopics_by_Subject(string subject, string categoryId)
+        {
+            try
+            {
+                string result = new JavaScriptSerializer().Serialize(SrvTools.GetTopics_by_Subject(subject, categoryId));
+                Context.Response.Write(result);
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+        }
+
+        [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string AddUpdateTopic(string TopicObj)
         {
-            int updatedTopicId = 0;
-            TopicVO Topic = null;
+            int updatedTopicId = -1;
             try
             {
-                Topic = new JavaScriptSerializer().Deserialize<TopicVO>(TopicObj);
-                
+                TopicVO Topic = new JavaScriptSerializer().Deserialize<TopicVO>(TopicObj);
                 updatedTopicId = SrvTools.Add_Update_Topic(Topic);
             }
             catch (Exception ex)
             {
                 Context.Response.Write(ex.Message);
             }
-            return Topic.TopicId.ToString();
+            return new JavaScriptSerializer().Serialize(updatedTopicId);
         }
 
         [WebMethod]

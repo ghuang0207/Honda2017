@@ -1,5 +1,7 @@
 ﻿
 <style>
+    .note-dialog .modal-dialog{ z-index:1050; }
+
     /**
     * For the correct positioning of the placeholder element, the dnd-list and
     * it's children must have position: relative
@@ -159,6 +161,10 @@
             <div class="md-dialog-content" style="text-align:left">
                     <div ng-repeat="Topic in Topics" class="typesDemo" layout="column">
 
+                        <md-subheader class="md-no-sticky Subsection" ng-if="isAllowEdit">
+                            {{Topic.State.StateName}}
+                        </md-subheader>
+
                         <div layout="column" layout-fill>
                             <div layout="row" layout-wrap>
                                 <div flex="95">
@@ -234,7 +240,7 @@
                                                 </a>
                                                 <md-input-container class="md-block" ng-if="Topic.ctrl_IsEdit" flex-gt-sm>
                                                     <label>Subsection</label>
-                                                    <textarea ng-model="Subsection.tree_Name" md-maxlength="200" rows="2"></textarea>
+                                                    <textarea ng-model="Subsection.tree_Name" rows="2"></textarea>
                                                 </md-input-container>
                                             </div>
                                             <!-- Subsection Node-->
@@ -272,7 +278,7 @@
                                                                 </a>
                                                                 <md-input-container class="md-block" ng-if="Topic.ctrl_IsEdit" flex-gt-sm>
                                                                     <label>Question</label>
-                                                                    <textarea ng-model="Question.tree_Name" md-maxlength="200" rows="2"></textarea>
+                                                                    <textarea ng-model="Question.tree_Name" rows="2"></textarea>
                                                                 </md-input-container>
                                                             </div>
 
