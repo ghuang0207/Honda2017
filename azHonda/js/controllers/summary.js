@@ -7,7 +7,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     $scope.subjects = [];
     $scope.allTopics = [];
 
-    $scope.select_Category = { CategoryId: '1' };
+    $scope.select_Category = { CategoryId: 1 };
     $scope.select_Subject = {Subject: 'Relocation'};
     $scope.subjectTopicStates = []; //StateVO
     $scope.selectedMultiStates = [];
@@ -102,12 +102,118 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     $scope.ListAllSubjects();
 
     $scope.ShowStateTopicsDialog = function (ev, StateInfo, categoryId) {
-        SrvData.GetTopics_by_State(StateInfo.StateCode, categoryId).then(function (response) {
-            var stateTopics = []
-            if (response.data != "null") {
-                stateTopics = response.data;
-                // format for tree
-                angular.forEach(stateTopics, function (topic) {
+        //Dialog Control Init
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'views/dialogs/topics-modal.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: false,
+            fullscreen: $scope.customFullscreen, // Only for -xs, -sm breakpoints.
+            locals: {
+                Info: {
+                    StateInfo: StateInfo,
+                    categoryId: categoryId
+                }
+            }
+        })
+        .then(function (returnVal) {
+            $scope.ListAllSubjects();
+        }, function () {
+            $scope.ListAllSubjects();
+        });
+    };
+
+    $scope.ShowSubjectTopicsDialog = function (ev, subject, stateCode) {
+        //Dialog Control Init
+        //var SubjectTopics = $filter('filter')(AllTopics, subject, true, 'Subject');
+        //SubjectTopics = $filter('unique')(SubjectTopics, 'State');
+
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'views/dialogs/topics-modal.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: false,
+            fullscreen: $scope.customFullscreen, // Only for -xs, -sm breakpoints.
+            locals: {
+                Info: {
+                    subject: subject
+                }
+            }
+        })
+        .then(function (returnVal) {
+            $scope.ListAllSubjects();
+        }, function () {
+            $scope.ListAllSubjects();
+        });
+    };
+
+
+    // Dialog scope directive ----------------------
+    function DialogController($scope, $mdDialog, Info) {
+        $scope.Topics = [];
+        $scope.$watch('Topics', function (Topics) {
+            $scope.modelAsJson = angular.toJson(Topics, true);
+        }, true);
+        $scope.GetNote_by_State = function () {
+            SrvData.GetNote_by_State($scope.StateInfo.StateCode, $scope.categoryId).then(function (response) {
+                if (response.data != "null") {
+                    $scope.NoteObj = response.data;
+                    $scope.NoteObj.ctrl_IsEdit = false;
+
+                    console.log($scope.NoteObj);
+                }
+                else {
+                    $scope.NoteObj = {};
+                    $scope.NoteObj.ctrl_IsEdit = false;
+                    $scope.NoteObj.NoteId = -1;
+                    $scope.NoteObj.Note = '';
+                }
+            }, function (err) {
+                console.log(err);
+            });
+        };
+
+        if (Info.hasOwnProperty("categoryId")) {
+            $scope.isAllowEdit = true;
+            $scope.StateInfo = Info.StateInfo;
+            $scope.categoryId = Info.categoryId;
+            $scope.title = $scope.StateInfo.StateName;
+
+            SrvData.GetTopics_by_State($scope.StateInfo.StateCode, $scope.categoryId).then(function (response) {
+                if (response.data != "null") {
+                    $scope.Topics = response.data;
+                    // format for tree
+                    angular.forEach($scope.Topics, function (topic) {
+                        try {
+                            topic.tree_Subsections = JSON.parse(topic.Content).tree_Subsections;
+                        }
+                        catch (e) {
+                            console.log(e);
+                        }
+                        //catch-all: to initiate all topics with at least empty array for tree_Subsections to prevent error
+                        if (topic.tree_Subsections == undefined) {
+                            topic.tree_Subsections = [];
+                        }
+                    });
+                    console.log($scope.Topics);
+                }
+            }, function (err) {
+                console.log(err);
+            });
+
+            $scope.GetNote_by_State();
+        }
+        if (Info.hasOwnProperty("subject")) {
+            $scope.isAllowEdit = false;
+            $scope.subject = Info.subject
+            $scope.title = $scope.subject;
+            console.log($scope)
+
+            if ($scope.Topics.length > 0) {
+                //format for tree
+                angular.forEach($scope.Topics, function (topic) {
                     try {
                         topic.tree_Subsections = JSON.parse(topic.Content).tree_Subsections;
                     }
@@ -118,115 +224,31 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                     if (topic.tree_Subsections == undefined) {
                         topic.tree_Subsections = [];
                     }
-                    //init ctrl_IsExpand
-                    topic.ctrl_IsExpand = true;
-                    angular.forEach(topic.tree_Subsections, function (Subsection) {
-                        Subsection.ctrl_IsExpand = true;
-                    });
                 });
-                console.log(stateTopics);
+                console.log($scope.Topics);
             }
-            
-            //Dialog Control Init
-            $mdDialog.show({
-                controller: DialogController,
-                templateUrl: 'views/dialogs/topics-modal.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: false,
-                fullscreen: $scope.customFullscreen, // Only for -xs, -sm breakpoints.
-                locals: {
-                    DisplayTopics: stateTopics,
-                    Info: {
-                        StateInfo: StateInfo,
-                        categoryId: categoryId
-                    }
-                }
-            })
-            .then(function (returnVal) {
-                $scope.ListAllSubjects();
-            }, function () {
-                $scope.ListAllSubjects();
+        }
+
+        //Note
+        $scope.EditNote = function () {
+            console.log(changedTopic)
+            $scope.NoteObj.ctrl_IsEdit = true;
+        };
+        $scope.SaveChangeNote = function () {
+            debugger;
+            $scope.NoteObj.StateCode = $scope.StateInfo.StateCode;
+            $scope.NoteObj.CategoryId = $scope.categoryId;
+            SrvData.AddUpdateNote($scope.NoteObj).then(function (response) {
+                $scope.NoteObj.NoteId = response.data;
+                $scope.NoteObj.ctrl_IsEdit = false;
+            }, function (err) {
+                console.log(err);
+                alert('Something went wrong when saving the note.');
             });
-
-        }, function (err) {
-            console.log(err);
-        });
-    };
-
-    $scope.ShowSubjectTopicsDialog = function (ev, subject, stateCode) {
-        //Dialog Control Init
-        //var SubjectTopics = $filter('filter')(AllTopics, subject, true, 'Subject');
-        //SubjectTopics = $filter('unique')(SubjectTopics, 'State');
-
-        if (SubjectTopics.length > 0) {
-            //format for tree
-            angular.forEach(SubjectTopics, function (topic) {
-                try {
-                    topic.tree_Subsections = JSON.parse(topic.Content).tree_Subsections;
-                }
-                catch (e) {
-                    console.log(e);
-                }
-                //catch-all: to initiate all topics with at least empty array for tree_Subsections to prevent error
-                if (topic.tree_Subsections == undefined){
-                    topic.tree_Subsections = [];
-                }
-                //init ctrl_IsExpand
-                topic.ctrl_IsExpand = true;
-                angular.forEach(topic.tree_Subsections, function (Subsection) {
-                    Subsection.ctrl_IsExpand = true;
-                });
-            });
-            console.log(SubjectTopics);
-        }
-        $mdDialog.show({
-            controller: DialogController,
-            templateUrl: 'views/dialogs/topics-modal.html',
-            parent: angular.element(document.body),
-            targetEvent: ev,
-            clickOutsideToClose: false,
-            fullscreen: $scope.customFullscreen, // Only for -xs, -sm breakpoints.
-            locals: {
-                DisplayTopics: SubjectTopics,
-                Info: {
-                    subject: subject
-                }
-            }
-        })
-        .then(function (returnVal) {
-            $scope.ListAllTopics();
-            $scope.ListAllSubjects();
-        }, function () {
-            $scope.ListAllTopics();
-            $scope.ListAllSubjects();
-        });
-    };
-
-
-    // Dialog scope directive ----------------------
-    function DialogController($scope, $mdDialog, DisplayTopics, Info) {
-        // Populate past-in topics to scope
-        $scope.Topics = DisplayTopics;
-        $scope.$watch('Topics', function (Topics) {
-            $scope.modelAsJson = angular.toJson(Topics, true);
-        }, true);
-        debugger;
-        if (Info.hasOwnProperty("categoryId")) {
-            $scope.isAllowEdit = true;
-            $scope.StateInfo = Info.StateInfo;
-            $scope.categoryId = Info.categoryId;
-            $scope.title = $scope.StateInfo.StateName;
-            console.log($scope)
-            //Format Topic Tree with IsEdit/ctrl_IsExpand  //Or Just save raw tree without any change
-        }
-        if (Info.hasOwnProperty("subject")) {
-            $scope.isAllowEdit = false;
-            $scope.subject = Info.subject
-            $scope.title = $scope.subject;
-            console.log($scope)
-            //Format Topic Tree with IsEdit/ctrl_IsExpand  //Or Just save raw tree without any change
-        }
+        };
+        $scope.CancelChangeNote = function () {
+            $scope.GetNote_by_State();
+        };
 
         // Expand All/Collapse All
         $scope.AddNewTopic = function () {
@@ -246,16 +268,17 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             console.log(changedTopic)
             changedTopic.ctrl_IsEdit = true;
         };
-        $scope.SaveChange = function (changedTopic) {
+        $scope.SaveChangeTopic = function (changedTopic) {
             changedTopic.Content = JSON.stringify({ tree_Subsections: changedTopic.tree_Subsections }) // if need special format before hit Server
             SrvData.addUpdateTopic(changedTopic).then(function (response) {
-                changedTopic.TopicId = response.data;
+                debugger;
+                changedTopic.TopicId = response.data.d;
                 changedTopic.ctrl_IsEdit = false;
             }, function (err) {
                 console.log(err);
             });
         };
-        $scope.CancelChange = function (changedTopic) {
+        $scope.CancelChangeTopic = function (changedTopic) {
             debugger;
             if (changedTopic.TopicId == -1) {
                 changedTopic.Subject.trim() == ""; //only delete those with topicId == -1 and empty Subject
@@ -321,7 +344,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             $mdDialog.cancel();
         };
         $scope.print = function () {
-            alert("Print this document.")
+            alert("Print this document.");
             //$mdDialog.hide(returnVal);
         };
     };

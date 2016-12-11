@@ -19,11 +19,6 @@ var app = angular.module("hondaApp", [
 ])
     .config(['$stateProvider', '$urlRouterProvider', 'lockProvider', function ($stateProvider, $urlRouterProvider, lockProvider) {
 
-        
-       
-
-
-
         $stateProvider
         .state('hondaWeb', { //base page
             url: '',
@@ -64,29 +59,6 @@ var app = angular.module("hondaApp", [
 
         $urlRouterProvider.otherwise('/home');
        
-    /*
-        $stateProvider
-      .state('home', {
-          url: '/home',
-          controller: 'HomeController',
-          templateUrl: 'views/home.html',
-          controllerAs: 'vm'
-      })
-      .state('login', {
-          url: '/login',
-          controller: 'LoginController',
-          templateUrl: 'views/login.html',
-          controllerAs: 'vm'
-      });
-
-        lockProvider.init({
-            clientID: AUTH0_CLIENT_ID,
-            domain: AUTH0_DOMAIN
-        });
-
-        $urlRouterProvider.otherwise('/home'); */
-
-
     }])
     .config(function ($mdThemingProvider) {
         $mdThemingProvider.theme('default')

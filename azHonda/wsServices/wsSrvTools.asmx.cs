@@ -97,6 +97,21 @@ namespace azHonda.wsSrvTools
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public void GetNote_by_State(string stateCode, string categoryId)
+        {
+            try
+            {
+                string result = new JavaScriptSerializer().Serialize(SrvTools.GetNote_by_State(Convert.ToInt16(categoryId), stateCode));
+                Context.Response.Write(result);
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
         public void GetTopics_by_Subject(string subject, string categoryId)
         {
             try
@@ -128,6 +143,23 @@ namespace azHonda.wsSrvTools
         }
 
         [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string AddUpdateNote(string NoteObj)
+        {
+            int updatedNoteId = -1;
+            try
+            {
+                NoteVO Note = new JavaScriptSerializer().Deserialize<NoteVO>(NoteObj);
+                updatedNoteId = SrvTools.Add_Update_Note(Note);
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+            return new JavaScriptSerializer().Serialize(updatedNoteId);
+        }
+
+        [WebMethod]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
         public void DeleteTopic_by_TopicId(string topicId)
         {
@@ -136,6 +168,23 @@ namespace azHonda.wsSrvTools
                 if (!string.IsNullOrEmpty(topicId))
                 {
                     SrvTools.DeleteTopic_by_TopicId(Convert.ToInt32(topicId));
+                }
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public void DeleteNote_by_NoteId(string noteId)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(noteId))
+                {
+                    SrvTools.DeleteNote_by_NoteId(Convert.ToInt32(noteId));
                 }
             }
             catch (Exception ex)

@@ -85,6 +85,33 @@
                     url: 'wsServices/wsSrvTools.asmx/GetTopic_by_TopicId?topicId=' + topicId,
                     headers: { 'Content-Type': 'application/json' }
                 });
+            },
+            //Note
+            GetNote_by_State: function (stateCode, categoryId) {
+                return $http(
+                {
+                    method: 'Get',
+                    url: 'wsServices/wsSrvTools.asmx/GetNote_by_State?stateCode=' + stateCode + '&categoryId=' + categoryId,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            },
+            AddUpdateNote: function (Note) {
+                var parameter = { 'NoteObj': JSON.stringify(Note) };
+                return $http(
+                    {
+                        method: 'POST',
+                        url: 'wsServices/wsSrvTools.asmx/AddUpdateNote',
+                        data: parameter,
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+            },
+            DeleteNote_by_NoteId: function (noteId) {
+                return $http(
+                {
+                    method: 'Get',
+                    url: 'wsServices/wsSrvTools.asmx/DeleteNote_by_NoteId?noteId=' + noteId,
+                    headers: { 'Content-Type': 'application/json' }
+                });
             }
         }
     });

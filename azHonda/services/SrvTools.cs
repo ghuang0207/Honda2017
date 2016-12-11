@@ -50,6 +50,39 @@ namespace azHonda.services
             }
         }
 
+        public static int Add_Update_Note(NoteVO note)
+        {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
+            SqlCommand cmd = new SqlCommand("add_update_note", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@noteId", note.NoteId);
+            cmd.Parameters.AddWithValue("@note", note.Note);
+            cmd.Parameters.AddWithValue("@stateCode", note.StateCode);
+            cmd.Parameters.AddWithValue("@categoryId", note.CategoryId);
+
+            int noteId = 0;
+            try
+            {
+                conn.Open();
+                string result = cmd.ExecuteScalar().ToString();
+                if (!string.IsNullOrEmpty(result))
+                {
+                    noteId = Convert.ToInt32(result);
+                }
+                return noteId;
+            }
+            catch (Exception ex)
+            {
+                string debug = ex.Message;
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         public static List<StateVO> ListAllStates()
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
@@ -362,6 +395,30 @@ namespace azHonda.services
             }
         }
 
+        public static void DeleteNote_by_NoteId(int noteId)
+        {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
+            SqlCommand cmd = new SqlCommand("delete_note_by_noteId", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@noteId", noteId);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                string debug = ex.Message;
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         /// <summary>
         /// Single Topic Detail: Get Topic by TopicId
         /// </summary>
@@ -401,6 +458,42 @@ namespace azHonda.services
                 }
 
                 return topic;
+            }
+            catch (Exception ex)
+            {
+                string debug = ex.Message;
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public static NoteVO GetNote_by_State(int categoryId, string stateCode)
+        {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
+            SqlCommand cmd = new SqlCommand("get_note_by_state", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@categoryId", categoryId);
+            cmd.Parameters.AddWithValue("@stateCode", stateCode);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                NoteVO note = null;
+                if (reader.Read())
+                {
+                    note = new NoteVO
+                    {
+                        NoteId = Convert.ToInt16(reader["noteId"]),
+                        Note = reader["note"].ToString()
+                    };
+                }
+
+                return note;
             }
             catch (Exception ex)
             {
