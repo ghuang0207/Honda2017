@@ -162,8 +162,8 @@
                 
                 <div layout="column" layout-fill ng-if="NoteObj">
                     <div layout="row" layout-wrap flex="95">
-                        <div ng-if="!NoteObj.ctrl_IsEdit">
-                            <p>{{NoteObj.Note}}</p>
+                        <div ng-if="!NoteObj.ctrl_IsEdit" ng-bind-html="NoteObj.Note">
+                            
                         </div>
                     </div>
                     <div layout="row" layout-wrap>

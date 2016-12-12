@@ -57,7 +57,7 @@ namespace azHonda.services
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@noteId", note.NoteId);
-            cmd.Parameters.AddWithValue("@note", note.Note);
+            cmd.Parameters.AddWithValue("@note", note.Note.Replace("\n","<br />"));
             cmd.Parameters.AddWithValue("@stateCode", note.StateCode);
             cmd.Parameters.AddWithValue("@categoryId", note.CategoryId);
 
