@@ -27,6 +27,7 @@ namespace azHonda.services
             cmd.Parameters.AddWithValue("@content", topic.Content);
             cmd.Parameters.AddWithValue("@stateCode", topic.State.StateCode);
             cmd.Parameters.AddWithValue("@categoryId", topic.Category.CategoryId);
+            cmd.Parameters.AddWithValue("@orderNumber", topic.OrderNumber);
 
             int topicId = 0;
             try
@@ -57,7 +58,7 @@ namespace azHonda.services
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@noteId", note.NoteId);
-            cmd.Parameters.AddWithValue("@note", note.Note.Replace("\n","<br />"));
+            cmd.Parameters.AddWithValue("@note", note.Note);
             cmd.Parameters.AddWithValue("@stateCode", note.StateCode);
             cmd.Parameters.AddWithValue("@categoryId", note.CategoryId);
 
@@ -232,7 +233,7 @@ namespace azHonda.services
                     {
                         allTopics.Add(new TopicVO
                         {
-                            TopicId = Convert.ToInt16(reader["topicId"]),
+                            TopicId = Convert.ToInt32(reader["topicId"]),
                             Subject = reader["subject"].ToString(),
                             Content = reader["content"].ToString(),
                             State = new StateVO()
@@ -245,6 +246,7 @@ namespace azHonda.services
                                 CategoryId = reader["categoryId"].ToString(),
                                 Category = reader["name"].ToString()
                             },
+                            OrderNumber = Convert.ToInt16(reader["orderNumber"].ToString()),
                             ctrl_IsEdit = false,
                             ctrl_IsExpand = true
                         });
@@ -302,7 +304,8 @@ namespace azHonda.services
                             {
                                 CategoryId = reader["categoryId"].ToString(),
                                 Category = reader["name"].ToString()
-                            }
+                            },
+                            OrderNumber = Convert.ToInt16(reader["orderNumber"].ToString())
                         });
                     }
                 }
@@ -353,7 +356,8 @@ namespace azHonda.services
                             {
                                 CategoryId = reader["categoryId"].ToString(),
                                 Category = reader["name"].ToString()
-                            }
+                            },
+                            OrderNumber = Convert.ToInt16(reader["orderNumber"].ToString())
                         });
                     }
                 }
@@ -587,7 +591,8 @@ namespace azHonda.services
                             {
                                 CategoryId = reader["categoryId"].ToString(),
                                 Category = reader["name"].ToString()
-                            }
+                            },
+                            OrderNumber = Convert.ToInt16(reader["orderNumber"].ToString())
                         });
                     }
                 }

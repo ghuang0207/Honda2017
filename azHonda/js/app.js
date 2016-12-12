@@ -62,7 +62,7 @@ var app = angular.module("hondaApp", [
     }])
     .config(function ($mdThemingProvider) {
         $mdThemingProvider.theme('default')
-            .primaryPalette('grey')
+            .primaryPalette('blue-grey')
             .accentPalette('orange');
         $mdThemingProvider.theme('input', 'default')
             .primaryPalette('grey')

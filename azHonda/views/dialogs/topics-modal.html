@@ -1,6 +1,22 @@
 ﻿
 <style>
-    .note-dialog .modal-dialog{ z-index:1050; }
+    .modal-dialog{
+        z-index: 99999 !important;
+    }
+    .modal-dialog label {
+        color: black;
+    }
+    .note-link-text .form-control{
+        color: black;
+    }
+    .note-link-text .form-control input{
+        color: black;
+    }
+    .modal-backdrop, .modal-backdrop.in{
+      display: none;
+    }
+    /*disapble link new window select*/
+    .note-editor .link-dialog .checkbox { display: none; }
 
     /**
     * For the correct positioning of the placeholder element, the dnd-list and
@@ -162,14 +178,11 @@
                 
                 <div layout="column" layout-fill ng-if="NoteObj">
                     <div layout="row" layout-wrap flex="95">
-                        <div ng-if="!NoteObj.ctrl_IsEdit" ng-bind-html="NoteObj.Note">
-                            
-                        </div>
+                        <div ng-if="!NoteObj.ctrl_IsEdit" ng-bind-html="NoteObj.Note"></div>
                     </div>
                     <div layout="row" layout-wrap>
                         <md-input-container class="md-block" ng-if="NoteObj.ctrl_IsEdit" flex="90">
-                            <label>Note</label>
-                            <textarea ng-model="NoteObj.Note" rows="5"></textarea>
+                            <summernote height="100" ng-if="NoteObj.ctrl_IsEdit" ng-model="NoteObj.Note"></summernote>
                         </md-input-container>
                         <div ng-if="NoteObj.ctrl_IsEdit" flex="10">
                             <md-button class="md-fab md-mini" aria-label="Save Note" ng-click="SaveChangeNote()">
@@ -188,7 +201,7 @@
                     </div>
                 </div>
 
-                <div ng-repeat="Topic in Topics" class="typesDemo" layout="column">
+                <div ng-repeat="Topic in Topics | orderBy : 'OrderNumber'" class="typesDemo" layout="column">
 
                     <md-subheader class="md-no-sticky Subsection" ng-if="!isAllowEdit">
                         {{Topic.State.StateName}}
