@@ -3,20 +3,46 @@
     md-nav-bar .md-nav-bar {
       border-top: 2px solid darkgrey;
     }
+    img{
+        padding: 0px 8px;
+         vertical-align:text-bottom;
+    }
+    div.md-nav-bar{
+        background-color: #3E3B3B;
+        color: white;
+        padding: 2px;
+    }
+    ._md-nav-button-text{
+        color: white;
+    }
+    li.md-nav-item:not(:last-child) {
+        font-weight: bolder;
+        text-align: center;
+        padding:0px;
+    }
+    li.md-nav-item:not(:last-child) {
+        border-right: none;
+        font-weight: bolder;
+        text-align: center;
+    }
+    .top-banner{
+        background-image: linear-gradient(to right, rgba(251, 251, 251, 0.772549) 0%, rgba(251, 251, 251, 0.772549) 82%, rgba(255, 255, 255, 0.498039) 100%);
+        padding:5px 0px;
+    }
 </style>
 
 <div>
     <!--header></header>--> 
         
-    <md-content class="md-padding" style="background-color:transparent;">
+    <md-content class="md-padding" style="background-color:transparent; padding-top: 0px;">
         <div layout-fill layout="column">
-            <div layout="row" layout-wrap">
-                <div flex="80" layout="row" style="padding:2px;">
-                    <img width="250" height="80" src="../images/Foley-Hoag-Logo-WWH_4_2015.png" style="padding: 0px 2px;"/>
-                    <img width="100" height="100" src="../images/honda_marine_logo.jpg" style="padding: 0px 2px;"/>
-                    <img width="100" height="100" src="../images/Power_Equipment_Logo_C1x1.JPG" style="padding: 0px 2px;"/>
+            <div layout="row" layout-wrap" class="top-banner">
+                <div flex="80" layout="row" style="padding: 10px 2px 5px 2px; vertical-align:text-bottom;">
+                    <img width="243" height="53" src="../images/Foley-Hoag-Logo-WWH_4_2015.png"/>
+                    <img width="268" height="80" src="../images/honda_marine_logo.jpg"/>
+                    <img width="158" height="80" src="../images/Power_Equipment_Logo_C1x1.JPG"/>
                 </div>
-                <div flex style="padding:2px;">
+                <div flex style="padding:2px; vertical-align:text-bottom;">
                     <div class="text-center" ng-if="!isAuthenticated">
                         <p>You are not yet authenticated. <a href="#/login">Log in.</a></p>
                     </div>
@@ -39,7 +65,7 @@
                 </md-input-container>-->
             </div>
             
-            <div style="padding:20px 5px;" flex="5">
+            <div style="padding:10px 5px; font-weight:bold;" flex="5">
                 <h5>{{currentNavItem}}</h5>
             </div>
 

@@ -12,6 +12,7 @@ namespace azHonda.objects
         public string Content { get; set; }
         public StateVO State { get; set; }
         public CategoryVO Category { get; set; }
+        public int OrderNumber { get; set; }
         public bool ctrl_IsEdit { get; set; }
         public bool ctrl_IsExpand { get; set; }
     }

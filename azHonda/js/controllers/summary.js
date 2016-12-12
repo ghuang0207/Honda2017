@@ -152,6 +152,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
 
     // Dialog scope directive ----------------------
     function DialogController($scope, $mdDialog, Info) {
+
         $scope.Topics = [];
         $scope.$watch('Topics', function (Topics) {
             $scope.modelAsJson = angular.toJson(Topics, true);
@@ -269,6 +270,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             changedTopic.ctrl_IsEdit = true;
         };
         $scope.SaveChangeTopic = function (changedTopic) {
+            changedTopic.OrderNumber = $scope.Topics.indexOf(changedTopic);
             changedTopic.Content = JSON.stringify({ tree_Subsections: changedTopic.tree_Subsections }) // if need special format before hit Server
             SrvData.addUpdateTopic(changedTopic).then(function (response) {
                 debugger;
@@ -279,7 +281,6 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             });
         };
         $scope.CancelChangeTopic = function (changedTopic) {
-            debugger;
             if (changedTopic.TopicId == -1) {
                 changedTopic.Subject.trim() == ""; //only delete those with topicId == -1 and empty Subject
                 var index = $scope.Topics.indexOf(changedTopic);
@@ -349,4 +350,3 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         };
     };
 });
-

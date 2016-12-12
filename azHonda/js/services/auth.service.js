@@ -13,10 +13,7 @@
     function authService(lock, authManager) {
 
         function login() {
-            debugger;
             lock.show();
-
-            
         }
         function logout() {
             localStorage.removeItem('id_token');
@@ -29,7 +26,6 @@
         function registerAuthenticationListener() {
             
             lock.on('authenticated', function (authResult) {
-                debugger;
                 localStorage.setItem('id_token', authResult.idToken);
                 localStorage.setItem('profile', authResult.profile);
                 authManager.authenticate();

@@ -75,6 +75,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\background.jpg" />
     <Content Include="images\Foley-Hoag-Logo-WWH_4_2015.png" />
     <Content Include="images\honda_marine_logo.jpg" />
     <Content Include="images\Power_Equipment_Logo_C1x1.JPG" />
@@ -91,21 +92,6 @@
     <Content Include="js\lib\angular-drag-and-drop-lists.min.js" />
     <Content Include="js\services\auth.service.js" />
     <Content Include="js\services\services.js" />
-    <Content Include="node_modules\auth0-angular\build\auth0-angular.js" />
-    <Content Include="node_modules\auth0-angular\build\auth0-angular.min.js" />
-    <Content Include="node_modules\auth0-angular\Gruntfile.js" />
-    <Content Include="node_modules\auth0-angular\index.js" />
-    <Content Include="node_modules\auth0-angular\karma.conf.js" />
-    <Content Include="node_modules\auth0-angular\scenario\protractor.conf.js" />
-    <Content Include="node_modules\auth0-angular\scenario\sanity.js" />
-    <Content Include="node_modules\auth0-angular\src\auth0.js" />
-    <Content Include="node_modules\auth0-angular\src\directives\auth0.directive.js" />
-    <Content Include="node_modules\auth0-angular\src\directives\ifUser.directive.js" />
-    <Content Include="node_modules\auth0-angular\src\services\auth0.service.js" />
-    <Content Include="node_modules\auth0-angular\src\services\auth0.utils.js" />
-    <Content Include="node_modules\auth0-angular\test\test.utils.js" />
-    <Content Include="node_modules\auth0-angular\test\unit\directives\ifUser.directive.test.js" />
-    <Content Include="node_modules\auth0-angular\test\unit\services\auth0.service.test.js" />
     <Content Include="views\dialogs\topics-modal.html" />
     <Content Include="views\home.html" />
     <Content Include="views\login.html" />
@@ -116,21 +102,6 @@
     <Content Include="views\summary.html" />
     <Content Include="wsServices\wsSrvTools.asmx" />
     <Content Include="packages.config" />
-    <Content Include="node_modules\auth0-angular\.bowerrc" />
-    <Content Include="node_modules\auth0-angular\.jshintrc" />
-    <Content Include="node_modules\auth0-angular\.npmignore" />
-    <Content Include="node_modules\auth0-angular\bower.json" />
-    <Content Include="node_modules\auth0-angular\CHANGELOG.md" />
-    <Content Include="node_modules\auth0-angular\docs\calling-an-api.md" />
-    <Content Include="node_modules\auth0-angular\docs\link-accounts.md" />
-    <Content Include="node_modules\auth0-angular\docs\refresh-token.md" />
-    <Content Include="node_modules\auth0-angular\docs\routing.md" />
-    <Content Include="node_modules\auth0-angular\docs\storing-information.md" />
-    <Content Include="node_modules\auth0-angular\docs\testing.md" />
-    <Content Include="node_modules\auth0-angular\examples\README.md" />
-    <Content Include="node_modules\auth0-angular\LICENSE" />
-    <Content Include="node_modules\auth0-angular\package.json" />
-    <Content Include="node_modules\auth0-angular\README.md" />
     <None Include="Properties\PublishProfiles\azHonda2017 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\azHonda2017.pubxml" />
     <Content Include="Site1.Master" />
@@ -175,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="css\" />
+    <Folder Include="node_modules\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
