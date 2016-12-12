@@ -92,6 +92,27 @@
     <Content Include="js\lib\angular-drag-and-drop-lists.min.js" />
     <Content Include="js\services\auth.service.js" />
     <Content Include="js\services\services.js" />
+    <Content Include="node_modules\angular-jwt\dist\angular-jwt.js" />
+    <Content Include="node_modules\angular-jwt\dist\angular-jwt.min.js" />
+    <Content Include="node_modules\angular-jwt\gulpfile.js" />
+    <Content Include="node_modules\angular-jwt\index.js" />
+    <Content Include="node_modules\angular-jwt\karma-dist-concatenated.conf.js" />
+    <Content Include="node_modules\angular-jwt\karma-dist-minified.conf.js" />
+    <Content Include="node_modules\angular-jwt\karma-src.conf.js" />
+    <Content Include="node_modules\angular-jwt\LICENSE.txt" />
+    <Content Include="node_modules\angular-jwt\src\angularJwt\angularJwt.js" />
+    <Content Include="node_modules\angular-jwt\src\angularJwt\services\authManager.js" />
+    <Content Include="node_modules\angular-jwt\src\angularJwt\services\interceptor.js" />
+    <Content Include="node_modules\angular-jwt\src\angularJwt\services\jwt.js" />
+    <Content Include="node_modules\angular-jwt\src\angularJwt\services\jwtOptions.js" />
+    <Content Include="node_modules\angular-jwt\src\angularJwt\services\urlUtils.js" />
+    <Content Include="node_modules\angular-jwt\test\unit\angularJwt\angularJwtSpec.js" />
+    <Content Include="node_modules\angular-jwt\test\unit\angularJwt\services\interceptorSpec.js" />
+    <Content Include="node_modules\angular-jwt\test\unit\angularJwt\services\jwtSpec.js" />
+    <Content Include="node_modules\angular-lock\angular-lock.js" />
+    <Content Include="node_modules\angular-lock\dist\angular-lock.js" />
+    <Content Include="node_modules\angular-lock\dist\angular-lock.min.js" />
+    <Content Include="node_modules\angular-lock\gulpfile.js" />
     <Content Include="views\dialogs\topics-modal.html" />
     <Content Include="views\home.html" />
     <Content Include="views\login.html" />
@@ -102,6 +123,20 @@
     <Content Include="views\summary.html" />
     <Content Include="wsServices\wsSrvTools.asmx" />
     <Content Include="packages.config" />
+    <Content Include="node_modules\angular-jwt\.bowerrc" />
+    <Content Include="node_modules\angular-jwt\.editorconfig" />
+    <Content Include="node_modules\angular-jwt\.jshintrc" />
+    <Content Include="node_modules\angular-jwt\.npmignore" />
+    <Content Include="node_modules\angular-jwt\.yo-rc.json" />
+    <Content Include="node_modules\angular-jwt\bower.json" />
+    <Content Include="node_modules\angular-jwt\History.md" />
+    <Content Include="node_modules\angular-jwt\package.json" />
+    <Content Include="node_modules\angular-jwt\README.md" />
+    <Content Include="node_modules\angular-lock\.npmignore" />
+    <Content Include="node_modules\angular-lock\bower.json" />
+    <Content Include="node_modules\angular-lock\LICENSE" />
+    <Content Include="node_modules\angular-lock\package.json" />
+    <Content Include="node_modules\angular-lock\README.md" />
     <None Include="Properties\PublishProfiles\azHonda2017 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\azHonda2017.pubxml" />
     <Content Include="Site1.Master" />
@@ -146,7 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="css\" />
-    <Folder Include="node_modules\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
