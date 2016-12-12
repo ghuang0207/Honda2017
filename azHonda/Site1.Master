@@ -74,14 +74,16 @@
             background-image:url(images/background.jpg);
             background-repeat: no-repeat;
             background-attachment: fixed;
-            background-size: 100%;
+            background-size: cover;
             background-position: center top; 
+            width:100vw;
+            height:100vh;
         }
     </style>
 </head>
-<body>
+<body class="main-form">
     <div ng-app="hondaApp">
-        <form id="form1" runat="server" class="main-form">
+        <form id="form1" runat="server" >
         <div class="container-fluid" style="max-width:80vw;">
             <!--<div layout-gt-xs="row">
                 <md-input-container flex="40" style="margin-left:60vw; margin-top:30px;">
