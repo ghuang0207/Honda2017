@@ -12,12 +12,14 @@
     .note-link-text .form-control input{
         color: black;
     }
-    .modal-backdrop, .modal-backdrop.in{
-      display: none;
+    /*disapble insert link backdrop*/
+    .modal-backdrop, .modal-backdrop.in, div.note-dropzone-message, div.note-dropzone {
+      display: none !important;
     }
-    /*disapble link new window select*/
+    /*disable link new window select*/   
     .note-editor .link-dialog .checkbox { display: none; }
-
+    /*disable dnd effect for summernote*/
+    .note-editor .note-dropzone { opacity: 0 !important; }
     /**
     * For the correct positioning of the placeholder element, the dnd-list and
     * it's children must have position: relative
@@ -130,6 +132,7 @@
     * Handle positioning
     */
     .typesDemo .handle {
+        padding: 1px 3px;
         cursor: move;
         position: absolute;
         top: 14px;
@@ -184,6 +187,10 @@
                         <md-input-container class="md-block" ng-if="NoteObj.ctrl_IsEdit" flex="90">
                             <summernote height="100" ng-if="NoteObj.ctrl_IsEdit" ng-model="NoteObj.Note"></summernote>
                         </md-input-container>
+                        <!--<md-input-container class="md-block" ng-if="NoteObj.ctrl_IsEdit" flex="90">
+                            <trix-editor angular-trix ng-model="NoteObj.Note"></trix-editor>
+                        </md-input-container>-->
+
                         <div ng-if="NoteObj.ctrl_IsEdit" flex="10">
                             <md-button class="md-fab md-mini" aria-label="Save Note" ng-click="SaveChangeNote()">
                                 <md-tooltip md-direction="top">
@@ -218,18 +225,6 @@
                             <div ng-if="!Topic.ctrl_IsEdit && isAllowEdit" flex="5" layout="row">
                                 <span class="glyphicon glyphicon-edit" ng-click="EditTopic(Topic)" style="margin-left: 3px;"></span>
                                 <span class="glyphicon glyphicon-trash" ng-click="DeleteTopic(Topic)" style="margin-left: 5px;"></span>
-                                <!--<md-button class="md-fab md-mini md-primary" aria-label="Edit Topic" ng-click="EditTopic(Topic)">
-                                    <md-tooltip md-direction="top">
-                                        Edit Topic
-                                    </md-tooltip>
-                                    <i class="material-icons">mode_edit</i>
-                                </md-button>
-                                <md-button class="md-fab md-mini md-warn" aria-label="Delete Topic" ng-click="DeleteTopic(Topic)">
-                                    <md-tooltip md-direction="top">
-                                        Delete Topic
-                                    </md-tooltip>
-                                    <i class="material-icons">delete_forever</i>
-                                </md-button>-->
                             </div>
                         </div>
                         <div layout="row" layout-wrap>
@@ -260,22 +255,23 @@
                             <span id="btnAddSubsection" class="glyphicon glyphicon-plus-sign" ng-click="addSubsection(Topic.tree_Subsections)"></span>
                         </md-subheader>
 
-                        <ul dnd-list="Topic.Subsections"
-                            dnd-allowed-types="Subsection">
+                        <ul dnd-list="Topic.tree_Subsections"
+                            dnd-allowed-types="['Subsection']">
                             <li ng-repeat="Subsection in Topic.tree_Subsections"
                                 dnd-draggable="Subsection"
                                 dnd-type="'Subsection'"
-                                dnd-moved="Topic.Subsections.splice($index, 1)"
+                                dnd-moved="Topic.tree_Subsections.splice($index, 1)"
                                 dnd-disable-if="!Topic.ctrl_IsEdit"
                                 dnd-effect-allowed="move"
                                 ng-class="{'Subsection': Topic.ctrl_IsEdit}">
+
                                 <div class="handle" ng-if="Topic.tree_Subsections.length > 1 && Topic.ctrl_IsEdit">
                                     <span class="glyphicon glyphicon-move"></span>
                                 </div>
 
                                 <div class="content" dnd-nodrag>
                                     <div layout="column">
-                                        <div flex>
+                                        <div flex style="margin-left: 5px;">
                                             <a ng-click="toggleExpand(Subsection)" ng-if="!Topic.ctrl_IsEdit">
                                                 <span ng-class="{'glyphicon glyphicon-menu-right': !Subsection.ctrl_IsExpand, 'glyphicon glyphicon-menu-down': Subsection.ctrl_IsExpand}"></span>
                                                 {{Subsection.tree_Name}}
@@ -289,6 +285,11 @@
                                         <div flex style="padding-left:20px;" ng-if="(Subsection.ctrl_IsExpand && Subsection.tree_Value) || (Topic.ctrl_IsEdit && Subsection.tree_Questions.length == 0)">
                                             <div ng-if="!Topic.ctrl_IsEdit" ng-bind-html="Subsection.tree_Value"></div>
                                             <summernote height="100" ng-if="Topic.ctrl_IsEdit" ng-model="Subsection.tree_Value"></summernote>
+
+                                            <!--<md-input-container class="md-block" ng-if="Topic.ctrl_IsEdit" flex="90">
+                                                <trix-editor angular-trix ng-model="Subsection.tree_Value"></trix-editor>
+                                            </md-input-container>-->
+
                                         </div>
                                     </div>
 
@@ -298,12 +299,12 @@
                                             <span id="btnAddQuestion" class="glyphicon glyphicon-plus-sign" ng-click="addQuestion(Subsection.tree_Questions)"></span>
                                         </md-subheader>
 
-                                        <ul dnd-list="Subsection.Questions"
-                                            dnd-allowed-types="Question" ng-if="Subsection.tree_Questions.length > 0"> <!-- Toggle Questions OR Subsection Value-->
+                                        <ul dnd-list="Subsection.tree_Questions"
+                                            dnd-allowed-types="['Question']" ng-if="Subsection.tree_Questions.length > 0"> <!-- Toggle Questions OR Subsection Value-->
                                             <li ng-repeat="Question in Subsection.tree_Questions"
                                                 dnd-draggable="Question"
-                                                dnd-type="Question"
-                                                dnd-moved="Subsection.Questions.splice($index, 1)"
+                                                dnd-type="'Question'"
+                                                dnd-moved="Subsection.tree_Questions.splice($index, 1)"
                                                 dnd-disable-if="!Topic.ctrl_IsEdit"
                                                 dnd-effect-allowed="move"
                                                 ng-class="{'Question': Topic.ctrl_IsEdit}">
@@ -312,7 +313,7 @@
                                                 </div>
 
                                                 <div class="content" dnd-nodrag>
-                                                    <div layout="column" style="color:darkseagreen">
+                                                    <div layout="column" style="color: darkseagreen; margin-left: 5px;">
                                                         <div>
                                                             <a ng-click="toggleExpand(Question)" ng-if="!Topic.ctrl_IsEdit">
                                                                 <span ng-class="{'glyphicon glyphicon-menu-right': !Question.ctrl_IsExpand, 'glyphicon glyphicon-menu-down': Question.ctrl_IsExpand}"></span>
@@ -329,6 +330,9 @@
                                                             <div style="padding: 5px 2px; margin-left: 10px;" ng-if="!Topic.ctrl_IsEdit" ng-bind-html="Question.tree_Value"></div>
                                                             <!--<div summernote ng-model="Question.Value"></div>-->
                                                             <summernote height="100" ng-if="Topic.ctrl_IsEdit" ng-model="Question.tree_Value"></summernote>
+                                                            <!--<md-input-container class="md-block" ng-if="Topic.ctrl_IsEdit" flex="90">
+                                                                <trix-editor angular-trix ng-model="Question.tree_Value"></trix-editor>
+                                                            </md-input-container>-->
                                                         </div>
                                                     </div>
                                                 </div>

@@ -78,6 +78,7 @@
     <Content Include="images\background.jpg" />
     <Content Include="images\Foley-Hoag-Logo-WWH_4_2015.png" />
     <Content Include="images\honda_marine_logo.jpg" />
+    <Content Include="images\image003.jpg" />
     <Content Include="images\Power_Equipment_Logo_C1x1.JPG" />
     <Content Include="js\app.run.js" />
     <Content Include="js\auth0-variables.js" />
@@ -90,6 +91,7 @@
     <Content Include="js\filters\utilities.js" />
     <Content Include="js\lib\angular-drag-and-drop-lists.js" />
     <Content Include="js\lib\angular-drag-and-drop-lists.min.js" />
+    <Content Include="js\lib\angular-trix.js" />
     <Content Include="js\services\auth.service.js" />
     <Content Include="js\services\services.js" />
     <Content Include="node_modules\angular-jwt\dist\angular-jwt.js" />

@@ -15,7 +15,7 @@ var app = angular.module("hondaApp", [
     'summernote',
     'dndLists',
     'auth0.lock',
-    'angular-jwt'
+    'angular-jwt', 'angularTrix'
 ])
     .config(['$stateProvider', '$urlRouterProvider', 'lockProvider', function ($stateProvider, $urlRouterProvider, lockProvider) {
 
