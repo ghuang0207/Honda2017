@@ -15,7 +15,7 @@ var app = angular.module("hondaApp", [
     'summernote',
     'dndLists',
     'auth0.lock',
-    'angular-jwt', 'angularTrix'
+    'angular-jwt'
 ])
     .config(['$stateProvider', '$urlRouterProvider', 'lockProvider', function ($stateProvider, $urlRouterProvider, lockProvider) {
 
@@ -37,12 +37,12 @@ var app = angular.module("hondaApp", [
         })
         .state('hondaWeb.news', {
             url: '/news',
-            controller: 'MainCtrl',
+            controller: '',
             templateUrl: 'views/news.html'
         })
         .state('hondaWeb.profile', {
             url: '/profile',
-            controller: 'MainCtrl',
+            controller: '',
             templateUrl: 'views/profile.html'
         })
         .state('login', {

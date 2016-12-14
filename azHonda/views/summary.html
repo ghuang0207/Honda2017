@@ -9,19 +9,27 @@
                         <div flex="70">
                             <h6 class="md-display">{{c.Category}}</h6>
                         </div>
-                        <!--<div flex>
+                        <div flex>
                             <md-input-container md-no-float class="md-block" style="margin:0px;">
                                 <md-icon class="material-icons" style="color: dodgerblue">search</md-icon>
-                                <input ng-model="search" type="text" placeholder="Search">
+                                <input ng-model="search" type="text" placeholder="Search topics" ng-keyup="onEnterSearch($event,search, c.CategoryId)">
                             </md-input-container>
-                        </div>-->
+                        </div>
                     </div>
-                    <div layout="column" layout-wrap style="max-height: 500px;">
+                    <!--tab content-->
+                    <div layout="column" layout-wrap ng-if="!showSearchResult" style="max-height: 500px;">
                         <div flex="40" ng-repeat="s in states">
                             <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStateTopicsDialog($event, s, c.CategoryId)">
                                 {{s.StateName}}
                             </md-button>
                         </div>
+                    </div>
+                    <!-- search results-->
+                    <div layout="column" ng-if="showSearchResult">
+                        <div flex="5">
+                            <a ng-click="toggleSearchResultView()">Back to State List</a>
+                        </div>
+                        <div flex ng-include="'views/topics.html'"></div>
                     </div>
 
                 </md-content>
@@ -32,9 +40,15 @@
 
                     <h6 class="md-display">Multi-State by Topic</h6>
 
-                    <hr />
 
-                    <div layout="column">
+                    <div>
+                        <h5>under construction</h5>
+                    </div>
+
+                    
+                    <!--<div layout="column">
+                        <hr />
+
                         <md-radio-group ng-model="select_Category" class="md-primary" layout="row"  ng-model-options="{trackBy: '$value.CategoryId'}">
 
                             <md-radio-button ng-repeat="c in categories"
@@ -70,9 +84,11 @@
                                 </md-checkbox>
                             </div>
                         </div>
-                    </div>
+                        
+                        <hr />
+                    </div>-->
 
-                    <hr />
+                   
 
                 </md-content>
             </md-tab>

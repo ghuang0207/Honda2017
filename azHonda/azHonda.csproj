@@ -91,7 +91,6 @@
     <Content Include="js\filters\utilities.js" />
     <Content Include="js\lib\angular-drag-and-drop-lists.js" />
     <Content Include="js\lib\angular-drag-and-drop-lists.min.js" />
-    <Content Include="js\lib\angular-trix.js" />
     <Content Include="js\services\auth.service.js" />
     <Content Include="js\services\services.js" />
     <Content Include="node_modules\angular-jwt\dist\angular-jwt.js" />
@@ -123,6 +122,7 @@
     <Content Include="views\profile.html" />
     <Content Include="views\statutes.html" />
     <Content Include="views\summary.html" />
+    <Content Include="views\topics.html" />
     <Content Include="wsServices\wsSrvTools.asmx" />
     <Content Include="packages.config" />
     <Content Include="node_modules\angular-jwt\.bowerrc" />

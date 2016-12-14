@@ -6,11 +6,13 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     $scope.categories = [];
     $scope.subjects = [];
     $scope.allTopics = [];
+    $scope.Topics = [];
 
     $scope.select_Category = { CategoryId: 1 };
     $scope.select_Subject = {Subject: 'Relocation'};
     $scope.subjectTopicStates = []; //StateVO
     $scope.selectedMultiStates = [];
+    $scope.showSearchResult = false;
 
     SrvData.ListAllCategories().then(function (response) {
         $scope.categories = response.data;
@@ -30,15 +32,10 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             console.log(err);
         });
     };
-    //$scope.ListAllTopics = function () {
-    //    SrvData.ListAllTopics().then(function (response) {
-    //        $scope.allTopics = [];
-    //        $scope.allTopics = response.data;
-    //    }, function (err) {
-    //        console.log(err);
-    //    });
-    //};
+    // page init load
+    $scope.ListAllSubjects();
 
+    // multi-state by topic tab
     $scope.SearchTopics_by_Subject = function () {
         
         if ($scope.select_Category && $scope.select_Subject != "") {
@@ -62,7 +59,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     };
 
 
-    // multi-state by topics controls
+    /*// multi-state by topics controls
     
     $scope.toggle = function (item, list) {
         var idx = list.indexOf(item);
@@ -98,8 +95,57 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         }
     };
 
-    // page init load
-    $scope.ListAllSubjects();
+    */
+
+    $scope.toggleSearchResultView = function () {
+        $scope.showSearchResult = false;
+    }
+
+    $scope.onEnterSearch = function ($event, keyword, categoryId) {
+        $event.preventDefault();
+
+        if ($event.keyCode == 13) {
+            //To-do: Change ListAllTopics to search (remember to add category = '')
+            SrvData.ListAllTopics().then(function (response) {
+                $scope.Topics = response.data;
+                $scope.Topics = $filter('filter')($scope.Topics, keyword);
+                debugger;
+                $scope.toggleExpand = function (targetObj) {
+                    targetObj.ctrl_IsExpand = !targetObj.ctrl_IsExpand
+                }
+                // format for tree
+                angular.forEach($scope.Topics, function (topic) {
+                    try {
+                        topic.tree_Subsections = JSON.parse(topic.Content).tree_Subsections;
+                    }
+                    catch (e) {
+                        console.log(e);
+                    }
+                    //catch-all: to initiate all topics with at least empty array for tree_Subsections to prevent error
+                    if (topic.tree_Subsections == undefined) {
+                        topic.tree_Subsections = [];
+                    }
+
+                    //format tree expand element
+                    angular.forEach(topic.tree_Subsections, function (Subsection) {
+                        if (Subsection) {
+                            Subsection.ctrl_IsExpand = false;
+                            angular.forEach(Subsection.tree_Questions, function (Question) {
+                                Question.ctrl_IsExpand = false;
+                            });
+                        }
+                    });
+                });
+                $scope.isAllowEdit = false;
+
+                $scope.showSearchResult = true;
+
+                console.log($scope.Topics);
+            }, function (err) {
+                console.log(err);
+            });
+        }
+    }
 
     $scope.ShowStateTopicsDialog = function (ev, StateInfo, categoryId) {
         //Dialog Control Init
@@ -197,6 +243,16 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                         if (topic.tree_Subsections == undefined) {
                             topic.tree_Subsections = [];
                         }
+
+                        //format tree expand element
+                        angular.forEach(topic.tree_Subsections, function (Subsection) {
+                            if (Subsection) {
+                                Subsection.ctrl_IsExpand = false;
+                                angular.forEach(Subsection.tree_Questions, function (Question) {
+                                    Question.ctrl_IsExpand = false;
+                                });
+                            }
+                        });
                     });
                     console.log($scope.Topics);
                 }
