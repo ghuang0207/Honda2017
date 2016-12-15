@@ -28,8 +28,19 @@
             
             lock.on('authenticated', function (authResult) {
                 localStorage.setItem('id_token', authResult.idToken);
-                localStorage.setItem('profile', authResult.profile);
+                
                 authManager.authenticate();
+
+                // get user profile
+                lock.getProfile(authResult.idToken, function (error, profile) {
+                    if (error) {
+                        console.log(error);
+                        return;
+                    }
+                    debugger;
+                    localStorage.setItem('profile', JSON.stringify(profile));
+                });
+
             }, function (err) {
                 console.log(err);
             });
