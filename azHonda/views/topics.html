@@ -180,6 +180,7 @@
         {{Topic.State.StateName}}
     </md-subheader>
 
+    <!--topic and control buttons-->
     <div layout="column" layout-fill>
         <div layout="row" layout-wrap>
             <div flex="95">
@@ -213,10 +214,19 @@
                 </md-button>
             </div>
         </div>
+
+        <div layout="column">
+            <!-- Topic Text Content -->
+            <div flex style="padding-left:20px;" ng-if="(Topic.ctrl_IsExpand && Topic.tree_Value) || (Topic.ctrl_IsEdit && Topic.tree_Subsections.length == 0)">
+                <div ng-if="!Topic.ctrl_IsEdit" ng-bind-html="Topic.tree_Value"></div>
+                <summernote height="100" ng-init="" ng-if="Topic.ctrl_IsEdit" ng-model="Topic.tree_Value"></summernote>
+            </div>
+        </div>
     </div>
 
+    <!--tree json start - subsections-->
     <div ng-if="Topic.ctrl_IsExpand || Topic.ctrl_IsEdit">
-        <md-subheader class="md-no-sticky Subsection" ng-if="Topic.ctrl_IsEdit">
+        <md-subheader class="md-no-sticky Subsection" ng-if="Topic.ctrl_IsEdit && !Topic.tree_Value">
             Subsections
             <span id="btnAddSubsection" class="glyphicon glyphicon-plus-sign" ng-click="addSubsection(Topic.tree_Subsections)"></span>
         </md-subheader>
@@ -251,7 +261,6 @@
                         <div flex style="padding-left:20px;" ng-if="(Subsection.ctrl_IsExpand && Subsection.tree_Value) || (Topic.ctrl_IsEdit && Subsection.tree_Questions.length == 0)">
                             <div ng-if="!Topic.ctrl_IsEdit" ng-bind-html="Subsection.tree_Value"></div>
                             <summernote height="100" ng-if="Topic.ctrl_IsEdit" ng-model="Subsection.tree_Value"></summernote>
-
                         </div>
                     </div>
 

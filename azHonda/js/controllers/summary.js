@@ -5,7 +5,6 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     $scope.states = [];
     $scope.categories = [];
     $scope.subjects = [];
-    $scope.allTopics = [];
     $scope.Topics = [];
 
     $scope.select_Category = { CategoryId: 1 };
@@ -110,13 +109,29 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                 $scope.Topics = response.data;
                 $scope.Topics = $filter('filter')($scope.Topics, keyword);
                 debugger;
+                // need refactor to under topic list functions
                 $scope.toggleExpand = function (targetObj) {
                     targetObj.ctrl_IsExpand = !targetObj.ctrl_IsExpand
                 }
                 // format for tree
                 angular.forEach($scope.Topics, function (topic) {
                     try {
-                        topic.tree_Subsections = JSON.parse(topic.Content).tree_Subsections;
+                        var topicJSON = JSON.parse(topic.Content)
+                        if (topicJSON.hasOwnProperty('tree_Subsections')) {
+                            topic.tree_Subsections = topicJSON.tree_Subsections;
+                            //format tree expand element
+                            angular.forEach(topic.tree_Subsections, function (Subsection) {
+                                if (Subsection) {
+                                    Subsection.ctrl_IsExpand = false;
+                                    angular.forEach(Subsection.tree_Questions, function (Question) {
+                                        Question.ctrl_IsExpand = false;
+                                    });
+                                }
+                            });
+                        }
+                        if (topicJSON.hasOwnProperty('tree_Value')) {
+                            topic.tree_Value = topicJSON.tree_Value;
+                        }
                     }
                     catch (e) {
                         console.log(e);
@@ -125,16 +140,6 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                     if (topic.tree_Subsections == undefined) {
                         topic.tree_Subsections = [];
                     }
-
-                    //format tree expand element
-                    angular.forEach(topic.tree_Subsections, function (Subsection) {
-                        if (Subsection) {
-                            Subsection.ctrl_IsExpand = false;
-                            angular.forEach(Subsection.tree_Questions, function (Question) {
-                                Question.ctrl_IsExpand = false;
-                            });
-                        }
-                    });
                 });
                 $scope.isAllowEdit = false;
 
@@ -234,7 +239,22 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                     // format for tree
                     angular.forEach($scope.Topics, function (topic) {
                         try {
-                            topic.tree_Subsections = JSON.parse(topic.Content).tree_Subsections;
+                            var topicJSON = JSON.parse(topic.Content)
+                            if (topicJSON.hasOwnProperty('tree_Subsections')) {
+                                topic.tree_Subsections = topicJSON.tree_Subsections;
+                                //format tree expand element
+                                angular.forEach(topic.tree_Subsections, function (Subsection) {
+                                    if (Subsection) {
+                                        Subsection.ctrl_IsExpand = false;
+                                        angular.forEach(Subsection.tree_Questions, function (Question) {
+                                            Question.ctrl_IsExpand = false;
+                                        });
+                                    }
+                                });
+                            }
+                            if (topicJSON.hasOwnProperty('tree_Value')) {
+                                topic.tree_Value = topicJSON.tree_Value;
+                            }
                         }
                         catch (e) {
                             console.log(e);
@@ -243,16 +263,6 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                         if (topic.tree_Subsections == undefined) {
                             topic.tree_Subsections = [];
                         }
-
-                        //format tree expand element
-                        angular.forEach(topic.tree_Subsections, function (Subsection) {
-                            if (Subsection) {
-                                Subsection.ctrl_IsExpand = false;
-                                angular.forEach(Subsection.tree_Questions, function (Question) {
-                                    Question.ctrl_IsExpand = false;
-                                });
-                            }
-                        });
                     });
                     console.log($scope.Topics);
                 }
@@ -327,7 +337,14 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         };
         $scope.SaveChangeTopic = function (changedTopic) {
             changedTopic.OrderNumber = $scope.Topics.indexOf(changedTopic);
-            changedTopic.Content = JSON.stringify({ tree_Subsections: changedTopic.tree_Subsections }) // if need special format before hit Server
+            if (changedTopic.tree_Subsections.length > 0) {
+                //subsections
+                changedTopic.Content = JSON.stringify({ tree_Subsections: changedTopic.tree_Subsections }) // if need special format before hit Server
+            }
+            else {
+                //text
+                changedTopic.Content = JSON.stringify({ tree_Value: changedTopic.tree_Value })
+            }
             SrvData.addUpdateTopic(changedTopic).then(function (response) {
                 debugger;
                 changedTopic.TopicId = response.data.d;
@@ -348,8 +365,18 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                     //replace editable parts with original data pulled from db.
                     try {
                         changedTopic.tree_Subsections = JSON.parse(OriginalTopic.Content).tree_Subsections;
+                        var topicJSON = JSON.parse(OriginalTopic.Content)
+                        if (topicJSON.hasOwnProperty('tree_Subsections')) {
+                            changedTopic.tree_Subsections = topicJSON.tree_Subsections;
+                        }
+                        if (topicJSON.hasOwnProperty('tree_Value')) {
+                            changedTopic.tree_Value = topicJSON.tree_Value;
+                        }
                     }
                     catch (e) {
+                        changedTopic.tree_Subsections = [];
+                    }
+                    if (changedTopic.tree_Subsections == undefined) {
                         changedTopic.tree_Subsections = [];
                     }
                     changedTopic.Subject = OriginalTopic.Subject;
