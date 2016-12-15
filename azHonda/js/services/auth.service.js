@@ -8,9 +8,9 @@
       .module('hondaApp')
       .service('authService', authService);
 
-    authService.$inject = ['lock', 'authManager'];
+    authService.$inject = ['lock', 'authManager', '$location'];
 
-    function authService(lock, authManager) {
+    function authService(lock, authManager, $location) {
 
         function login() {
             lock.show();
@@ -19,6 +19,7 @@
             localStorage.removeItem('id_token');
             localStorage.removeItem('profile');
             authManager.unauthenticate();
+            $location.url("/login");
         }
 
         // Set up the logic for when a user authenticates
