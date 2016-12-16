@@ -4,7 +4,7 @@ var app = angular.module("hondaApp");
 
 
 
-app.controller("MainCtrl", function ($scope, $location, authService, $interval) {
+app.controller("MainCtrl", function ($rootScope, $scope, $location, authService, $interval) {
     $scope.currentNavItem = "Summaries";
     
     var stop;
@@ -13,10 +13,12 @@ app.controller("MainCtrl", function ($scope, $location, authService, $interval) 
         console.log("interval started.");
         var profile = JSON.parse(localStorage.getItem('profile'));
         if (profile != null) {
-            $scope.isAdmin = profile.isadmin;
+            $rootScope.isAdmin = profile.isadmin;
+            $scope.isAdmin = $rootScope.isAdmin;
             stopInterval();
         } else {
-            $scope.isAdmin = null;
+            $rootScope.isAdmin = null;
+            $scope.isAdmin = $rootScope.isAdmin;
         }
 
     }, 1000);

@@ -202,8 +202,9 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
 
 
     // Dialog scope directive ----------------------
-    function DialogController($scope, $mdDialog, Info) {
-
+    function DialogController($rootScope, $scope, $mdDialog, Info) {
+        debugger;
+        $scope.isAdmin = $rootScope.isAdmin;
         $scope.Topics = [];
         $scope.$watch('Topics', function (Topics) {
             $scope.modelAsJson = angular.toJson(Topics, true);

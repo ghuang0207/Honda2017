@@ -189,7 +189,7 @@
                     {{Topic.Subject}}
                 </a>
             </div>
-            <div ng-if="!Topic.ctrl_IsEdit && isAllowEdit" flex="5" layout="row">
+            <div ng-if="isAdmin===true && !Topic.ctrl_IsEdit && isAllowEdit" flex="5" layout="row">
                 <span class="glyphicon glyphicon-edit" ng-click="EditTopic(Topic)" style="margin-left: 3px;"></span>
                 <span class="glyphicon glyphicon-trash" ng-click="DeleteTopic(Topic)" style="margin-left: 5px;"></span>
             </div>

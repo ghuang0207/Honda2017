@@ -50,10 +50,10 @@
             <!--<md-button ng-click="print()">
                 Print Document
             </md-button>-->
-            <md-button ng-if="isAllowEdit" ng-click="NoteObj.ctrl_IsEdit = true">
+            <md-button ng-if="isAdmin===true && isAllowEdit" ng-click="NoteObj.ctrl_IsEdit = true">
                 Edit State Note
             </md-button>
-            <md-button ng-if="isAllowEdit" ng-click="AddNewTopic()">
+            <md-button ng-if="isAdmin===true && isAllowEdit" ng-click="AddNewTopic()">
                 Add Topic
             </md-button>
             <md-button ng-click="CancelDialog()">
