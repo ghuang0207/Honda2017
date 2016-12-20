@@ -31,9 +31,8 @@
     }
 </style>
 
+
 <div>
-    <!--header></header>--> 
-        
     <md-content class="md-padding" style="background-color:transparent; padding-top: 0px;">
         <div layout-fill layout="column">
             <div layout="row" layout-wrap" class="top-banner">
@@ -53,6 +52,7 @@
                 </div>
             </div>
 
+            <!--Main Nav-->
             <div layout-align="center">
                 <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
                     <md-nav-item md-nav-sref="hondaWeb.statutes" name="Statutes" value="Statutes" flex>Statutes</md-nav-item>
@@ -60,17 +60,15 @@
                     <md-nav-item md-nav-sref="hondaWeb.news" name="News" value="News" flex>News</md-nav-item>
                     <md-nav-item md-nav-sref="hondaWeb.profile" name="Profile" value="Profile" flex>My Profile</md-nav-item>
                 </md-nav-bar>
-                <!--<md-input-container md-no-float class="md-block" style="padding-top: 10px;">
-                    <input placeholder="Search full site" ng-model="user.title">
-                </md-input-container>-->
             </div>
             
+            <!--page title-->
             <div style="padding:10px 5px; font-weight:bold;" flex="5">
                 <h5>{{currentNavItem}}</h5>
             </div>
 
+            <!--page-->
             <ui-view></ui-view>
         </div>
     </md-content>
-    <!--footer></footer>-->
 </div>

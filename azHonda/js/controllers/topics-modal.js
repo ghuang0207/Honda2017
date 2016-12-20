@@ -1,4 +1,12 @@
 ﻿
+'use strict';
+var app = angular.module("hondaApp");
+
+app.controller("TopicCtrl", function ($scope, $mdDialog, $sce, SrvData, $filter) {
+
+});
+
+
 function cleanWordPaste(in_word_text) {
     var tmp = document.createElement("DIV");
     tmp.innerHTML = in_word_text;

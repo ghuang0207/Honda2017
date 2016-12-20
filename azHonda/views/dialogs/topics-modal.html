@@ -11,6 +11,7 @@
         <md-dialog-content>
             <div class="md-dialog-content" style="text-align:left">
                 
+                <!--State Note section-->
                 <div layout="column" layout-fill ng-if="NoteObj">
                     <div layout="row" layout-wrap flex="95">
                         <div ng-if="!NoteObj.ctrl_IsEdit" ng-bind-html="NoteObj.Note"></div>
@@ -19,9 +20,6 @@
                         <md-input-container class="md-block" ng-if="NoteObj.ctrl_IsEdit" flex="90">
                             <summernote height="100" ng-if="NoteObj.ctrl_IsEdit" ng-model="NoteObj.Note"></summernote>
                         </md-input-container>
-                        <!--<md-input-container class="md-block" ng-if="NoteObj.ctrl_IsEdit" flex="90">
-                            <trix-editor angular-trix ng-model="NoteObj.Note"></trix-editor>
-                        </md-input-container>-->
 
                         <div ng-if="NoteObj.ctrl_IsEdit" flex="10">
                             <md-button class="md-fab md-mini" aria-label="Save Note" ng-click="SaveChangeNote()">
@@ -40,6 +38,7 @@
                     </div>
                 </div>
 
+                <!--Topic List section-->
                 <div ng-include="'views/topics.html'"></div>
 
             </div>

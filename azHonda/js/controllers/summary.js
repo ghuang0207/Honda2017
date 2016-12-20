@@ -57,7 +57,6 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         }
     };
 
-
     /*// multi-state by topics controls
     
     $scope.toggle = function (item, list) {
@@ -96,7 +95,8 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
 
     */
 
-    $scope.toggleSearchResultView = function () {
+
+    $scope.hideSearchResultView = function () {
         $scope.showSearchResult = false;
     }
 

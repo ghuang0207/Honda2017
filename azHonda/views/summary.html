@@ -2,9 +2,9 @@
 <div class="container-fluid" style="max-width:85vw;padding:0px !important"> <!--ng-controller="MainCtrl"-->
 
     <md-content>
-        <md-tabs md-border-bottom style="min-height: 500px;">
-            <md-tab label="{{c.Category}}" ng-repeat="c in categories">
-                <md-content class="md-padding" layout="column" layout-fill>
+        <md-tabs md-border-bottom style="min-height: 600px;">
+            <md-tab label="{{c.Category}}" ng-repeat="c in categories" md-on-select="hideSearchResultView()">
+                <md-content class="md-padding" style="min-height: 530px;" layout="column" layout-fill>
                     <div layout="row" flex="15">
                         <div flex="70">
                             <h6 class="md-display">{{c.Category}}</h6>
@@ -18,7 +18,7 @@
                     </div>
                     <!--tab content-->
                     <div layout="column" layout-wrap ng-if="!showSearchResult" style="max-height: 500px;">
-                        <div flex="40" ng-repeat="s in states">
+                        <div ng-repeat="s in states">
                             <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStateTopicsDialog($event, s, c.CategoryId)">
                                 {{s.StateName}}
                             </md-button>
@@ -27,7 +27,7 @@
                     <!-- search results-->
                     <div layout="column" ng-if="showSearchResult">
                         <div flex="5">
-                            <a ng-click="toggleSearchResultView()">Back to State List</a>
+                            <a ng-click="hideSearchResultView()">Back to State List</a>
                         </div>
                         <div flex ng-include="'views/topics.html'"></div>
                     </div>
@@ -35,7 +35,7 @@
                 </md-content>
             </md-tab>
 
-            <md-tab label="Multi-State by Topic">
+            <md-tab label="Multi-State by Topic" md-on-select="hideSearchResultView()">
                 <md-content class="md-padding">
 
                     <h6 class="md-display">Multi-State by Topic</h6>

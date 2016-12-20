@@ -1,20 +1,18 @@
 ﻿
 <style>
+    /* for summernote insert link styles */
     .modal-dialog {
         z-index: 99999 !important;
     }
-
-        .modal-dialog label {
-            color: black;
-        }
-
+    .modal-dialog label {
+        color: black;
+    }
     .note-link-text .form-control {
         color: black;
     }
-
-        .note-link-text .form-control input {
-            color: black;
-        }
+   .note-link-text .form-control input {
+        color: black;
+    }
     /*disapble insert link backdrop*/
     .modal-backdrop, .modal-backdrop.in, div.note-dropzone-message, div.note-dropzone {
         display: none !important;
@@ -149,9 +147,7 @@
         margin-left: 5px;
     }
 
-    /**
-    * delete sign positioning
-    */
+    /* delete sign positioning */
     .typesDemo .deleteSign {
         cursor: pointer;
         position: absolute;
@@ -180,7 +176,7 @@
         {{Topic.State.StateName}}
     </md-subheader>
 
-    <!--topic and control buttons-->
+    <!--topic level elements and control buttons-->
     <div layout="column" layout-fill>
         <div layout="row" layout-wrap>
             <div flex="95">
@@ -302,9 +298,6 @@
                                             <div style="padding: 5px 2px; margin-left: 10px;" ng-if="!Topic.ctrl_IsEdit" ng-bind-html="Question.tree_Value"></div>
                                             <!--<div summernote ng-model="Question.Value"></div>-->
                                             <summernote height="100" ng-if="Topic.ctrl_IsEdit" ng-model="Question.tree_Value"></summernote>
-                                            <!--<md-input-container class="md-block" ng-if="Topic.ctrl_IsEdit" flex="90">
-                                                <trix-editor angular-trix ng-model="Question.tree_Value"></trix-editor>
-                                            </md-input-container>-->
                                         </div>
                                     </div>
                                 </div>

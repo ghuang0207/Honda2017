@@ -20,15 +20,18 @@ var app = angular.module("hondaApp", [
     .config(['$stateProvider', '$urlRouterProvider', 'lockProvider', function ($stateProvider, $urlRouterProvider, lockProvider) {
 
         $stateProvider
-        .state('hondaWeb', { //base page
+        .state('hondaWeb', { //base page: Top Banner, Navigation, uiview (for child page)
             url: '',
             controller: 'MainCtrl',
             templateUrl: 'views/main.html'
         })
-        .state('hondaWeb.home', {
+        .state('hondaWeb.home', { //Summary page: Marine/power Equipment/Multi-state by Topic
+            //url: '/home',
+            //controller: 'MainCtrl',
+            //templateUrl: 'views/home.html'
             url: '/home',
-            controller: 'MainCtrl',
-            templateUrl: 'views/home.html'
+            controller: 'SummaryCtrl',
+            templateUrl: 'views/summary.html'
         })
         .state('hondaWeb.statutes', {
             url: '/statutes',
@@ -45,7 +48,8 @@ var app = angular.module("hondaApp", [
             controller: '',
             templateUrl: 'views/profile.html'
         })
-        .state('login', {
+
+        .state('login', { //Login page
             url: '/login',
             controller: 'LoginController',
             templateUrl: 'views/login.html',
