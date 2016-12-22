@@ -86,6 +86,14 @@
                     headers: { 'Content-Type': 'application/json' }
                 });
             },
+            SearchTopics: function (Search) {
+                return $http(
+                {
+                    method: 'Get',
+                    url: 'wsServices/wsSrvTools.asmx/GetTopic_by_TopicId?topicId=' + topicId,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            },
             //Note
             GetNote_by_State: function (stateCode, categoryId) {
                 return $http(
