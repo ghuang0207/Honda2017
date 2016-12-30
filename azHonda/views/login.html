@@ -1,36 +1,96 @@
-﻿
+﻿<style>
+    .login-panel-left {
+        background: #f1f1f1 url(../images/bg_pattern.png);
+        padding: 15px;
+        overflow: scroll;
+        overflow-x: hidden;
+        max-height: 400px;
+    }
+    .login-panel-right-wrapper {
+        background: linear-gradient(#3683b1,#204e6a);
+        background-image: linear-gradient(rgb(54, 131, 177), rgb(32, 78, 106));
+        overflow-x: hidden;
+        overflow-y: hidden;
+        padding: 0px;
+    }
+    .login-panel-right {
+        background-image: url(../images/bg_pattern.png);
+        padding: 80px 30px;
+        height: 100%;
+        width: 100%;
+    }
+</style>
+
+
 <div layout ="row" layout-align="center center" style="height:100vh;width:100vw;">
     <div layout="column" layout-align="center center">
-        <md-content style="width:80vw;background-color:rgba(0, 51, 102, 0.2)" layout="row">
-            <div style="padding-top: 250px" flex="30">
-                <h2 class="text-center"><img width="250" height="80" src="../images/Foley-Hoag-Logo-WWH_4_2015.png"></h2>
-                <div class="text-center">
-                    <button type="button" class="btn btn-primary" ng-click="vm.authService.login()">Log In</button>
-                </div>
+        <md-content style="width:80vw; height: 500px" layout="row">
+            <div class="login-panel-left" flex="60">
+                <h5>NOTICE</h5>
+                <p>
+                    The materials on this website are intended to provide a brief summary of the state laws
+
+                    regulating the relationships between the manufacturers of certain products and dealers or
+
+                    distributors. These materials are not exhaustive and should not be construed as legal advice or
+
+                    opinion with respect to any specific facts or circumstances. NO LEGAL ACTION SHOULD BE
+
+                    UNDERTAKEN WITHOUT CONSULTING HONDA NORTH AMERICA LEGAL DEPARTMENT (“HNA
+
+                    Legal”). Website users must consult with HNA Legal before initiating termination of a dealer or
+
+                    distributor, applying chargebacks against a dealer or distributor for any incentive or warranty
+
+                    payments made to the dealer or distributor, or taking any other legal action against a dealer or
+
+                    distributor.
+                </p>
+                <p>
+                    The materials on this website are intended to provide a brief summary of the state laws
+
+                    regulating the relationships between the manufacturers of certain products and dealers or
+
+                    distributors. These materials are not exhaustive and should not be construed as legal advice or
+
+                    opinion with respect to any specific facts or circumstances. NO LEGAL ACTION SHOULD BE
+
+                    UNDERTAKEN WITHOUT CONSULTING HONDA NORTH AMERICA LEGAL DEPARTMENT (“HNA
+
+                    Legal”). Website users must consult with HNA Legal before initiating termination of a dealer or
+
+                    distributor, applying chargebacks against a dealer or distributor for any incentive or warranty
+
+                    payments made to the dealer or distributor, or taking any other legal action against a dealer or
+
+                    distributor.
+                </p>
+                <p>
+                    The information on this website is subject to change at any time without notice. While the
+
+                    material is reviewed regularly for updates, new case law and legislative materials may render
+
+                    some of the material inoperative or inapplicable, and Foley Hoag LLP makes no promise that the
+
+                    information contained on this website is current and complete.
+                </p>
+                <p>
+                    This website may contain links to statutes or other internet resources. These links are not
+
+                    intended to be referrals to, or endorsements of, any of the linked entities or the information that
+
+                    they make available. Foley Hoag LLP is not sponsored by, or affiliated with, any of the entities
+
+                    associated with any of the links contained on this website.
+                </p>
             </div>
-            <div style="padding: 10px; font-weight:bold; background-color:rgba(255, 255, 255, 0.7)" flex>
-                <h5>AHM Marine and Power Equipment Website Portal Disclaimer</h5>
-                <p>
-                    The materials on this website are intended to provide a brief summary of the state laws regulating the relationships between the manufacturers of certain products and dealers or distributors.  
-                    These materials are not exhaustive and should not be construed as legal advice or opinion with respect to any specific facts or circumstances. 
-                    NO LEGAL ACTION SHOULD BE UNDERTAKEN WITHOUT CONSULTING HONDA NORTH AMERICA LEGAL DEPARTMENT (“HNA Legal”).  
-                    Survey users must consult with HNA Legal before initiating termination of a dealer or distributor, chargebacks against a dealer or distributor for any incentive or warranty payments made to the dealer or distributor, or taking any other legal action against a dealer or distributor.   
-                    All substantive legal questions should be directed to the appropriate attorney at HNA Legal.    
-                </p>
-                <p>
-                    Please note that one state included in the marine survey, Wisconsin, has not enacted a statute that exclusively addresses dealers of marine products.  
-                    However, Wisconsin has enacted a broad, well-known statute that governs dealers generally.  
-                    Although the Wisconsin statute has been summarized and included in the marine survey, please note that no other general dealer statutes have been included.
-                </p>
-                <p>
-                    The information on this website is subject to change at any time without notice.  
-                    While the material is reviewed regularly for updates, new case law and legislative materials may render some of the material inoperative or inapplicable, and Foley Hoag makes no promise that the information contained on it is current and complete.
-                </p>
-                <p>
-                    This website may contain links to statutes or other internet resources.  
-                    These links are not intended to be referrals to, or endorsements of, any of the linked entities or the information that they make available.  
-                    Foley Hoag is not sponsored by or affiliated with any of the entities associated with any of the links contained on this website.  
-                </p>
+            <div class="login-panel-right-wrapper" flex>
+                <div class="login-panel-right">
+                    <div class="text-center"><img width="243" height="53" src="../images/logo_footer.png"></div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary" ng-click="vm.authService.login()">Log In</button>
+                    </div>
+                </div>
             </div>
         </md-content>
     </div>

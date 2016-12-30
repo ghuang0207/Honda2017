@@ -40,9 +40,9 @@ app.controller("MainCtrl", function ($rootScope, $scope, $location, authService,
                 case "Summaries":
                     $location.url("/home");
                     break;
-                case "News":
-                    $location.url("/news");
-                    break;
+                //case "News":
+                  //  $location.url("/news");
+                    //break;
                 case "Profile":
                     $location.url("/profile");
                     break;

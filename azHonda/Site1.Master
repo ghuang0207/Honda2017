@@ -72,7 +72,7 @@
 
     <style>
         .main-form {
-            background-image:url(images/background.jpg);
+            background-image: url(images/background.jpg);
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -88,14 +88,20 @@
             background-size: cover;
             background-position: center top;*/ 
             width:100vw;
-            height:100vh;
             z-index: 3;
+            overflow: visible;
         }
         .footer-top {
             background: #262626 url(images/bg_pattern.png)
         }
+        .footer-top-content{
+            width: 80vw;
+            color: white;
+            margin-left: auto;
+            margin-right: auto;
+        }
         .footer-bottom {
-            background: rgba(108,122,123,.95) url(images/bg_pattern.png)
+            background: rgba(108,122,123,.95) url(images/bg_pattern.png);
         }
     </style>
 </head>
@@ -107,12 +113,12 @@
             
         <%--footer--%>
         <div layout="column" class="footer">
-            <div class="footer-top" flex="20" layout="row">
-                <div layout="column" flex-offset="5">
-                    <div flex>
+            <div class="footer-top" flex="19" layout="row">
+                <div class="footer-top-content" layout="column" flex-offset="5">
+                    <div style="padding-top: 2px;" flex>
                         <img width="243" height="53" src="images/logo_footer.png"/>
                     </div>
-                    <div flex>
+                    <div style="padding-left: 60px; font-size: smaller;" flex>
                         Attorney advertising. Prior results do not guarantee a similar outcome. 
                         <br />Copyright © 2016 Foley Hoag LLP. All rights reserved.
                     </div>
@@ -120,7 +126,7 @@
                 
             </div>
             <div class="footer-bottom" flex>
-                <%--<div ng-include="'views/footer-bottom.html'"></div>--%>
+                <div ng-include="'views/footer-bottom.html'"></div>
             </div>
         </div>
     </div>

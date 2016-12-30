@@ -1,354 +1,391 @@
 ﻿<style>
-    ol,ul{list-style:none}
-    .footer-bottom p,.footer-bottom a{
-        color:#fff;text-shadow:1px 1px 0 #5d6868;font-family:'Myriad W01 Regular',Arial,Helvetica,sans-serif;
+    ol,ul{
+        list-style:none;
+        margin-left: 5px;
+        padding-left: 5px;
     }
-    .footer-links{float:right;margin:5px 42px 0 0}.footer-links>li{float:left;margin-left:85px}.footer-links>li.first{margin-left:0}.footer-links>li a.open-footer-link{font:16px/20px 'Oswald Regular',Arial,Helvetica,sans-serif}.footer-links>li>ul>li>ul{margin:5px 0 11px 12px}.footer-links>li>ul>li>ul li{font-size:12px;margin-bottom:0;line-height:16px}footer-links>li>ul>li>ul li a{display:block}.box-address{float:none;width:215px;font-size:12px;margin:4px 0 0 0}.box-address>div{float:left}.box-address>div{line-height:18px;margin-bottom:30px}.box-address a.title{display:block;font:20px/24px 'Oswald Regular',Arial,Helvetica,sans-serif;text-transform:uppercase}.box-address .street-address{display:block}.box-address ul li{float:left;color:#fff;margin-right:3px}.box-address ul li a{color:#fff;float:left;margin-right:3px}.home .content{background:none;padding:30px 0 20px 0}.wrapper-feature{background:url(../images/common/women_img.png) no-repeat top center;width:100%;height:612px}.home-feature{width:680px;margin:0 auto;padding:112px 0 0 0;position:relative;height:612px}.wrapper-feature-left{background:#fbfbfb;background:-moz-linear-gradient(top,#fbfbfb 0%,#e5e5e5 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#fbfbfb),color-stop(100%,#e5e5e5));background:-webkit-linear-gradient(top,#fbfbfb 0%,#e5e5e5 100%);background:-o-linear-gradient(top,#fbfbfb 0%,#e5e5e5 100%);background:-ms-linear-gradient(top,#fbfbfb 0%,#e5e5e5 100%);background:linear-gradient(to bottom,#fbfbfb 0%,#e5e5e5 100%);-pie-background:linear-gradient(#fbfbfb 0%,#e5e5e5 100%);position:relative;behavior:url(_ui/js/PIE.htc);width:50%;float:left;height:415px}.left-hand{width:97px;height:112px;position:absolute;bottom:8px;z-index:100}a.link-open{display:none}a.open-news{display:none}.feature-left{background:url(../images/common/bg_pattern.png);padding:30px 0 0 40px;height:385px}.feature-left>div{margin:15px 0 0 3px}.feature-left label{color:#ba771c;font:17px/30px 'Oswald Bold',Arial,Helvetica,sans-serif;text-transform:uppercase;display:block}.feature-left>div>div{margin-bottom:10px}.feature-left div div input[type=text]{height:35px;padding:0 10px 0 15px;width:231px}.ie8 .feature-left div div input[type=text]{padding-top:8px;height:27px}.feature-left div input.submit-search{margin:10px 38px 0 0}.wrapper-feature-right{width:50%;background:#3683b1;background:-webkit-gradient(linear,0 0,0 bottom,from(#3683b1),to(#204e6a));background:-webkit-linear-gradient(#3683b1,#204e6a);background:-moz-linear-gradient(#3683b1,#204e6a);background:-ms-linear-gradient(#3683b1,#204e6a);background:-o-linear-gradient(#3683b1,#204e6a);background:linear-gradient(#3683b1,#204e6a);-pie-background:linear-gradient(#3683b1,#204e6a);position:relative;behavior:url(_ui/js/PIE.htc);float:left;height:415px}.right-hand{width:100px;height:128px;position:absolute;bottom:-2px;z-index:100}.feature-right{background:url(../images/common/bg_pattern.png);padding:30px 40px 0 35px;height:385px;position:relative}.feature-right h2{color:#fff;margin-bottom:5px}.feature-right p{margin-bottom:15px}.feature-right p a{color:#57dbe6;font:16px/22px 'Myriad W01 Bd',Arial,Helvetica,sans-serif}.feature-right p a.link-more{color:#fff;margin-bottom:0;display:block}.feature-right a.link-view-all{position:absolute;bottom:40px;margin-left:2px;font:18px 'Myriad W01 Bd',Arial,Helvetica,sans-serif;text-transform:uppercase;color:#fff;margin-bottom:0}.slider-home{height:113px;width:100%;margin-bottom:10px}.slider-home h3{font-size:20px;color:#404040;font-family:'Oswald Bold',Arial,Helvetica,sans-serif;padding:15px;text-transform:uppercase}.slider-industry{background:#fff url(../images/common/bg_pattern_light.png);width:auto;position:relative;height:87px;-webkit-box-shadow:1px 1px 1px #c1c1c1;-moz-box-shadow:1px 1px 1px #c1c1c1;box-shadow:1px 1px 1px #c1c1c1;position:relative;behavior:url(_ui/js/PIE.htc)}.ie8 .slider-industry{box-shadow:none;-webkit-box-shadow:none;-moz-box-shadow:none}.slider-industry{width:100%}.slider-industry .slides{padding:0;position:relative}.slider-industry .slides li{position:relative;display:none;height:87px}.slider-industry .slides li a{width:100%;float:left;border-right:1px solid #c5c5c5;-webkit-box-shadow:1px 0 0 #fafafa;-moz-box-shadow:1px 0 0 #fafafa;box-shadow:1px 0 0 #fafafa;behavior:url(_ui/js/PIE.htc);margin:10px 0 0 0;height:67px}.slider-industry .slides figure img{float:left;margin:10px 5px 0 5px}.slider-industry .slides figure figcaption{display:inline-block;color:#767676;text-transform:uppercase;font:17px/22px 'Oswald Regular',Arial,Helvetica,sans-serif;margin:15px 0 0 0}.slider-industry .slides figure figcaption:hover{color:#0077be}.slider-industry .flex-direction-nav{position:relative}.slider-industry .flex-direction-nav li{position:relative}.slider-industry .flex-direction-nav li .flex-prev{position:absolute;background:url(../images/common/ico.png) 0 -111px;width:26px;height:52px;left:-25px;top:-70px}.slider-industry .flex-direction-nav li .flex-next{position:absolute;background:url(../images/common/ico.png) 0 -163px;width:26px;height:52px;right:-25px;top:-70px}.box-events{width:50%;float:left}.container-events{position:relative}.box-events h2{margin:0 0 5px 0}a.close-event{position:absolute;right:5px;top:5px;display:none;background:url(../images/common/ico.png) 0 -215px;width:9px;height:8px}.box-events .container-events{clear:both}.box-events .link-all-events{font:18px/20px 'Myriad W01 Bd',Arial,Helvetica,sans-serif;float:right;margin:23px 20px 0 0}.box-events .container-events .events{-webkit-box-shadow:1px 1px 3px #a9a9a9;-moz-box-shadow:1px 1px 3px #a9a9a9;box-shadow:1px 1px 3px #a9a9a9;position:relative;behavior:url(_ui/js/PIE.htc);width:233px;float:left;background:#ececec;margin-bottom:17px}.box-events .container-events .fullWidthEvents{width:97.8%}.box-events .container-events .events:hover a.close-event{display:block;z-index:100}                                                                                                                                                                                                              .utility-toolbar li.first .tooltip{opacity:0;position:absolute;left:0;top:32px;margin-left:0;z-index:99;background:url(../images/common/toolTipArrow.png) no-repeat 13px 0;-webkit-transition:all .5s ease-in-out;-moz-transition:all .5s ease-in-out;-ms-transition:all .5s ease-in-out;-o-transition:all .5s ease-in-out;transition:all .5s ease-in-out} 
+    .footer-bottom{
+        font-size: smaller;
+    }
+    .footer-bottom p,.footer-bottom a{
+        color:#fff;
+        text-shadow:1px 1px 0 #5d6868;
+        font-family:'Myriad W01 Regular',Arial,Helvetica,sans-serif;
+    }
+    .footer-bottom-content{
+        width: 80vw;
+        padding: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    a.open-footer-link{
+        font: 16px/20px 'Oswald Regular',Arial,Helvetica,sans-serif;
+        font-weight: bold;
+    }
+    a.title{
+        font: 20px/24px 'Oswald Regular',Arial,Helvetica,sans-serif;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .vcard{
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+    .vcard > p{
+        padding: 0px;
+        margin: 0px;
+    }
+    .street-address{
+        display: block;
+    }
 </style>
 
-<div class="footer-bottom">
-    <ul class="footer-links clearfix">
+<div class="footer-bottom" layout="row" layout-wrap>
+    <div class="footer-bottom-content" layout="row" layout-wrap>
+        <div class="box-address" flex="25">
+            <div>
+                <div class="vcard">
+                    <a href="/our-firm/offices/boston" class="title">
+                        Boston
+                    </a>
+                    <p class="adr">
+                        <span class="street-address">
+                            Seaport West
+                        </span>
+                        <span class="street-address">
+                            155 Seaport Boulevard
+                        </span>
+                        <span class="street-address">
 
-        <li class="first">
-            <ul>
-                <li>
-                    <a class="open-footer-link" href="/people" target="">Our People</a>
-
-                    <ul></ul>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <a class="open-footer-link" href="/industries" target="">Industries</a>
-
-                    <ul>
-                        <li>
-                            <a class="" href="/industries/education" target="">Education</a>
-                        </li>
-                        <li>
-                            <a class="" href="/industries/energy-and-cleantech" target="">Energy &amp; Cleantech</a>
-                        </li>
-                        <li>
-                            <a class="" href="/industries/healthcare" target="">Healthcare</a>
-                        </li>
-                        <li>
-                            <a class="" href="/industries/investment-management" target="">Investment Management</a>
-                        </li>
-                        <li>
-                            <a class="" href="/industries/life-sciences" target="">Life Sciences</a>
-                        </li>
-                        <li>
-                            <a class="" href="/industries/professional-services" target="">Professional Services</a>
-                        </li>
-                        <li>
-                            <a class="" href="/industries/sovereign-states" target="">Sovereign States</a>
-                        </li>
-                        <li>
-                            <a class="" href="/industries/technology" target="">Technology</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <a class="open-footer-link" href="/practices" target="">Practices</a>
-
-                    <ul>
-                        <li>
-                            <a class="" href="/practices#by-alphabet" target="">Practices A-Z</a>
-                        </li>
-                        <li>
-                            <a class="" href="/practices#by-category" target="">Practices by Category</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-
-        <li>
-            <ul>
-                <li>
-                    <a class="open-footer-link" href="/publications" target="">Publications</a>
-
-                    <ul>
-                        <li>
-                            <a class="" href="/publications/alerts-and-updates" target="">Alerts &amp; Updates</a>
-                        </li>
-                        <li>
-                            <a class="" href="/publications/ebooks-and-white-papers" target="">eBooks &amp; White Papers</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <a class="open-footer-link" href="/news-and-events" target="">News &amp; Events</a>
-
-                    <ul>
-                        <li>
-                            <a class="" href="/news-and-events/news" target="">News</a>
-                        </li>
-                        <li>
-                            <a class="" href="/news-and-events/events" target="">Events</a>
-                        </li>
-                        <li>
-                            <a class="" href="/news-and-events/media-center" target="">Media Center</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <a class="open-footer-link" href="/publications/blogs" target="">Blogs</a>
-
-                    <ul>
-                        <li>
-                            <a class="" href="http://www.csrandthelaw.com/" target="_blank">Corporate Social Responsibility and the Law</a>
-                        </li>
-                        <li>
-                            <a class="" href="http://www.energycleantechcounsel.com" target="_blank">Energy &amp; Cleantech Counsel</a>
-                        </li>
-                        <li>
-                            <a class="" href="http://www.infrastructureandconstructionlaw.com/" target="_blank">Infrastructure &amp; Construction Law</a>
-                        </li>
-                        <li>
-                            <a class="" href="http://www.lawandenvironment.com/" target="_blank">Law &amp; the Environment</a>
-                        </li>
-                        <li>
-                            <a class="" href="http://www.masslaborandemploymentlaw.com/" target="_blank">Massachusetts Labor &amp; Employment Law</a>
-                        </li>
-                        <li>
-                            <a class="" href="http://www.massachusettsnoncompetelaw.com/" target="_blank">Massachusetts Noncompete Law</a>
-                        </li>
-                        <li>
-                            <a class="" href="http://www.medicaidandthelaw.com/" target="_blank">Medicaid &amp; the Law</a>
-                        </li>
-                        <li>
-                            <a class="" href="http://www.ptab-blog.com/" target="">PTAB Blog</a>
-                        </li>
-                        <li>
-                            <a class="" href="http://www.securityprivacyandthelaw.com/" target="_blank">Security, Privacy and the Law</a>
-                        </li>
-                        <li>
-                            <a class="" href="http://www.stateaginsights.com/" target="_blank">State AG Insights</a>
-                        </li>
-                        <li>
-                            <a class="" href="http://www.trademarkandcopyrightlawblog.com/" target="_blank">Trademark &amp; Copyright Law</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-
-        <li>
-            <ul>
-                <li>
-                    <a class="open-footer-link" href="/careers" target="">Careers</a>
-
-                    <ul>
-                        <li>
-                            <a class="" href="/careers/lawyers" target="">Lawyers</a>
-                        </li>
-                        <li>
-                            <a class="" href="/careers/technology-specialists" target="">Technology Specialists</a>
-                        </li>
-                        <li>
-                            <a class="" href="/careers/paralegals" target="">Paralegals</a>
-                        </li>
-                        <li>
-                            <a class="" href="/careers/business-professionals" target="">Business Professionals</a>
-                        </li>
-                        <li>
-                            <a class="" href="/careers/current-openings" target="">Current Openings</a>
-                        </li>
-                        <li>
-                            <a class="" href="/practices/litigation/pro-bono" target="">Pro Bono</a>
-                        </li>
-                        <li>
-                            <a class="" href="http://recruiting.foleyhoag.com/" target="_blank">Summer Program</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <a class="open-footer-link" href="/our-firm" target="">Our Firm</a>
-
-                    <ul>
-                        <li>
-                            <a class="" href="/our-firm/history" target="">History</a>
-                        </li>
-                        <li>
-                            <a class="" href="/our-firm/management-team" target="">Management Team</a>
-                        </li>
-                        <li>
-                            <a class="" href="/practices/litigation/pro-bono" target="">Pro Bono</a>
-                        </li>
-                        <li>
-                            <a class="" href="/our-firm/technology-and-entrepreneurship" target="">Technology &amp; Entrepreneurship</a>
-                        </li>
-                        <li>
-                            <a class="" href="/our-firm/lex-mundi" target="">Lex Mundi</a>
-                        </li>
-                        <li>
-                            <a class="" href="/our-firm/the-foley-hoag-foundation" target="">The Foley Hoag Foundation</a>
-                        </li>
-                        <li>
-                            <a class="" href="/our-firm/offices" target="">Offices</a>
-                        </li>
-                        <li>
-                            <a class="" href="/our-firm/rankings-and-accolades" target="">Rankings and Accolades</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
-
-    <div class="box-address clearfix">
-        <div>
-            <div class="vcard">
-                <a href="/our-firm/offices/boston" class="title">
-                    Boston
-                </a>
-                <p class="adr">
-                    <span class="street-address">
-                        Seaport West
-                    </span>
-                    <span class="street-address">
-                        155 Seaport Boulevard
-                    </span>
-                    <span class="street-address">
-
-                    </span>
-                    <span class="locality">Boston</span>, <span class="region">MA US</span>
-                    <span class="postal-code">
-                        02210-2600
-                    </span>
-                </p>
-                <p>
-                    tel: <span class="tel">
-                        617.832.1000
-                    </span>
-                </p>
-                <p>
-                    fax: <span class="fax">
-                        617.832.7000
-                    </span>
-                </p>
+                        </span>
+                        <span class="locality">Boston</span>, <span class="region">MA US</span>
+                        <span class="postal-code">
+                            02210-2600
+                        </span>
+                    </p>
+                    <p>
+                        tel: <span class="tel">
+                            617.832.1000
+                        </span>
+                    </p>
+                    <p>
+                        fax: <span class="fax">
+                            617.832.7000
+                        </span>
+                    </p>
+                    <div layout="row">
+                        <div flex><a href="/our-firm/offices/boston/directions">Directions &raquo;</a>|</div>
+                        <div flex><a href="/our-firm/offices/boston">Details &raquo;</a></div>
+                    </div>
+                </div>
             </div>
-            <ul>
-                <li><a href="/our-firm/offices/boston/directions">Directions &raquo;</a>|</li>
-                <li><a href="/our-firm/offices/boston">Details &raquo;</a></li>
-            </ul>
+            <div>
+                <div class="vcard">
+                    <a href="/our-firm/offices/new-york" class="title">
+                        New York
+                    </a>
+                    <p class="adr">
+                        <span class="street-address">
+                            1540 Broadway
+                        </span>
+                        <span class="street-address">
+                            23rd Floor
+                        </span>
+                        <span class="street-address">
+
+                        </span>
+                        <span class="locality">New York</span>, <span class="region">NY US</span>
+                        <span class="postal-code">
+                            10036
+                        </span>
+                    </p>
+                    <p>
+                        tel: <span class="tel">
+                            646.927.5500
+                        </span>
+                    </p>
+                    <p>
+                        fax: <span class="fax">
+                            646.927.5599
+                        </span>
+                    </p>
+
+                    <div layout="row">
+                        <div flex><a href="/our-firm/offices/new-york/directions">Directions &raquo;</a>|</div>
+                        <div flex><a href="/our-firm/offices/new-york">Details &raquo;</a></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="vcard">
+                    <a href="/our-firm/offices/paris" class="title">
+                        Paris
+                    </a>
+                    <p class="adr">
+                        <span class="street-address">
+                            153 rue du Faubourg Saint-Honor&#233;
+                        </span>
+                        <span class="street-address">
+
+                        </span>
+                        <span class="street-address">
+
+                        </span>
+                        <span class="locality">75008 Paris</span>, <span class="region">France </span>
+                        <span class="postal-code">
+
+                        </span>
+                    </p>
+                    <p>
+                        tel: <span class="tel">
+                            +33.01.70.36.61.30
+                        </span>
+                    </p>
+                    <p>
+                        fax: <span class="fax">
+                            +33.01.70.36.61.31
+                        </span>
+                    </p>
+                    <div layout="row">
+                        <div flex><a href="/our-firm/offices/paris/directions">Directions &raquo;</a>|</div>
+                        <div flex><a href="/our-firm/offices/paris">Details &raquo;</a></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="vcard">
+                    <a href="/our-firm/offices/washington-dc" class="title">
+                        Washington, D.C.
+                    </a>
+                    <p class="adr">
+                        <span class="street-address">
+                            1717 K Street, N.W.
+                        </span>
+                        <span class="street-address">
+
+                        </span>
+                        <span class="street-address">
+
+                        </span>
+                        <span class="locality">Washington</span>, <span class="region">D.C. US</span>
+                        <span class="postal-code">
+                            20006-5350
+                        </span>
+                    </p>
+                    <p>
+                        tel: <span class="tel">
+                            202.223.1200
+                        </span>
+                    </p>
+                    <p>
+                        fax: <span class="fax">
+                            202.785.6687
+                        </span>
+                    </p>
+                    <div layout="row">
+                        <div flex><a href="/our-firm/offices/washington-dc/directions">Directions &raquo;</a>|</div>
+                        <div flex><a href="/our-firm/offices/washington-dc">Details &raquo;</a></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <div class="vcard">
-                <a href="/our-firm/offices/new-york" class="title">
-                    New York
-                </a>
-                <p class="adr">
-                    <span class="street-address">
-                        1540 Broadway
-                    </span>
-                    <span class="street-address">
-                        23rd Floor
-                    </span>
-                    <span class="street-address">
 
-                    </span>
-                    <span class="locality">New York</span>, <span class="region">NY US</span>
-                    <span class="postal-code">
-                        10036
-                    </span>
-                </p>
-                <p>
-                    tel: <span class="tel">
-                        646.927.5500
-                    </span>
-                </p>
-                <p>
-                    fax: <span class="fax">
-                        646.927.5599
-                    </span>
-                </p>
+        <div class="footer-links" flex layout="row">
+            <div flex>
+                <ul>
+                    <li>
+                        <a class="open-footer-link" href="/people" target="">Our People</a>
+
+                        <ul></ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a class="open-footer-link" href="/industries" target="">Industries</a>
+
+                        <ul>
+                            <li>
+                                <a class="" href="/industries/education" target="">Education</a>
+                            </li>
+                            <li>
+                                <a class="" href="/industries/energy-and-cleantech" target="">Energy &amp; Cleantech</a>
+                            </li>
+                            <li>
+                                <a class="" href="/industries/healthcare" target="">Healthcare</a>
+                            </li>
+                            <li>
+                                <a class="" href="/industries/investment-management" target="">Investment Management</a>
+                            </li>
+                            <li>
+                                <a class="" href="/industries/life-sciences" target="">Life Sciences</a>
+                            </li>
+                            <li>
+                                <a class="" href="/industries/professional-services" target="">Professional Services</a>
+                            </li>
+                            <li>
+                                <a class="" href="/industries/sovereign-states" target="">Sovereign States</a>
+                            </li>
+                            <li>
+                                <a class="" href="/industries/technology" target="">Technology</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a class="open-footer-link" href="/practices" target="">Practices</a>
+
+                        <ul>
+                            <li>
+                                <a class="" href="/practices#by-alphabet" target="">Practices A-Z</a>
+                            </li>
+                            <li>
+                                <a class="" href="/practices#by-category" target="">Practices by Category</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
-            <ul>
-                <li><a href="/our-firm/offices/new-york/directions">Directions &raquo;</a>|</li>
-                <li><a href="/our-firm/offices/new-york">Details &raquo;</a></li>
-            </ul>
-        </div>
-        <div>
-            <div class="vcard">
-                <a href="/our-firm/offices/paris" class="title">
-                    Paris
-                </a>
-                <p class="adr">
-                    <span class="street-address">
-                        153 rue du Faubourg Saint-Honor&#233;
-                    </span>
-                    <span class="street-address">
 
-                    </span>
-                    <span class="street-address">
+            <div flex>
+                <ul>
+                    <li>
+                        <a class="open-footer-link" href="/publications" target="">Publications</a>
 
-                    </span>
-                    <span class="locality">75008 Paris</span>, <span class="region">France </span>
-                    <span class="postal-code">
+                        <ul>
+                            <li>
+                                <a class="" href="/publications/alerts-and-updates" target="">Alerts &amp; Updates</a>
+                            </li>
+                            <li>
+                                <a class="" href="/publications/ebooks-and-white-papers" target="">eBooks &amp; White Papers</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a class="open-footer-link" href="/news-and-events" target="">News &amp; Events</a>
 
-                    </span>
-                </p>
-                <p>
-                    tel: <span class="tel">
-                        +33.01.70.36.61.30
-                    </span>
-                </p>
-                <p>
-                    fax: <span class="fax">
-                        +33.01.70.36.61.31
-                    </span>
-                </p>
+                        <ul>
+                            <li>
+                                <a class="" href="/news-and-events/news" target="">News</a>
+                            </li>
+                            <li>
+                                <a class="" href="/news-and-events/events" target="">Events</a>
+                            </li>
+                            <li>
+                                <a class="" href="/news-and-events/media-center" target="">Media Center</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a class="open-footer-link" href="/publications/blogs" target="">Blogs</a>
+
+                        <ul>
+                            <li>
+                                <a class="" href="http://www.csrandthelaw.com/" target="_blank">Corporate Social Responsibility and the Law</a>
+                            </li>
+                            <li>
+                                <a class="" href="http://www.energycleantechcounsel.com" target="_blank">Energy &amp; Cleantech Counsel</a>
+                            </li>
+                            <li>
+                                <a class="" href="http://www.infrastructureandconstructionlaw.com/" target="_blank">Infrastructure &amp; Construction Law</a>
+                            </li>
+                            <li>
+                                <a class="" href="http://www.lawandenvironment.com/" target="_blank">Law &amp; the Environment</a>
+                            </li>
+                            <li>
+                                <a class="" href="http://www.masslaborandemploymentlaw.com/" target="_blank">Massachusetts Labor &amp; Employment Law</a>
+                            </li>
+                            <li>
+                                <a class="" href="http://www.massachusettsnoncompetelaw.com/" target="_blank">Massachusetts Noncompete Law</a>
+                            </li>
+                            <li>
+                                <a class="" href="http://www.medicaidandthelaw.com/" target="_blank">Medicaid &amp; the Law</a>
+                            </li>
+                            <li>
+                                <a class="" href="http://www.ptab-blog.com/" target="">PTAB Blog</a>
+                            </li>
+                            <li>
+                                <a class="" href="http://www.securityprivacyandthelaw.com/" target="_blank">Security, Privacy and the Law</a>
+                            </li>
+                            <li>
+                                <a class="" href="http://www.stateaginsights.com/" target="_blank">State AG Insights</a>
+                            </li>
+                            <li>
+                                <a class="" href="http://www.trademarkandcopyrightlawblog.com/" target="_blank">Trademark &amp; Copyright Law</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
-            <ul>
-                <li><a href="/our-firm/offices/paris/directions">Directions &raquo;</a>|</li>
-                <li><a href="/our-firm/offices/paris">Details &raquo;</a></li>
-            </ul>
-        </div>
-        <div>
-            <div class="vcard">
-                <a href="/our-firm/offices/washington-dc" class="title">
-                    Washington, D.C.
-                </a>
-                <p class="adr">
-                    <span class="street-address">
-                        1717 K Street, N.W.
-                    </span>
-                    <span class="street-address">
 
-                    </span>
-                    <span class="street-address">
+            <div flex>
+                <ul>
+                    <li>
+                        <a class="open-footer-link" href="/careers" target="">Careers</a>
 
-                    </span>
-                    <span class="locality">Washington</span>, <span class="region">D.C. US</span>
-                    <span class="postal-code">
-                        20006-5350
-                    </span>
-                </p>
-                <p>
-                    tel: <span class="tel">
-                        202.223.1200
-                    </span>
-                </p>
-                <p>
-                    fax: <span class="fax">
-                        202.785.6687
-                    </span>
-                </p>
+                        <ul>
+                            <li>
+                                <a class="" href="/careers/lawyers" target="">Lawyers</a>
+                            </li>
+                            <li>
+                                <a class="" href="/careers/technology-specialists" target="">Technology Specialists</a>
+                            </li>
+                            <li>
+                                <a class="" href="/careers/paralegals" target="">Paralegals</a>
+                            </li>
+                            <li>
+                                <a class="" href="/careers/business-professionals" target="">Business Professionals</a>
+                            </li>
+                            <li>
+                                <a class="" href="/careers/current-openings" target="">Current Openings</a>
+                            </li>
+                            <li>
+                                <a class="" href="/practices/litigation/pro-bono" target="">Pro Bono</a>
+                            </li>
+                            <li>
+                                <a class="" href="http://recruiting.foleyhoag.com/" target="_blank">Summer Program</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a class="open-footer-link" href="/our-firm" target="">Our Firm</a>
+
+                        <ul>
+                            <li>
+                                <a class="" href="/our-firm/history" target="">History</a>
+                            </li>
+                            <li>
+                                <a class="" href="/our-firm/management-team" target="">Management Team</a>
+                            </li>
+                            <li>
+                                <a class="" href="/practices/litigation/pro-bono" target="">Pro Bono</a>
+                            </li>
+                            <li>
+                                <a class="" href="/our-firm/technology-and-entrepreneurship" target="">Technology &amp; Entrepreneurship</a>
+                            </li>
+                            <li>
+                                <a class="" href="/our-firm/lex-mundi" target="">Lex Mundi</a>
+                            </li>
+                            <li>
+                                <a class="" href="/our-firm/the-foley-hoag-foundation" target="">The Foley Hoag Foundation</a>
+                            </li>
+                            <li>
+                                <a class="" href="/our-firm/offices" target="">Offices</a>
+                            </li>
+                            <li>
+                                <a class="" href="/our-firm/rankings-and-accolades" target="">Rankings and Accolades</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
-            <ul>
-                <li><a href="/our-firm/offices/washington-dc/directions">Directions &raquo;</a>|</li>
-                <li><a href="/our-firm/offices/washington-dc">Details &raquo;</a></li>
-            </ul>
         </div>
     </div>
 </div>
