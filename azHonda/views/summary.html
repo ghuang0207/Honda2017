@@ -22,8 +22,14 @@
                             </md-input-container>
                         </div>
                     </div>
+
+                    <!--temp-->
+                    <div flex ng-if="isAdmin !==true && c.Category != 'Marine'">
+                        Under Construction
+                    </div>
+
                     <!--tab content-->
-                    <div layout="column" layout-wrap ng-if="!showSearchResult" style="max-height: 500px;">
+                    <div layout="column" ng-if="isAdmin ===true || c.Category == 'Marine'" layout-wrap ng-if="!showSearchResult" style="max-height: 500px;">
                         <div ng-repeat="s in states | orderBy:'StateName'">
                             <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStateTopicsDialog($event, s, c.CategoryId)">
                                 {{s.StateName}}
@@ -46,7 +52,11 @@
 
                     <h6 class="md-display">Multi-State by Topic</h6>
 
-                    <div layout="column">
+                    <div ng-if="isAdmin!==true">
+                        Under Construction
+                    </div>
+
+                    <div ng-if="isAdmin===true" layout="column">
                         <hr />
 
                         <md-radio-group ng-model="select_Category" class="md-primary" layout="row" ng-model-options="{trackBy: '$value.CategoryId'}">
