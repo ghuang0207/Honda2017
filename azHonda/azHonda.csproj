@@ -78,6 +78,7 @@
     <Content Include="css\app.css" />
     <Content Include="images\background.jpg" />
     <Content Include="images\bg_pattern.png" />
+    <Content Include="images\FH-logo-Honda.png" />
     <Content Include="images\Foley-Hoag-Logo-WWH_4_2015.png" />
     <Content Include="images\honda_marine_logo.jpg" />
     <Content Include="images\image003.jpg" />

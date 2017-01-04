@@ -35,9 +35,9 @@
 <div>
     <md-content class="md-padding" style="background-color:transparent; padding-top: 0px;">
         <div layout-fill layout="column">
-            <div layout="row" layout-wrap" class="top-banner">
+            <div layout="row" layout-wrap class="top-banner">
                 <div flex="80" layout="row" style="padding: 10px 2px 5px 2px; vertical-align:text-bottom;">
-                    <img width="243" height="53" src="../images/Foley-Hoag-Logo-WWH_4_2015.png"/>
+                    <img width="243" height="53" src="../images/FH-logo-Honda.png"/>
                     <img width="268" height="80" src="../images/honda_marine_logo.jpg"/>
                     <img width="158" height="80" src="../images/Power_Equipment_Logo_C1x1.JPG"/>
                 </div>
@@ -53,12 +53,17 @@
             </div>
 
             <!--Main Nav-->
-            <div layout-align="center">
+            <div layout-wrap layout-align="center">
                 <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-                    <md-nav-item md-nav-sref="hondaWeb.statutes" name="Statutes" value="Statutes" flex>Statutes</md-nav-item>
-                    <md-nav-item md-nav-sref="hondaWeb.home" name="Summaries" value="Summaries" flex>Summaries</md-nav-item>
-                    <!--<md-nav-item md-nav-sref="hondaWeb.news" name="News" value="News" flex>News</md-nav-item>-->
-                    <md-nav-item md-nav-sref="hondaWeb.profile" name="Profile" value="Profile" flex>My Profile</md-nav-item>
+                    <div layout="row" layout-align="center" flex>
+                        <md-nav-item md-nav-sref="hondaWeb.home" name="Summaries" value="Summaries">Summaries</md-nav-item>
+                    </div>
+                    <div layout="row" layout-align="center" flex>
+                        <md-nav-item md-nav-sref="hondaWeb.statutes" name="Statutes" value="Statutes">Statutes</md-nav-item>
+                    </div>
+                    <div layout="row" layout-align="center" flex>
+                        <md-nav-item md-nav-sref="hondaWeb.profile" name="Profile" value="Profile">My Profile</md-nav-item>
+                    </div>
                 </md-nav-bar>
             </div>
             
