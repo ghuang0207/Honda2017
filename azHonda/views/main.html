@@ -32,10 +32,10 @@
 </style>
 
 
-<div>
-    <md-content class="md-padding" style="background-color:transparent; padding-top: 0px;">
-        <div layout-fill layout="column">
-            <div layout="row" layout-wrap class="top-banner">
+<div class="cPrint">
+    <md-content class="md-padding cPrint" style="background-color:transparent; padding-top: 0px;">
+        <div layout-fill layout="column" class="cPrint">
+            <div layout="row" layout-wrap class="top-banner cScreenOnly">
                 <div flex="80" layout="row" style="padding: 10px 2px 5px 2px; vertical-align:text-bottom;">
                     <img width="243" height="53" src="../images/FH-logo-Honda.png"/>
                     <img width="268" height="80" src="../images/honda_marine_logo.jpg"/>
@@ -53,22 +53,22 @@
             </div>
 
             <!--Main Nav-->
-            <div layout-wrap layout-align="center">
-                <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-                    <div layout="row" layout-align="center" flex>
-                        <md-nav-item md-nav-sref="hondaWeb.home" name="Summaries" value="Summaries">Summaries</md-nav-item>
+            <div layout-wrap layout-align="center" class="cScreenOnly">
+                <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" class="cScreenOnly">
+                    <div layout="row" layout-align="center" class="cScreenOnly" flex>
+                        <md-nav-item class="cScreenOnly" md-nav-sref="hondaWeb.home" name="Summaries" value="Summaries">Summaries</md-nav-item>
                     </div>
-                    <div layout="row" layout-align="center" flex>
-                        <md-nav-item md-nav-sref="hondaWeb.statutes" name="Statutes" value="Statutes">Statutes</md-nav-item>
+                    <div layout="row" layout-align="center" class="cScreenOnly" flex>
+                        <md-nav-item class="cScreenOnly" md-nav-sref="hondaWeb.statutes" name="Statutes" value="Statutes">Statutes</md-nav-item>
                     </div>
-                    <div layout="row" layout-align="center" flex>
-                        <md-nav-item md-nav-sref="hondaWeb.profile" name="Profile" value="Profile">My Profile</md-nav-item>
+                    <div layout="row" layout-align="center" class="cScreenOnly" flex>
+                        <md-nav-item class="cScreenOnly" md-nav-sref="hondaWeb.profile" name="Profile" value="Profile">My Profile</md-nav-item>
                     </div>
                 </md-nav-bar>
             </div>
             
             <!--page title-->
-            <div style="padding:10px 5px; font-weight:bold;" flex="5">
+            <div class="cScreenOnly" style="padding:10px 5px; font-weight:bold;" flex="5">
                 <h5>{{currentNavItem}}</h5>
             </div>
 

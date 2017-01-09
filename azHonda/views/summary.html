@@ -10,7 +10,7 @@
     <md-content>
         <md-tabs md-border-bottom style="min-height: 600px;">
             <md-tab label="{{c.Category}}" ng-repeat="c in categories" md-on-select="hideSearchResultView()">
-                <md-content class="md-padding" style="min-height: 530px;" layout="column" layout-fill>
+                <md-content class="md-padding cScreenOnly" style="min-height: 530px;" layout="column" layout-fill>
                     <div layout="row" flex="15">
                         <div flex="70">
                             <h6 class="md-display">{{c.Category}}</h6>
@@ -29,7 +29,7 @@
                     </div>
 
                     <!--tab content-->
-                    <div layout="column" ng-if="isAdmin ===true || c.Category == 'Marine'" layout-wrap ng-if="!showSearchResult" style="max-height: 500px;">
+                    <div layout="column" ng-if="(isAdmin === true && !showSearchResult) || (c.Category == 'Marine' && !showSearchResult)" layout-wrap style="max-height: 500px;">
                         <div ng-repeat="s in states | orderBy:'StateName'">
                             <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStateTopicsDialog($event, s, c.CategoryId)">
                                 {{s.StateName}}
@@ -41,14 +41,15 @@
                         <div flex="5">
                             <a ng-click="hideSearchResultView()">Back to State List</a>
                         </div>
-                        <div flex ng-include="'views/topics.html'"></div>
+                        <!--<div flex ng-include="'views/topics.html'"></div>-->
+                        <topiclist info="Info"></topiclist>
                     </div>
 
                 </md-content>
             </md-tab>
 
             <md-tab label="Multi-State by Topic" md-on-select="hideSearchResultView()">
-                <md-content class="md-padding">
+                <md-content class="md-padding cScreenOnly">
 
                     <h6 class="md-display">Multi-State by Topic</h6>
 
@@ -104,7 +105,8 @@
 
                         <!--multi state by topic filter results-->
                         <div layout="column" ng-if="showBySubjectResult">
-                            <div flex ng-include="'views/topics.html'"></div>
+                            <!--<div flex ng-include="'views/topics.html'"></div>-->
+                            <topiclist info="Info"></topiclist>
                         </div>
 
                     </div>

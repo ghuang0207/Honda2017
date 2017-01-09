@@ -17,7 +17,7 @@ var app = angular.module("hondaApp", [
     'auth0.lock',
     'angular-jwt'
 ])
-    .config(['$stateProvider', '$urlRouterProvider', 'lockProvider', function ($stateProvider, $urlRouterProvider, lockProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', 'lockProvider', 'jwtOptionsProvider', function ($stateProvider, $urlRouterProvider, lockProvider, jwtOptionsProvider) {
 
         $stateProvider
         .state('hondaWeb', { //base page: Top Banner, Navigation, uiview (for child page)
@@ -26,9 +26,6 @@ var app = angular.module("hondaApp", [
             templateUrl: 'views/main.html'
         })
         .state('hondaWeb.home', { //Summary page: Marine/power Equipment/Multi-state by Topic
-            //url: '/home',
-            //controller: 'MainCtrl',
-            //templateUrl: 'views/home.html'
             url: '/home',
             controller: 'SummaryCtrl',
             templateUrl: 'views/summary.html'
@@ -45,7 +42,7 @@ var app = angular.module("hondaApp", [
         })
         .state('hondaWeb.profile', {
             url: '/profile',
-            controller: '',
+            controller: 'ProfileCtrl',
             templateUrl: 'views/profile.html'
         })
 
@@ -58,7 +55,23 @@ var app = angular.module("hondaApp", [
 
         lockProvider.init({
             clientID: AUTH0_CLIENT_ID,
-            domain: AUTH0_DOMAIN
+            domain: AUTH0_DOMAIN,
+            options: {
+                theme: {
+                    logo: '../images/FH-logo-Honda.png',
+                    primaryColor: "#b81b1c"
+                },
+                languageDictionary: {
+                    title: "Log in"
+                }
+            }
+        });
+
+        // Configuration for angular-jwt
+        jwtOptionsProvider.config({
+            tokenGetter: function () {
+                return localStorage.getItem('id_token');
+            }
         });
 
         $urlRouterProvider.otherwise('/home');

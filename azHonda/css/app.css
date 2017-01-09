@@ -1,3 +1,24 @@
 ﻿body {
     font-family: 'Century Gothic';
 }
+
+@media print 
+{
+    div{
+        page-break-after: always;
+    }
+    md-content {
+        overflow: visible;
+    }
+    .cPrint  
+    {
+        max-width: none !important;
+        max-height: none !important;
+        display: block;
+        width: auto;
+        height: auto;
+        overflow: visible;
+        page-break-inside: avoid;
+    }
+    .cScreenOnly { display: none !important; }
+}

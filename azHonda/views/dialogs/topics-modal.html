@@ -1,54 +1,31 @@
 ﻿
-<md-dialog aria-label="title" flex="80">
+<md-dialog class="cPrint" aria-label="title" flex="80">
     <!-- use flex to control dialog size  flex="50" -->
-    <form ng-cloak>
+    <form ng-cloak class="cPrint">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2 style="color:white !important">{{title}}</h2>
             </div>
         </md-toolbar>
 
-        <md-dialog-content>
-            <div class="md-dialog-content" style="text-align:left">
+        <md-dialog-content class="cPrint">
+            <div class="md-dialog-content cPrint" style="text-align:left">
                 
                 <!--State Note section-->
-                <div layout="column" layout-fill ng-if="NoteObj">
-                    <div layout="row" layout-wrap flex="95">
-                        <div ng-if="!NoteObj.ctrl_IsEdit" ng-bind-html="NoteObj.Note"></div>
-                    </div>
-                    <div layout="row" layout-wrap>
-                        <md-input-container class="md-block" ng-if="NoteObj.ctrl_IsEdit" flex="90">
-                            <summernote height="100" ng-if="NoteObj.ctrl_IsEdit" ng-model="NoteObj.Note"></summernote>
-                        </md-input-container>
-
-                        <div ng-if="NoteObj.ctrl_IsEdit" flex="10">
-                            <md-button class="md-fab md-mini" aria-label="Save Note" ng-click="SaveChangeNote()">
-                                <md-tooltip md-direction="top">
-                                    Save Note
-                                </md-tooltip>
-                                <md-icon class="material-icons">save</md-icon>
-                            </md-button>
-                            <md-button class="md-fab md-mini" aria-label="Cancel Note" ng-click="CancelChangeNote()">
-                                <md-tooltip md-direction="top">
-                                    Cancel
-                                </md-tooltip>
-                                <md-icon class="material-icons">cancel</md-icon>
-                            </md-button>
-                        </div>
-                    </div>
-                </div>
+                <div ng-include="'views/statenote.html'"></div>
 
                 <!--Topic List section-->
-                <div ng-include="'views/topics.html'"></div>
+                <!--<div class="cPrint" ng-include="'views/topics.html'"></div>-->
+                <topiclist info="Info"></topiclist>
 
             </div>
         </md-dialog-content>
 
         <!--Dialog Controls-->
-        <md-dialog-actions layout="row">
-            <!--<md-button ng-click="print()">
+        <md-dialog-actions class="cScreenOnly" layout="row">
+            <md-button ng-click="print()">
                 Print Document
-            </md-button>-->
+            </md-button>
             <md-button ng-if="isAdmin===true && isAllowEdit" ng-click="NoteObj.ctrl_IsEdit = true">
                 Edit State Note
             </md-button>

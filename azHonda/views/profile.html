@@ -1,6 +1,36 @@
-﻿<div>
-    <h1>Profile Page</h1>
-    <div>
-        <h5>under construction</h5>
-    </div>
+﻿<div class="container-fluid" style="max-width:85vw;padding:0px !important">
+    
+    <md-content>
+        <md-tabs md-border-bottom style="min-height: 600px;">
+            <md-tab label="Profile">
+                <md-content class="md-padding" style="min-height: 530px;" layout="column" layout-fill>
+                    
+                    <div>
+                        Email: {{profile.email}}
+                    </div>
+                    <div>
+                        Name: {{profile.nickname}}
+                    </div>
+
+                    <div>
+                        <md-button ng-click="sendChangePwEmail()">
+                            Send Change Password Email
+                        </md-button>
+                    </div>
+
+                </md-content>
+            </md-tab>
+            <md-tab label="Create Account" ng-if="isAdmin">
+                <md-content class="md-padding" style="min-height: 530px;" layout="column" layout-fill>
+
+                    <div layout="row" flex="15">
+                        
+                    </div>
+
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+
+
 </div>

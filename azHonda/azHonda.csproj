@@ -88,9 +88,10 @@
     <Content Include="js\auth0-variables.js" />
     <Content Include="js\controllers\home-ctrl.js" />
     <Content Include="js\controllers\login-ctrl.js" />
+    <Content Include="js\controllers\profile-ctrl.js" />
     <Content Include="js\controllers\statutes.js" />
     <Content Include="js\controllers\summary.js" />
-    <Content Include="js\controllers\topics-modal.js" />
+    <Content Include="js\directives\topiclist\topiclist.js" />
     <Content Include="js\filters\unique.js" />
     <Content Include="js\filters\utilities.js" />
     <Content Include="js\lib\angular-drag-and-drop-lists.js" />
@@ -118,6 +119,7 @@
     <Content Include="node_modules\angular-lock\dist\angular-lock.js" />
     <Content Include="node_modules\angular-lock\dist\angular-lock.min.js" />
     <Content Include="node_modules\angular-lock\gulpfile.js" />
+    <Content Include="print.aspx" />
     <Content Include="views\dialogs\topics-modal.html" />
     <Content Include="views\footer-bottom.html" />
     <Content Include="views\home.html" />
@@ -125,9 +127,10 @@
     <Content Include="views\main.html" />
     <Content Include="views\news.html" />
     <Content Include="views\profile.html" />
+    <Content Include="views\statenote.html" />
     <Content Include="views\statutes.html" />
     <Content Include="views\summary.html" />
-    <Content Include="views\topics.html" />
+    <Content Include="js\directives\topiclist\topiclist.html" />
     <Content Include="wsServices\wsSrvTools.asmx" />
     <Content Include="packages.config" />
     <Content Include="node_modules\angular-jwt\.bowerrc" />
@@ -172,6 +175,13 @@
     <Compile Include="objects\NoteVO.cs" />
     <Compile Include="objects\StateVO.cs" />
     <Compile Include="objects\TopicVO.cs" />
+    <Compile Include="print.aspx.cs">
+      <DependentUpon>print.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="print.aspx.designer.cs">
+      <DependentUpon>print.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\SrvTools.cs" />
     <Compile Include="Site1.Master.cs">

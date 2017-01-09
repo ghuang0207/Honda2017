@@ -62,8 +62,11 @@
     <script src="js/controllers/summary.js"></script>
     <script src="js/controllers/login-ctrl.js"></script>
     <script src="js/controllers/statutes.js"></script>
-    <script src="js/controllers/topics-modal.js"></script>
-    
+    <script src="js/controllers/profile-ctrl.js"></script>
+
+    <!-- directives -->
+    <script src="js/directives/topiclist/topiclist.js"></script>
+
     <!-- Filters -->
     <script src="js/filters/unique.js"></script>
     <script src="js/filters/utilities.js"></script>
@@ -77,8 +80,11 @@
             background-attachment: fixed;
             background-size: cover;
             background-position: center top; 
-            width:100vw;
+            max-width:100vw;
             height:100vh;
+        }
+        .main-form > div {
+            max-width:100vw;
         }
         .footer {
             /*margin-top: 20px;*/
@@ -87,7 +93,7 @@
             background-attachment: fixed;
             background-size: cover;
             background-position: center top;*/ 
-            width:100vw;
+            max-width:100vw;
             z-index: 3;
             overflow: visible;
         }
@@ -95,7 +101,7 @@
             background: #262626 url(images/bg_pattern.png)
         }
         .footer-top-content{
-            width: 80vw;
+            max-width: 80vw;
             color: white;
             margin-left: auto;
             margin-right: auto;
@@ -112,7 +118,7 @@
         </div>
             
         <%--footer--%>
-        <div layout="column" class="footer">
+        <div layout="column" class="footer cScreenOnly">
             <div class="footer-top" flex="19" layout="row">
                 <div class="footer-top-content" layout="column" flex-offset="5">
                     <div style="padding-top: 2px;" flex>
