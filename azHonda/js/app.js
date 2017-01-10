@@ -59,7 +59,7 @@ var app = angular.module("hondaApp", [
             options: {
                 theme: {
                     logo: '../images/FH-logo-Honda.png',
-                    primaryColor: "#b81b1c"
+                    primaryColor: "#0077be" //"#b81b1c"
                 },
                 languageDictionary: {
                     title: "Log in"

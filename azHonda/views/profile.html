@@ -5,14 +5,16 @@
             <md-tab label="Profile">
                 <md-content class="md-padding" style="min-height: 530px;" layout="column" layout-fill>
                     
+                    <!--<img [src]="auth.userProfile.picture" alt="" class="profile-img">-->
                     <div>
-                        Email: {{profile.email}}
+                        <h3>Profile</h3>
+                        <p><strong>Name: </strong> {{profile.name}}</p>
+                        <p><strong>Email: </strong> {{profile.email}}</p>
+                        <p><strong>Nickname: </strong> {{profile.nickname}}</p>
+                        <p><strong>Created At: </strong> {{profile.created_at}}</p>
+                        <p><strong>Updated At: </strong> {{profile.updated_at}}</p>
                     </div>
-                    <div>
-                        Name: {{profile.nickname}}
-                    </div>
-
-                    <div>
+                    <div style="display: none;">
                         <md-button ng-click="sendChangePwEmail()">
                             Send Change Password Email
                         </md-button>

@@ -8,9 +8,9 @@
       .module('hondaApp')
       .service('authService', authService);
 
-    authService.$inject = ['lock', 'authManager', '$location', '$http', 'angularAuth0'];
+    authService.$inject = ['lock', 'authManager', '$location', '$http'];
 
-    function authService(lock, authManager, $location, $http, angularAuth0) {
+    function authService(lock, authManager, $location, $http) {
 
         function login() {
             //open the widget and then listen for successful authentication with the authenticated event. 
@@ -24,6 +24,32 @@
             authManager.unauthenticate();
             $location.url("/login");
         }
+        // Set up the logic for when a user authenticates
+        // This method is called from app.run.js
+        function registerAuthenticationListener() {
+
+            lock.on('authenticated', function (authResult) {
+                // When the user successfully authenticates, their JWT will be saved in local storage as id_token
+                localStorage.setItem('id_token', authResult.idToken);
+
+                authManager.authenticate();
+
+                // get user profile
+                lock.getProfile(authResult.idToken, function (error, profile) {
+                    if (error) {
+                        console.log(error);
+                        return;
+                    }
+                    debugger;
+                    localStorage.setItem('profile', JSON.stringify(profile));
+                });
+
+            }, function (err) {
+                console.log(err);
+            });
+        }
+
+
         // custom login https://auth0.com/docs/quickstart/spa/angularjs/02-custom-login
         function signup(username, password, callback) {
             angularAuth0.signup({
@@ -45,37 +71,13 @@
                 });
         }
 
-        // Set up the logic for when a user authenticates
-        // This method is called from app.run.js
-        function registerAuthenticationListener() {
-            
-            lock.on('authenticated', function (authResult) {
-                // When the user successfully authenticates, their JWT will be saved in local storage as id_token
-                localStorage.setItem('id_token', authResult.idToken);
-                
-                authManager.authenticate();
-
-                // get user profile
-                lock.getProfile(authResult.idToken, function (error, profile) {
-                    if (error) {
-                        console.log(error);
-                        return;
-                    }
-                    debugger;
-                    localStorage.setItem('profile', JSON.stringify(profile));
-                });
-
-            }, function (err) {
-                console.log(err);
-            });
-        }
 
         return {
             login: login,
             logout: logout,
+            registerAuthenticationListener: registerAuthenticationListener,
             signup: signup,
-            updateProfile: updateProfile,
-            registerAuthenticationListener: registerAuthenticationListener
+            updateProfile: updateProfile
         }
     }
 })();

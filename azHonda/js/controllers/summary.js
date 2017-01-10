@@ -327,7 +327,13 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             $mdDialog.cancel();
         };
         $scope.print = function () {
-            $timeout($window.print, 0);
+            //$timeout($window.print, 0);
+            debugger;
+            var contentToPrint = document.getElementById('testprint').innerHTML;
+            var windowPopup = $window.open('', '_blank', 'width=1500,height=1500');
+            windowPopup.document.open();
+            windowPopup.document.write('<html><head><link rel="stylesheet" type="text/css" href="" /></head><body onload="window.print()">' + contentToPrint + '</body></html>');
+            windowPopup.document.close();
         }
     };
 });

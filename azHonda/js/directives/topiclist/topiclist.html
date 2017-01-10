@@ -167,12 +167,29 @@
     div .typesDemo {
         margin-bottom: 5px;
     }
+
+
+@media print 
+{
+    .cPrint  
+    {
+        max-width: none !important;
+        max-height: none !important;
+        display: block;
+        overflow: visible !important;
+        page-break-inside: avoid;
+    }
+    .cScreenOnly { display: none !important; }
+    input {
+        display: none;
+    }
+}
 </style>
 
 
 <div ng-repeat="Topic in Topics | orderBy : 'OrderNumber'" class="typesDemo" layout="column">
 
-    <md-subheader class="md-no-sticky Subsection" ng-show="!isAllowEdit">
+    <md-subheader class="md-no-sticky Subsection cScreenOnly" ng-show="!isAllowEdit">
         {{Topic.State.StateName}}
     </md-subheader>
 
@@ -190,7 +207,7 @@
                 <span class="glyphicon glyphicon-trash" ng-click="DeleteTopic(Topic)" style="margin-left: 5px;"></span>
             </div>
         </div>
-        <div layout="row" layout-wrap>
+        <div class="cScreenOnly" layout="row" layout-wrap>
             <md-input-container class="md-block" ng-show="Topic.ctrl_IsEdit" flex="90">
                 <label>Topic</label>
                 <textarea ng-model="Topic.Subject" md-maxlength="200" rows="2"></textarea>
@@ -222,7 +239,7 @@
 
     <!--tree json start - subsections-->
     <div ng-show="Topic.ctrl_IsExpand || Topic.ctrl_IsEdit">
-        <md-subheader class="md-no-sticky Subsection" ng-show="Topic.ctrl_IsEdit && !Topic.tree_Value">
+        <md-subheader class="md-no-sticky Subsection cScreenOnly" ng-show="Topic.ctrl_IsEdit && !Topic.tree_Value">
             Subsections
             <span id="btnAddSubsection" class="glyphicon glyphicon-plus-sign" ng-click="addSubsection(Topic.tree_Subsections)"></span>
         </md-subheader>
@@ -248,7 +265,7 @@
                                 <span ng-class="{'glyphicon glyphicon-menu-right': !Subsection.ctrl_IsExpand, 'glyphicon glyphicon-menu-down': Subsection.ctrl_IsExpand}"></span>
                                 {{Subsection.tree_Name}}
                             </a>
-                            <md-input-container class="md-block" ng-show="Topic.ctrl_IsEdit" flex-gt-sm>
+                            <md-input-container class="md-block cScreenOnly" ng-show="Topic.ctrl_IsEdit" flex-gt-sm>
                                 <label>Subsection</label>
                                 <textarea ng-model="Subsection.tree_Name" rows="2"></textarea>
                             </md-input-container>
@@ -261,7 +278,7 @@
                     </div>
 
                     <div class="content" ng-show="Subsection.ctrl_IsExpand || Topic.ctrl_IsEdit">
-                        <md-subheader class="md-no-sticky" style="color:darkseagreen" ng-show="Topic.ctrl_IsEdit && !Subsection.tree_Value">
+                        <md-subheader class="md-no-sticky cScreenOnly" style="color:darkseagreen" ng-show="Topic.ctrl_IsEdit && !Subsection.tree_Value">
                             Questions
                             <span id="btnAddQuestion" class="glyphicon glyphicon-plus-sign" ng-click="addQuestion(Subsection.tree_Questions)"></span>
                         </md-subheader>
@@ -287,7 +304,7 @@
                                                 <span ng-class="{'glyphicon glyphicon-menu-right': !Question.ctrl_IsExpand, 'glyphicon glyphicon-menu-down': Question.ctrl_IsExpand}"></span>
                                                 {{Question.tree_Name}}
                                             </a>
-                                            <md-input-container class="md-block" ng-show="Topic.ctrl_IsEdit" flex-gt-sm>
+                                            <md-input-container class="md-block cScreenOnly" ng-show="Topic.ctrl_IsEdit" flex-gt-sm>
                                                 <label>Question</label>
                                                 <textarea ng-model="Question.tree_Name" rows="2"></textarea>
                                             </md-input-container>
