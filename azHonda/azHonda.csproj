@@ -119,7 +119,6 @@
     <Content Include="node_modules\angular-lock\dist\angular-lock.js" />
     <Content Include="node_modules\angular-lock\dist\angular-lock.min.js" />
     <Content Include="node_modules\angular-lock\gulpfile.js" />
-    <Content Include="print.aspx" />
     <Content Include="views\dialogs\topics-modal.html" />
     <Content Include="views\footer-bottom.html" />
     <Content Include="views\home.html" />
@@ -175,13 +174,6 @@
     <Compile Include="objects\NoteVO.cs" />
     <Compile Include="objects\StateVO.cs" />
     <Compile Include="objects\TopicVO.cs" />
-    <Compile Include="print.aspx.cs">
-      <DependentUpon>print.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="print.aspx.designer.cs">
-      <DependentUpon>print.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\SrvTools.cs" />
     <Compile Include="Site1.Master.cs">
