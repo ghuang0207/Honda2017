@@ -306,20 +306,9 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             $scope.GetNote_by_State();
         };
 
-
-        // Topic ops (at dialog level - Add)
         $scope.AddNewTopic = function () {
-            var newTopic = {
-                'TopicId': -1,
-                'State': { 'StateCode': $scope.StateInfo.StateCode },
-                'Category': { 'CategoryId': $scope.categoryId },
-                'Subject': '',
-                'tree_Subsections': [],
-                'ctrl_IsEdit': true,
-                'ctrl_IsExpand': true
-            };
-            $scope.Topics.push(newTopic);
-            console.log(newTopic);
+            $scope.$broadcast('AddNewTopic')
+            // and in directive, it will listen for this broadcast and run the defined "addNewTopic" function inside the directive
         };
         
         //Dialog controls

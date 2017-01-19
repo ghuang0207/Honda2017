@@ -91,6 +91,24 @@ app.directive('topiclist', ['$location', function () {
 
               // To do: topics Expand All/Collapse All
 
+
+              // Topic ops (at dialog level access - Add)
+              $scope.$on('AddNewTopic', function () {
+                  $scope.AddNewTopic()
+              })
+              $scope.AddNewTopic = function () {
+                  var newTopic = {
+                      'TopicId': -1,
+                      'State': { 'StateCode': $scope.StateInfo.StateCode },
+                      'Category': { 'CategoryId': $scope.categoryId },
+                      'Subject': '',
+                      'tree_Subsections': [],
+                      'ctrl_IsEdit': true,
+                      'ctrl_IsExpand': true
+                  };
+                  $scope.Topics.push(newTopic);
+                  console.log(newTopic);
+              };
               // topics Edit/save/cancel/delete
               $scope.EditTopic = function (changedTopic) {
                   console.log(changedTopic)
