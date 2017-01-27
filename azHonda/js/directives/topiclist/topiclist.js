@@ -11,40 +11,62 @@ app.directive('topiclist', ['$location', function () {
 
           controller: function ($rootScope, $scope, SrvData, $filter, $window, $q, $timeout) {
               // data initialization
-              debugger;
-              $scope.isAdmin = $rootScope.isAdmin;
-              $scope.Topics = [];
-              $scope.$watch('Topics', function (Topics) {
-                  $scope.modelAsJson = angular.toJson(Topics, true);
-              }, true);
+              $scope.$watch('Info', function (Info) {
+                  debugger;
+                  if ($scope.Info.hasOwnProperty("categoryId")) {
+                      $scope.isAllowEdit = true;
+                      $scope.StateInfo = $scope.Info.StateInfo;
+                      $scope.categoryId = $scope.Info.categoryId;
 
-              if ($scope.Info.hasOwnProperty("categoryId")) {
-                  $scope.isAllowEdit = true;
-                  $scope.StateInfo = $scope.Info.StateInfo;
-                  $scope.categoryId = $scope.Info.categoryId;
+                      SrvData.GetTopics_by_State($scope.StateInfo.StateCode, $scope.categoryId).then(function (response) {
+                          if (response.data != "null") {
+                              $scope.Topics = response.data;
+                              // format for tree
+                              angular.forEach($scope.Topics, function (topic) {
+                                  try {
+                                      var topicJSON = JSON.parse(topic.Content)
+                                      if (topicJSON.hasOwnProperty('tree_Subsections')) {
+                                          topic.tree_Subsections = topicJSON.tree_Subsections;
+                                          //format tree expand element
+                                          angular.forEach(topic.tree_Subsections, function (Subsection) {
+                                              if (Subsection) {
+                                                  Subsection.ctrl_IsExpand = false;
+                                                  angular.forEach(Subsection.tree_Questions, function (Question) {
+                                                      Question.ctrl_IsExpand = false;
+                                                  });
+                                              }
+                                          });
+                                      }
+                                      if (topicJSON.hasOwnProperty('tree_Value')) {
+                                          topic.tree_Value = topicJSON.tree_Value;
+                                      }
+                                  }
+                                  catch (e) {
+                                      console.log(e);
+                                  }
+                                  //catch-all: to initiate all topics with at least empty array for tree_Subsections to prevent error
+                                  if (topic.tree_Subsections == undefined) {
+                                      topic.tree_Subsections = [];
+                                  }
+                              });
+                              console.log($scope.Topics);
+                          }
+                      }, function (err) {
+                          console.log(err);
+                      });
 
-                  SrvData.GetTopics_by_State($scope.StateInfo.StateCode, $scope.categoryId).then(function (response) {
-                      if (response.data != "null") {
-                          $scope.Topics = response.data;
-                          // format for tree
+                  }
+                  if ($scope.Info.hasOwnProperty("subject")) {
+                      $scope.isAllowEdit = false;
+                      $scope.subject = $scope.Info.subject;
+                      $scope.title = $scope.subject;
+                      console.log($scope)
+
+                      if ($scope.Topics.length > 0) {
+                          //format for tree
                           angular.forEach($scope.Topics, function (topic) {
                               try {
-                                  var topicJSON = JSON.parse(topic.Content)
-                                  if (topicJSON.hasOwnProperty('tree_Subsections')) {
-                                      topic.tree_Subsections = topicJSON.tree_Subsections;
-                                      //format tree expand element
-                                      angular.forEach(topic.tree_Subsections, function (Subsection) {
-                                          if (Subsection) {
-                                              Subsection.ctrl_IsExpand = false;
-                                              angular.forEach(Subsection.tree_Questions, function (Question) {
-                                                  Question.ctrl_IsExpand = false;
-                                              });
-                                          }
-                                      });
-                                  }
-                                  if (topicJSON.hasOwnProperty('tree_Value')) {
-                                      topic.tree_Value = topicJSON.tree_Value;
-                                  }
+                                  topic.tree_Subsections = JSON.parse(topic.Content).tree_Subsections;
                               }
                               catch (e) {
                                   console.log(e);
@@ -56,38 +78,20 @@ app.directive('topiclist', ['$location', function () {
                           });
                           console.log($scope.Topics);
                       }
-                  }, function (err) {
-                      console.log(err);
-                  });
-
-              }
-              if ($scope.Info.hasOwnProperty("subject")) {
-                  $scope.isAllowEdit = false;
-                  $scope.subject = $scope.Info.subject;
-                  $scope.title = $scope.subject;
-                  console.log($scope)
-
-                  if ($scope.Topics.length > 0) {
-                      //format for tree
-                      angular.forEach($scope.Topics, function (topic) {
-                          try {
-                              topic.tree_Subsections = JSON.parse(topic.Content).tree_Subsections;
-                          }
-                          catch (e) {
-                              console.log(e);
-                          }
-                          //catch-all: to initiate all topics with at least empty array for tree_Subsections to prevent error
-                          if (topic.tree_Subsections == undefined) {
-                              topic.tree_Subsections = [];
-                          }
-                      });
-                      console.log($scope.Topics);
                   }
-              }
-              if ($scope.Info.hasOwnProperty("topics")) {
-                  $scope.Topics = $scope.Info['topics'];
-              }
+                  if ($scope.Info.hasOwnProperty("topics")) {
+                      debugger;
+                      $scope.Topics = $scope.Info['topics'];
+                  }
 
+              }, true);
+              $scope.isAdmin = $rootScope.isAdmin;
+              $scope.Topics = [];
+              $scope.$watch('Topics', function (Topics) {
+                  $scope.modelAsJson = angular.toJson(Topics, true);
+              }, true);
+
+              
 
               // To do: topics Expand All/Collapse All
 

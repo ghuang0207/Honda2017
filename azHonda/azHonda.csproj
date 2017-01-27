@@ -39,9 +39,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Auth0.Core, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Auth0.Core.3.7.0\lib\net45\Auth0.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Auth0.ManagementApi, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Auth0.ManagementApi.3.7.0\lib\net45\Auth0.ManagementApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http" />
@@ -75,6 +87,35 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bower_components\angular-auth0\angular-auth0.js" />
+    <Content Include="bower_components\angular-auth0\dist\angular-auth0.js" />
+    <Content Include="bower_components\angular-auth0\dist\angular-auth0.min.js" />
+    <Content Include="bower_components\angular-auth0\gulpfile.js" />
+    <Content Include="bower_components\angular-auth0\index.js" />
+    <Content Include="bower_components\angular\angular-csp.css" />
+    <Content Include="bower_components\angular\angular.js" />
+    <Content Include="bower_components\angular\angular.min.js" />
+    <Content Include="bower_components\angular\index.js" />
+    <Content Include="bower_components\auth0.js\build\auth0.js" />
+    <Content Include="bower_components\auth0.js\build\auth0.min.js" />
+    <Content Include="bower_components\auth0.js\example\callback.html" />
+    <Content Include="bower_components\auth0.js\example\index.html" />
+    <Content Include="bower_components\auth0.js\Gruntfile.js" />
+    <Content Include="bower_components\auth0.js\index.js" />
+    <Content Include="bower_components\auth0.js\lib\assert_required.js" />
+    <Content Include="bower_components\auth0.js\lib\base64_url.js" />
+    <Content Include="bower_components\auth0.js\lib\IframeHandler.js" />
+    <Content Include="bower_components\auth0.js\lib\index-of.js" />
+    <Content Include="bower_components\auth0.js\lib\is-array.js" />
+    <Content Include="bower_components\auth0.js\lib\json-parse.js" />
+    <Content Include="bower_components\auth0.js\lib\LoginError.js" />
+    <Content Include="bower_components\auth0.js\lib\nonce-generator.js" />
+    <Content Include="bower_components\auth0.js\lib\same-origin.js" />
+    <Content Include="bower_components\auth0.js\lib\SilentAuthenticationHandler.js" />
+    <Content Include="bower_components\auth0.js\lib\use_jsonp.js" />
+    <Content Include="bower_components\auth0.js\standalone.js" />
+    <Content Include="bower_components\auth0.js\test_harness.html" />
+    <Content Include="bower_components\auth0.js\version.js" />
     <Content Include="css\app.css" />
     <Content Include="images\background.jpg" />
     <Content Include="images\bg_pattern.png" />
@@ -146,6 +187,33 @@
     <Content Include="node_modules\angular-lock\LICENSE" />
     <Content Include="node_modules\angular-lock\package.json" />
     <Content Include="node_modules\angular-lock\README.md" />
+    <Content Include="bower_components\angular-auth0\.bower.json" />
+    <Content Include="bower_components\angular-auth0\.gitignore" />
+    <Content Include="bower_components\angular-auth0\bower.json" />
+    <Content Include="bower_components\angular-auth0\LICENSE" />
+    <Content Include="bower_components\angular-auth0\package.json" />
+    <Content Include="bower_components\angular-auth0\README.md" />
+    <Content Include="bower_components\angular\.bower.json" />
+    <Content Include="bower_components\angular\angular.min.js.gzip" />
+    <Content Include="bower_components\angular\angular.min.js.map" />
+    <Content Include="bower_components\angular\bower.json" />
+    <Content Include="bower_components\angular\LICENSE.md" />
+    <Content Include="bower_components\angular\package.json" />
+    <Content Include="bower_components\angular\README.md" />
+    <Content Include="bower_components\auth0.js\.bower.json" />
+    <Content Include="bower_components\auth0.js\.eslintignore" />
+    <Content Include="bower_components\auth0.js\.eslintrc" />
+    <Content Include="bower_components\auth0.js\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\auth0.js\.gitignore" />
+    <Content Include="bower_components\auth0.js\.travis.yml" />
+    <Content Include="bower_components\auth0.js\.zuul.yml" />
+    <Content Include="bower_components\auth0.js\bin\deploy" />
+    <Content Include="bower_components\auth0.js\bin\version" />
+    <Content Include="bower_components\auth0.js\bower.json" />
+    <Content Include="bower_components\auth0.js\CHANGELOG.md" />
+    <Content Include="bower_components\auth0.js\LICENSE" />
+    <Content Include="bower_components\auth0.js\package.json" />
+    <Content Include="bower_components\auth0.js\README.md" />
     <None Include="Properties\PublishProfiles\azHonda2017 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\azHonda2017.pubxml" />
     <Content Include="Site1.Master" />
@@ -175,6 +243,7 @@
     <Compile Include="objects\StateVO.cs" />
     <Compile Include="objects\TopicVO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="services\SrvAuthManagementAPI.cs" />
     <Compile Include="services\SrvTools.cs" />
     <Compile Include="Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>

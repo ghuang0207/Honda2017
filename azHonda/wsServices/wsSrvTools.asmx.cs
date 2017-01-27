@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
+using System.Threading.Tasks;
 
 namespace azHonda.wsSrvTools
 {
@@ -235,6 +236,25 @@ namespace azHonda.wsSrvTools
         {
             List<StateVO> st = new JavaScriptSerializer().Deserialize<List<StateVO>>(obj);
             return obj.ToString();
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public string TestAsync(string subject)
+        {
+            try
+            {
+
+                SrvAuthManagementAPI api = new SrvAuthManagementAPI();
+                //var result = api.testAPIAsync();
+                api.testRequest();
+                Context.Response.Write("Things ok");
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+            return "Hello";
         }
     }
 }

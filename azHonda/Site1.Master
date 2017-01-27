@@ -40,6 +40,9 @@
     <script type="text/javascript" src="https://cdn.auth0.com/js/lock/10.6/lock.min.js"></script>
     <script src="node_modules/angular-lock/dist/angular-lock.js"></script>
     <script src="node_modules/angular-jwt/dist/angular-jwt.js"></script>
+    <script type="text/javascript" src="bower_components/auth0.js/build/auth0.js"></script>
+    <!-- auth0-angular -->
+    <script type="text/javascript" src="bower_components/angular-auth0/dist/angular-auth0.js"></script>
 
     <!-- angular ui.router -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>

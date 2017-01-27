@@ -15,9 +15,11 @@ var app = angular.module("hondaApp", [
     'summernote',
     'dndLists',
     'auth0.lock',
-    'angular-jwt'
+    'angular-jwt',
+    'auth0.auth0'
 ])
-    .config(['$stateProvider', '$urlRouterProvider', 'lockProvider', 'jwtOptionsProvider', function ($stateProvider, $urlRouterProvider, lockProvider, jwtOptionsProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', 'lockProvider', 'jwtOptionsProvider', 'angularAuth0Provider', '$locationProvider',
+function ($stateProvider, $urlRouterProvider, lockProvider, jwtOptionsProvider, angularAuth0Provider, $locationProvider) {
 
         $stateProvider
         .state('hondaWeb', { //base page: Top Banner, Navigation, uiview (for child page)
@@ -67,12 +69,26 @@ var app = angular.module("hondaApp", [
             }
         });
 
-        // Configuration for angular-jwt
+            // Configuration for angular-jwt
+            // Configure a tokenGetter so that the isAuthenticated
+            // method from angular-jwt can be used
         jwtOptionsProvider.config({
             tokenGetter: function () {
                 return localStorage.getItem('id_token');
             }
         });
+
+        // Initialization for the angular-auth0 library
+        angularAuth0Provider.init({
+            clientID: AUTH0_CLIENT_ID,
+            domain: AUTH0_DOMAIN,
+            responseType: 'token id_token',
+            redirectUri: '/home'
+        });
+
+            // Remove the ! from the hash so that
+            // auth0.js can properly parse it
+        $locationProvider.hashPrefix('');
 
         $urlRouterProvider.otherwise('/home');
        

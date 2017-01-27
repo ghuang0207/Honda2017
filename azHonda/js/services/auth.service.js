@@ -8,9 +8,9 @@
       .module('hondaApp')
       .service('authService', authService);
 
-    authService.$inject = ['lock', 'authManager', '$location', '$http'];
+    authService.$inject = ['lock', 'authManager', '$location', '$http', '$state', 'angularAuth0', 'authManager'];
 
-    function authService(lock, authManager, $location, $http) {
+    function authService(lock, authManager, $location, $http, $state, angularAuth0) {
 
         function login() {
             //open the widget and then listen for successful authentication with the authenticated event. 
@@ -51,33 +51,30 @@
 
 
         // custom login https://auth0.com/docs/quickstart/spa/angularjs/02-custom-login
-        function signup(username, password, callback) {
-            angularAuth0.signup({
-                connection: 'Username-Password-Authentication',
-                responseType: 'token',
-                email: username,
-                password: password
-            }, callback);
-        }
+        //function signup(username, password, callback) {
+        //    angularAuth0.signup({
+        //        connection: 'Username-Password-Authentication',
+        //        responseType: 'token',
+        //        email: username,
+        //        password: password
+        //    }, callback);
+        //}
 
-        function updateProfile(id, profile) {
-            profile.connection = 'Username-Password-Authentication';
-            return $http(
-                {
-                    method: 'Patch',
-                    url: 'http://' + AUTH0_DOMAIN + '/api/v2/users/' + id,
-                    data: JSON.stringify(profile),
-                    headers: { 'Content-Type': 'application/json' }
-                });
-        }
-
+        //function updateProfile(id, profile) {
+        //    profile.connection = 'Username-Password-Authentication';
+        //    return $http(
+        //        {
+        //            method: 'Patch',
+        //            url: 'http://' + AUTH0_DOMAIN + '/api/v2/users/' + id,
+        //            data: JSON.stringify(profile),
+        //            headers: { 'Content-Type': 'application/json' }
+        //        });
+        //}
 
         return {
             login: login,
             logout: logout,
-            registerAuthenticationListener: registerAuthenticationListener,
-            signup: signup,
-            updateProfile: updateProfile
+            registerAuthenticationListener: registerAuthenticationListener
         }
     }
 })();

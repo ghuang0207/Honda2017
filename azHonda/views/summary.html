@@ -53,36 +53,39 @@
 
                     <h6 class="md-display">Multi-State by Topic</h6>
 
-                    <div ng-if="isAdmin!==true">
-                        Under Construction
-                    </div>
-
-                    <div ng-if="isAdmin===true" layout="column">
+                    <div layout="column">
                         <hr />
 
-                        <md-radio-group ng-model="select_Category" class="md-primary" layout="row" ng-model-options="{trackBy: '$value.CategoryId'}">
+                        <div>
+                            <md-radio-group ng-model="select_Category.CategoryId" class="md-primary" layout="row" ng-model-options="{trackBy: '$value.CategoryId'}">
 
-                            <md-radio-button ng-repeat="c in categories"
-                                             ng-value="c"
-                                             class="md-align-top-left"
-                                             aria-label="{{c.Category}}">
-                                {{ c.Category }}<br />
+                                <md-radio-button ng-repeat="c in categories"
+                                                 ng-value="c.CategoryId"
+                                                 class="md-align-top-left"
+                                                 aria-label="{{c.Category}}">
+                                    {{ c.Category }}<br />
 
-                            </md-radio-button>
+                                </md-radio-button>
 
-                        </md-radio-group>
+                            </md-radio-group>
+                        </div>
 
+                        <div>
+                            <md-input-container>
+                                <md-select ng-model="select_Subject" placeholder="Select Topic" class="md-no-underline" ng-model-options="{trackBy: '$value.Subject'}">
+                                    <md-option ng-repeat="sub in subjects | orderBy:'Subject'" ng-value="sub">
+                                        {{sub.Subject}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
 
-                        <label>Subject</label>
-                        <md-select aria-label="Select Subject" ng-model="select_Subject" ng-model-options="{trackBy: '$value.Subject'}" ng-change="SearchTopics_by_Subject()">
-                            <md-option ng-value="">
-                                Please select a subject...
-                            </md-option>
-                            <md-option ng-repeat="s in subjects | orderBy:'Subject'" ng-value="s">
-                                {{s.Subject}}
-                            </md-option>
-                        </md-select>
-                    
+                        <div class="md-align-top-center">
+                            <md-button class="md-primary md-raised" type="button" ng-click="SearchTopics_by_Subject()">
+                                Get Topics
+                            </md-button>
+                        </div>
+
                         <div layout="column" layout-wrap flex ng-if="subjectTopicStates.length > 0">
                             <div flex-xs flex="10">
                                 <md-checkbox aria-label="Select All"

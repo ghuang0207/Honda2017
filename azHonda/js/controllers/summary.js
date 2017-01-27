@@ -9,15 +9,16 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     //$scope.Topics = [];
     $scope.Info = {};
 
-    $scope.select_Category = {CategoryId: '1' };
-    $scope.select_Subject = {Subject: ''};
     $scope.subjectTopicStates = []; //StateName
     $scope.selectedMultiStates = []; //StateName
     $scope.notCheckedSubjectTopics = [];
     $scope.showSearchResult = false;
 
+    // Load init data
     SrvData.ListAllCategories().then(function (response) {
         $scope.categories = response.data;
+        // set pre-select data
+        $scope.select_Category = {CategoryId: "1"};
     }, function (err) {
         console.log(err);
     });
@@ -26,20 +27,32 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     }, function (err) {
         console.log(err);
     });
-
     $scope.ListAllSubjects = function () {
         SrvData.ListAllSubjects().then(function (response) {
-            $scope.subjects = response.data;
+            $scope.subjects = $.grep(response.data, function (s) {
+                return s.Category.CategoryId.toString() == $scope.select_Category.CategoryId;
+            });
+            $scope.subjects = $filter('unique')($scope.subjects, 'Subject');
         }, function (err) {
             console.log(err);
         });
     };
-    // page init load
-    $scope.ListAllSubjects();
+
+    $scope.$watch('select_Category', function (select_Category) {
+        debugger;
+        $scope.ListAllSubjects();
+    }, true);
+
+    $scope.$watch('Topics', function (Topics) {
+        $scope.Info = {
+            topics: $scope.Topics
+        };
+    }, true);
 
     // multi-state by topic tab
     $scope.SearchTopics_by_Subject = function () {
-        if ($scope.select_Category && $scope.select_Subject != "") {
+        debugger;
+        if ($scope.select_Category && $scope.select_Subject) {
             SrvData.GetTopics_by_Subject($scope.select_Subject.Subject, $scope.select_Category.CategoryId).then(function (response) {
                 $scope.SubjectTopics = response.data;
 
@@ -51,9 +64,17 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                         //default to all select
                         $scope.selectedMultiStates = $scope.subjectTopicStates.slice(0);
                     });
+
+                    $scope.Topics = formatTopicLists($scope.SubjectTopics);
+                }
+                else {
+                    $scope.Topics = [];
                 }
 
-                $scope.Topics = formatTopicLists($scope.SubjectTopics);
+                $scope.Info = {
+                    topics: $scope.Topics
+                };
+
                 $scope.showBySubjectResult = true;
                 $scope.isAllowEdit = false;
             }, function (err) {
@@ -162,7 +183,6 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         $scope.showSearchResult = false;
         // multi-state by topic
         $scope.showBySubjectResult = false;
-        $scope.select_Subject = { Subject: '' };
         $scope.subjectTopicStates = [];
         $scope.selectedMultiStates = [];
     }
@@ -175,7 +195,6 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             SrvData.ListAllTopics().then(function (response) {
                 $scope.Topics = response.data;
                 $scope.Topics = $filter('filter')($scope.Topics, keyword);
-                debugger;
                 
                 // format for tree
                 angular.forEach($scope.Topics, function (topic) {

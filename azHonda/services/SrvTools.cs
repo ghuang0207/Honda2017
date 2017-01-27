@@ -150,7 +150,11 @@ namespace azHonda.services
                     {
                         subjects.Add(new TopicVO
                         {
-                            Subject = reader["subject"].ToString()
+                            Subject = reader["subject"].ToString(),
+                            Category = new CategoryVO()
+                            {
+                                CategoryId = reader["CategoryId"].ToString()
+                            }
                         });
                     }
                 }
