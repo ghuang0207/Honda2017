@@ -14,46 +14,6 @@
                         <p><strong>Created At: </strong> {{profile.created_at}}</p>
                         <p><strong>Updated At: </strong> {{profile.updated_at}}</p>
                     </div>
-                    <div style="display: none;">
-                        <md-button ng-click="sendChangePwEmail()">
-                            Send Change Password Email
-                        </md-button>
-                    </div>
-
-                </md-content>
-            </md-tab>
-            <md-tab label="Create Account" ng-if="isAdmin">
-                <md-content class="md-padding" style="min-height: 530px;" layout="column" layout-fill>
-
-                    <div layout="row" flex="15">
-                        <div id="login-container">
-                            <form>
-                                <div class="form-group">
-                                    <label for="user">Username</label>
-                                    <input class="form-control"
-                                           id="username"
-                                           type="text"
-                                           name="username"
-                                           ng-model="vm.username"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input class="form-control"
-                                           id="password"
-                                           type="password"
-                                           name="password"
-                                           ng-model="vm.password"/>
-                                </div>
-                                <button class="btn btn-primary"
-                                        type="submit"
-                                        ng-click="vm.auth.signup(vm.username, vm.password)">
-                                    Sign Up
-                                </button>
-                            </form>
-
-                        </div>
-                    </div>
-
                 </md-content>
             </md-tab>
         </md-tabs>
