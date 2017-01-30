@@ -23,13 +23,8 @@
                         </div>
                     </div>
 
-                    <!--temp-->
-                    <div flex ng-if="isAdmin !==true && c.Category != 'Marine'">
-                        Under Construction
-                    </div>
-
                     <!--tab content-->
-                    <div layout="column" ng-if="(isAdmin === true && !showSearchResult) || (c.Category == 'Marine' && !showSearchResult)" layout-wrap style="max-height: 500px;">
+                    <div layout="column" layout-wrap style="max-height: 500px;">
                         <div ng-repeat="s in states | orderBy:'StateName'">
                             <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStateTopicsDialog($event, s, c.CategoryId)">
                                 {{s.StateName}}

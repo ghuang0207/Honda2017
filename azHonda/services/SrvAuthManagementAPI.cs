@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Auth0.ManagementApi;
 using System.Threading.Tasks;
-using Auth0.ManagementApi.Models;
+//using Auth0.ManagementApi.Models;
 using RestSharp;
 
 namespace azHonda.services
@@ -35,10 +35,10 @@ namespace azHonda.services
         {
             var client = new RestClient("http://foley.auth0.com/api/v2/users");
             RestRequest request = new RestRequest(Method.GET);
-            //request.AddHeader("authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ6VU4ydFhVWUE2SFlpcnpnTmdFSlI2SDNoWmVhTWpDQyIsInNjb3BlcyI6eyJ1c2VycyI6eyJhY3Rpb25zIjpbInJlYWQiXX0sInVzZXJfaWRwX3Rva2VucyI6eyJhY3Rpb25zIjpbInJlYWQiXX19LCJpYXQiOjE0ODU1MTIxNzQsImp0aSI6IjQ5MTg0YjNjZGE2MTU5MTczNGM1MDM2ZmZhYWE4ZjJiIn0.4bJe_qooYKGRb5oAvN-y9PICSv9s2d8AoYMGX3yU34Q");
-            request.AddParameter("Authorization",
-                String.Format("Bearer {0}", token),
-            ParameterType.HttpHeader);
+            request.AddHeader("authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ6VU4ydFhVWUE2SFlpcnpnTmdFSlI2SDNoWmVhTWpDQyIsInNjb3BlcyI6eyJ1c2VycyI6eyJhY3Rpb25zIjpbInJlYWQiXX0sInVzZXJfaWRwX3Rva2VucyI6eyJhY3Rpb25zIjpbInJlYWQiXX19LCJpYXQiOjE0ODU1MTIxNzQsImp0aSI6IjQ5MTg0YjNjZGE2MTU5MTczNGM1MDM2ZmZhYWE4ZjJiIn0.4bJe_qooYKGRb5oAvN-y9PICSv9s2d8AoYMGX3yU34Q");
+            //request.AddParameter("Authorization",
+            //    String.Format("Bearer {0}", token),
+            //ParameterType.HttpHeader);
             var response = client.Execute(request);
         }
     }
