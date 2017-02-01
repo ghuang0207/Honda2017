@@ -61,7 +61,7 @@ function ($stateProvider, $urlRouterProvider, lockProvider, jwtOptionsProvider, 
             options: {
                 theme: {
                     logo: '../images/FH-logo-Honda.png',
-                    primaryColor: "#0077be" //"#b81b1c"
+                    primaryColor: "#0077be"
                 },
                 languageDictionary: {
                     title: "Log in"

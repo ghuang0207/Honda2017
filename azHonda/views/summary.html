@@ -5,12 +5,13 @@
 </style>
 
 
-<div class="container-fluid" style="max-width:85vw;padding:0px !important"> <!--ng-controller="MainCtrl"-->
+<div class="container-fluid" style="max-width:85vw;padding:0px !important">
 
     <md-content>
         <md-tabs md-border-bottom style="min-height: 600px;">
             <md-tab label="{{c.Category}}" ng-repeat="c in categories" md-on-select="hideSearchResultView()">
                 <md-content class="md-padding cScreenOnly" style="min-height: 530px;" layout="column" layout-fill>
+                    
                     <div layout="row" flex="15">
                         <div flex="70">
                             <h6 class="md-display">{{c.Category}}</h6>
@@ -23,21 +24,20 @@
                         </div>
                     </div>
 
-                    <!--tab content-->
-                    <div layout="column" layout-wrap style="max-height: 500px;">
+                    <!-- State buttons list -->
+                    <div layout="column" ng-if="!showSearchResult" layout-wrap style="max-height: 500px;" flex>
                         <div ng-repeat="s in states | orderBy:'StateName'">
                             <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStateTopicsDialog($event, s, c.CategoryId)">
                                 {{s.StateName}}
                             </md-button>
                         </div>
                     </div>
-                    <!-- search results-->
-                    <div layout="column" ng-if="showSearchResult">
+                    <!-- search results -->
+                    <div layout="column" ng-if="showSearchResult" flex>
                         <div flex="5">
                             <a ng-click="hideSearchResultView()">Back to State List</a>
                         </div>
-                        <!--<div flex ng-include="'views/topics.html'"></div>-->
-                        <topiclist info="Info"></topiclist>
+                        <topiclist info="By_Search_Topics_Info"></topiclist>
                     </div>
 
                 </md-content>
@@ -104,7 +104,7 @@
                         <!--multi state by topic filter results-->
                         <div layout="column" ng-if="showBySubjectResult">
                             <!--<div flex ng-include="'views/topics.html'"></div>-->
-                            <topiclist info="Info"></topiclist>
+                            <topiclist info="By_Subject_Topics_Info"></topiclist>
                         </div>
 
                     </div>

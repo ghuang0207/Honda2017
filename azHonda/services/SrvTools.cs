@@ -218,11 +218,13 @@ namespace azHonda.services
             }
         }
 
-        public static List<TopicVO> ListAllTopics()
+        public static List<TopicVO> ListAllTopics(int CategoryId)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
             SqlCommand cmd = new SqlCommand("list_all_topics", conn);
             cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@categoryId", CategoryId);
 
             try
             {

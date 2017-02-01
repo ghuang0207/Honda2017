@@ -6,12 +6,14 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     $scope.states = [];
     $scope.categories = [];
     $scope.subjects = [];
-    //$scope.Topics = [];
-    $scope.Info = {};
+    $scope.By_State_Topics_Info = {};
+    $scope.By_Search_Topics_Info = {};
 
+    $scope.By_Subject_Topics_Info = {};
     $scope.subjectTopicStates = []; //StateName
     $scope.selectedMultiStates = []; //StateName
-    $scope.notCheckedSubjectTopics = [];
+    $scope.displayingSubjectTopics = []; // for 'watch' to update By_Subject_Topics_Info to update directive to show filtered subject topic list
+    $scope.notCheckedSubjectTopics = []; //Temp storage of original/non-filter_by_subject_yet topics, so later can get unchecked topic back from this list
     $scope.showSearchResult = false;
 
     // Load init data
@@ -29,6 +31,10 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     });
     $scope.ListAllSubjects = function () {
         SrvData.ListAllSubjects().then(function (response) {
+            // List unique subject based on selected category
+            if ($scope.select_Category == undefined) {
+                $scope.select_Category = { CategoryId: "1" };
+            }
             $scope.subjects = $.grep(response.data, function (s) {
                 return s.Category.CategoryId.toString() == $scope.select_Category.CategoryId;
             });
@@ -39,99 +45,41 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     };
 
     $scope.$watch('select_Category', function (select_Category) {
-        debugger;
+        // update subjects dropdown when category change
         $scope.ListAllSubjects();
     }, true);
 
-    $scope.$watch('Topics', function (Topics) {
-        $scope.Info = {
-            topics: $scope.Topics
+    // centralized watch displayingSubjectTopics to update By_Subject_Topics_Info object to pass into Directive
+    $scope.$watch('displayingSubjectTopics', function (displayingSubjectTopics) {
+        // update subjects dropdown when category change
+        $scope.By_Subject_Topics_Info = {
+            topics: displayingSubjectTopics
         };
     }, true);
 
-    // multi-state by topic tab
-    $scope.SearchTopics_by_Subject = function () {
-        debugger;
-        if ($scope.select_Category && $scope.select_Subject) {
-            SrvData.GetTopics_by_Subject($scope.select_Subject.Subject, $scope.select_Category.CategoryId).then(function (response) {
-                $scope.SubjectTopics = response.data;
-
-                var subjectTopics = $filter('unique')($scope.SubjectTopics, 'State');
-                $scope.subjectTopicStates = [];
-                if (subjectTopics != "null") {
-                    angular.forEach(subjectTopics, function (topic) {
-                        $scope.subjectTopicStates.push(topic.State.StateName);
-                        //default to all select
-                        $scope.selectedMultiStates = $scope.subjectTopicStates.slice(0);
-                    });
-
-                    $scope.Topics = formatTopicLists($scope.SubjectTopics);
-                }
-                else {
-                    $scope.Topics = [];
-                }
-
-                $scope.Info = {
-                    topics: $scope.Topics
-                };
-
-                $scope.showBySubjectResult = true;
-                $scope.isAllowEdit = false;
-            }, function (err) {
-                console.log(err);
-            });
-        }
-        else {
-            alert("please select a category and subject.");
-        }
+    // Starts - multi-state by topics controls
+    $scope.exists = function (item, list) {
+        return list.indexOf(item) > -1;
     };
-
-    // control tree expand and json formating etc.
-    function formatTopicLists(topicList) {
-        angular.forEach(topicList, function (topic) {
-            try {
-                var topicJSON = JSON.parse(topic.Content)
-                if (topicJSON.hasOwnProperty('tree_Subsections')) {
-                    topic.tree_Subsections = topicJSON.tree_Subsections;
-                    //format tree expand element
-                    angular.forEach(topic.tree_Subsections, function (Subsection) {
-                        if (Subsection) {
-                            Subsection.ctrl_IsExpand = false;
-                            angular.forEach(Subsection.tree_Questions, function (Question) {
-                                Question.ctrl_IsExpand = false;
-                            });
-                        }
-                    });
-                }
-                if (topicJSON.hasOwnProperty('tree_Value')) {
-                    topic.tree_Value = topicJSON.tree_Value;
-                }
-            }
-            catch (e) {
-                console.log(e);
-            }
-            //catch-all: to initiate all topics with at least empty array for tree_Subsections to prevent error
-            if (topic.tree_Subsections == undefined) {
-                topic.tree_Subsections = [];
-            }
-        });
-
-        return topicList
-    }
-
-    // multi-state by topics controls
+    $scope.isIndeterminate = function () {
+        return ($scope.selectedMultiStates.length !== 0 &&
+            $scope.selectedMultiStates.length !== $scope.subjectTopicStates.length);
+    };
+    $scope.isChecked = function () {
+        return $scope.selectedMultiStates.length === $scope.subjectTopicStates.length;
+    };
     $scope.toggle = function (item, list) {
-        var idx = list.indexOf(item);
         debugger;
+        var idx = list.indexOf(item);
         if (idx > -1) {
             // existed, so remove
             list.splice(idx, 1);
 
             // control filtered topic list
-            angular.forEach($scope.Topics, function (topic) {
+            angular.forEach($scope.displayingSubjectTopics, function (topic) {
                 if (topic.State.StateName == item){
-                    var topic_idx = $scope.Topics.indexOf(topic);
-                    $scope.Topics.splice(topic_idx, 1);
+                    var topic_idx = $scope.displayingSubjectTopics.indexOf(topic);
+                    $scope.displayingSubjectTopics.splice(topic_idx, 1);
                     $scope.notCheckedSubjectTopics.push(topic);
                 }
             });
@@ -145,39 +93,28 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                 if (topic.State.StateName == item) {
                     var topic_idx = $scope.notCheckedSubjectTopics.indexOf(topic);
                     $scope.notCheckedSubjectTopics.splice(topic_idx, 1);
-                    $scope.Topics.push(topic);
+                    $scope.displayingSubjectTopics.push(topic);
                 }
             });
         }
-    };
-    $scope.exists = function (item, list) {
-        return list.indexOf(item) > -1;
-    };
-    $scope.isIndeterminate = function () {
-        return ($scope.selectedMultiStates.length !== 0 &&
-            $scope.selectedMultiStates.length !== $scope.subjectTopicStates.length);
-    };
-    $scope.isChecked = function () {
-        return $scope.selectedMultiStates.length === $scope.subjectTopicStates.length;
     };
     $scope.toggleAll = function () {
         if ($scope.selectedMultiStates.length === $scope.subjectTopicStates.length) {
             //if checked all, uncheck all.
             $scope.selectedMultiStates = [];
-            $scope.notCheckedSubjectTopics = $scope.Topics.slice(0);
-            $scope.Topics = [];
+            $scope.notCheckedSubjectTopics = $scope.displayingSubjectTopics.slice(0);
+            $scope.displayingSubjectTopics = [];
         } else if ($scope.selectedMultiStates.length === 0 || $scope.selectedMultiStates.length > 0) {
             //if none or have at least one checked, 
                 //select entire array to a new array object//
             $scope.selectedMultiStates = $scope.subjectTopicStates.slice(0);
             angular.forEach($scope.notCheckedSubjectTopics, function (topic) {
-                $scope.Topics.push(topic);
+                $scope.displayingSubjectTopics.push(topic);
             });
             $scope.notCheckedSubjectTopics = [];
         }
     };
-    //*/
-
+    // End - multi-state by topics controls */
 
     $scope.hideSearchResultView = function () {
         $scope.showSearchResult = false;
@@ -188,60 +125,62 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     }
 
     $scope.onEnterSearch = function ($event, keyword, categoryId) {
+        debugger;
         $event.preventDefault();
 
         if ($event.keyCode == 13) {
-            //To-do: Change ListAllTopics to search (remember to add category = '')
-            SrvData.ListAllTopics().then(function (response) {
-                $scope.Topics = response.data;
-                $scope.Topics = $filter('filter')($scope.Topics, keyword);
+            SrvData.ListAllTopics(categoryId).then(function (response) {
+                var topics = response.data;
+                topics = $filter('filter')(topics, keyword);
                 
-                // format for tree
-                angular.forEach($scope.Topics, function (topic) {
-                    try {
-                        var topicJSON = JSON.parse(topic.Content)
-                        if (topicJSON.hasOwnProperty('tree_Subsections')) {
-                            topic.tree_Subsections = topicJSON.tree_Subsections;
-                            //format tree expand element
-                            angular.forEach(topic.tree_Subsections, function (Subsection) {
-                                if (Subsection) {
-                                    Subsection.ctrl_IsExpand = false;
-                                    angular.forEach(Subsection.tree_Questions, function (Question) {
-                                        Question.ctrl_IsExpand = false;
-                                    });
-                                }
-                            });
-                        }
-                        if (topicJSON.hasOwnProperty('tree_Value')) {
-                            topic.tree_Value = topicJSON.tree_Value;
-                        }
-                    }
-                    catch (e) {
-                        console.log(e);
-                    }
-                    //catch-all: to initiate all topics with at least empty array for tree_Subsections to prevent error
-                    if (topic.tree_Subsections == undefined) {
-                        topic.tree_Subsections = [];
-                    }
-                });
-                $scope.isAllowEdit = false;
-
-                $scope.Info = {
-                    topics: $scope.Topics
+                $scope.By_Search_Topics_Info = {
+                    topics: topics
                 };
 
+                $scope.isAllowEdit = false;
                 $scope.showSearchResult = true;
 
-                console.log($scope.Topics);
+                console.log(topics);
             }, function (err) {
                 console.log(err);
             });
         }
     }
 
+    // multi-state by topic tab
+    $scope.SearchTopics_by_Subject = function () {
+        if ($scope.select_Category && $scope.select_Subject) {
+            // get data and filter it for $scope.displayingSubjectTopics
+            SrvData.GetTopics_by_Subject($scope.select_Subject.Subject, $scope.select_Category.CategoryId).then(function (response) {
+                var subjectTopics = response.data;
+
+                if (subjectTopics != "null") {
+                    angular.forEach(subjectTopics, function (topic) {
+                        $scope.subjectTopicStates.push(topic.State.StateName);
+                        //set default to all select
+                        $scope.selectedMultiStates = $scope.subjectTopicStates.slice(0);
+                    });
+                    
+                    $scope.displayingSubjectTopics = subjectTopics;
+                }
+                else {
+                    $scope.displayingSubjectTopics = [];
+                }
+
+                $scope.showBySubjectResult = true;
+                $scope.isAllowEdit = false;
+            }, function (err) {
+                console.log(err);
+            });
+        }
+        else {
+            alert("please select a category and subject.");
+        }
+    };
+
     $scope.ShowStateTopicsDialog = function (ev, StateInfo, categoryId) {
         //Dialog Control Init
-        $scope.Info = {
+        $scope.By_State_Topics_Info = {
             StateInfo: StateInfo,
             categoryId: categoryId
         };
@@ -254,13 +193,13 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             clickOutsideToClose: false,
             fullscreen: $scope.customFullscreen, // Only for -xs, -sm breakpoints.
             locals: {
-                Info: $scope.Info
+                Info: $scope.By_State_Topics_Info
             }
         })
         .then(function (returnVal) {
-            $scope.ListAllSubjects();
+            // md callback when dialog return value
         }, function () {
-            $scope.ListAllSubjects();
+            // md callback when dialog return value
         });
     };
 
@@ -270,7 +209,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         $scope.isAdmin = $rootScope.isAdmin;
         $scope.Info = Info;
 
-        // Note section
+        //State Note section
         $scope.GetNote_by_State = function () {
             SrvData.GetNote_by_State($scope.StateInfo.StateCode, $scope.categoryId).then(function (response) {
                 if (response.data != "null") {
@@ -298,19 +237,13 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
 
             $scope.GetNote_by_State();
         }
-        if ($scope.Info.hasOwnProperty("subject")) {
-            $scope.isAllowEdit = false;
-            $scope.title = $scope.Info.subject
-            console.log($scope)
-        }
 
-        //Note CRUD
+        //State Note CRUD
         $scope.EditNote = function () {
             console.log(changedTopic)
             $scope.NoteObj.ctrl_IsEdit = true;
         };
         $scope.SaveChangeNote = function () {
-            debugger;
             $scope.NoteObj.StateCode = $scope.StateInfo.StateCode;
             $scope.NoteObj.CategoryId = $scope.categoryId;
             SrvData.AddUpdateNote($scope.NoteObj).then(function (response) {
@@ -324,8 +257,9 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         $scope.CancelChangeNote = function () {
             $scope.GetNote_by_State();
         };
-
+        
         $scope.AddNewTopic = function () {
+            // call the add new topic in topiclist directive
             $scope.$broadcast('AddNewTopic')
             // and in directive, it will listen for this broadcast and run the defined "addNewTopic" function inside the directive
         };
@@ -335,8 +269,6 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             $mdDialog.cancel();
         };
         $scope.print = function () {
-            //$timeout($window.print, 0);
-            debugger;
             var contentToPrint = document.getElementById('testprint').innerHTML;
             var windowPopup = $window.open('', '_blank', 'width=1500,height=1500');
             windowPopup.document.open();

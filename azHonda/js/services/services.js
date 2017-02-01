@@ -20,11 +20,11 @@
                     headers: { 'Content-Type': 'application/json' }
                 });
             },
-            ListAllTopics: function () {
+            ListAllTopics: function (categoryId) {
                 return $http(
                 {
                     method: 'Get',
-                    url: 'wsServices/wsSrvTools.asmx/ListAllTopics',
+                    url: 'wsServices/wsSrvTools.asmx/ListAllTopics?categoryId=' + categoryId,
                     headers: { 'Content-Type': 'application/json' }
                 });
             },

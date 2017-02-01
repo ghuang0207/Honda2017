@@ -68,11 +68,11 @@ namespace azHonda.wsSrvTools
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
-        public void ListAllTopics()
+        public void ListAllTopics(string categoryId)
         {
             try
             {
-                string result = new JavaScriptSerializer().Serialize(SrvTools.ListAllTopics());
+                string result = new JavaScriptSerializer().Serialize(SrvTools.ListAllTopics(Convert.ToInt32(categoryId)));
                 Context.Response.Write(result);
             }
             catch (Exception ex)

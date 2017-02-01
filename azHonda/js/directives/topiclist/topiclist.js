@@ -12,7 +12,7 @@ app.directive('topiclist', ['$location', function () {
           controller: function ($rootScope, $scope, SrvData, $filter, $window, $q, $timeout) {
               // data initialization
               $scope.$watch('Info', function (Info) {
-                  debugger;
+                  // get topiclist by state
                   if ($scope.Info.hasOwnProperty("categoryId")) {
                       $scope.isAllowEdit = true;
                       $scope.StateInfo = $scope.Info.StateInfo;
@@ -20,80 +20,25 @@ app.directive('topiclist', ['$location', function () {
 
                       SrvData.GetTopics_by_State($scope.StateInfo.StateCode, $scope.categoryId).then(function (response) {
                           if (response.data != "null") {
-                              $scope.Topics = response.data;
-                              // format for tree
-                              angular.forEach($scope.Topics, function (topic) {
-                                  try {
-                                      var topicJSON = JSON.parse(topic.Content)
-                                      if (topicJSON.hasOwnProperty('tree_Subsections')) {
-                                          topic.tree_Subsections = topicJSON.tree_Subsections;
-                                          //format tree expand element
-                                          angular.forEach(topic.tree_Subsections, function (Subsection) {
-                                              if (Subsection) {
-                                                  Subsection.ctrl_IsExpand = false;
-                                                  angular.forEach(Subsection.tree_Questions, function (Question) {
-                                                      Question.ctrl_IsExpand = false;
-                                                  });
-                                              }
-                                          });
-                                      }
-                                      if (topicJSON.hasOwnProperty('tree_Value')) {
-                                          topic.tree_Value = topicJSON.tree_Value;
-                                      }
-                                  }
-                                  catch (e) {
-                                      console.log(e);
-                                  }
-                                  //catch-all: to initiate all topics with at least empty array for tree_Subsections to prevent error
-                                  if (topic.tree_Subsections == undefined) {
-                                      topic.tree_Subsections = [];
-                                  }
-                              });
+                              $scope.Topics = formatTopicLists(response.data);
                               console.log($scope.Topics);
                           }
                       }, function (err) {
                           console.log(err);
                       });
-
                   }
-                  if ($scope.Info.hasOwnProperty("subject")) {
-                      $scope.isAllowEdit = false;
-                      $scope.subject = $scope.Info.subject;
-                      $scope.title = $scope.subject;
-                      console.log($scope)
-
-                      if ($scope.Topics.length > 0) {
-                          //format for tree
-                          angular.forEach($scope.Topics, function (topic) {
-                              try {
-                                  topic.tree_Subsections = JSON.parse(topic.Content).tree_Subsections;
-                              }
-                              catch (e) {
-                                  console.log(e);
-                              }
-                              //catch-all: to initiate all topics with at least empty array for tree_Subsections to prevent error
-                              if (topic.tree_Subsections == undefined) {
-                                  topic.tree_Subsections = [];
-                              }
-                          });
-                          console.log($scope.Topics);
-                      }
-                  }
+                  // by topiclist
                   if ($scope.Info.hasOwnProperty("topics")) {
-                      debugger;
-                      $scope.Topics = $scope.Info['topics'];
+                      // Stop binding; so that when expand/collapse won't trigger reload again
+                        // - stop binding is a must, so that all collapse/expand won't be override by initial settings
+                      $scope.Topics = formatTopicLists(angular.copy($scope.Info['topics']));
                   }
-
               }, true);
               $scope.isAdmin = $rootScope.isAdmin;
               $scope.Topics = [];
               $scope.$watch('Topics', function (Topics) {
                   $scope.modelAsJson = angular.toJson(Topics, true);
               }, true);
-
-              
-
-              // To do: topics Expand All/Collapse All
 
 
               // Topic ops (at dialog level access - Add)
@@ -113,7 +58,16 @@ app.directive('topiclist', ['$location', function () {
                   $scope.Topics.push(newTopic);
                   console.log(newTopic);
               };
-              // topics Edit/save/cancel/delete
+
+              // Topics Expand All/Collapse All
+              $scope.ControlAllTopicsExpand = function (Action) {
+                  angular.forEach($scope.Topics, function (topic) {
+                      topic.ctrl_IsExpand = Action
+                      topic.tree_Subsections = toggleTreeTopicChildElements(topic.tree_Subsections, Action, Action);
+                  });
+              };
+
+              // Topics Edit/save/cancel/delete
               $scope.EditTopic = function (changedTopic) {
                   console.log(changedTopic)
                   changedTopic.ctrl_IsEdit = true;
@@ -205,6 +159,47 @@ app.directive('topiclist', ['$location', function () {
                       //if has another child layer, need to add an empty array (refer to addSubsection)
                   });
               };
+
+
+              // shared control tree expand and json formating etc.
+              function formatTopicLists(topicList) {
+                  angular.forEach(topicList, function (topic) {
+                      try {
+                          var topicJSON = JSON.parse(topic.Content)
+                          // Subsections
+                          if (topicJSON.hasOwnProperty('tree_Subsections')) {
+                              topic.tree_Subsections = toggleTreeTopicChildElements(topicJSON.tree_Subsections, false, false);                              
+                          }
+                          // Text
+                          if (topicJSON.hasOwnProperty('tree_Value')) {
+                              topic.tree_Value = topicJSON.tree_Value;
+                          }
+                      }
+                      catch (e) {
+                          console.log(e);
+                      }
+                      //catch-all: to initiate all topics with at least empty array for tree_Subsections to prevent error
+                      if (topic.tree_Subsections == undefined) {
+                          topic.tree_Subsections = [];
+                      }
+                  });
+
+                  return topicList
+              }
+
+              function toggleTreeTopicChildElements(tree_Subsections, subsectionExpand, QuestionExpand) {
+                  // input SINGLE topic: format tree expand element
+                  angular.forEach(tree_Subsections, function (Subsection) {
+                      if (Subsection) {
+                          Subsection.ctrl_IsExpand = subsectionExpand; //True/False
+                          angular.forEach(Subsection.tree_Questions, function (Question) {
+                              Question.ctrl_IsExpand = QuestionExpand; //True/False
+                          });
+                      }
+                  });
+                  return tree_Subsections;
+              }
+
           }
       }
   }]);
