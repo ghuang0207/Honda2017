@@ -260,7 +260,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         
         $scope.AddNewTopic = function () {
             // call the add new topic in topiclist directive
-            $scope.$broadcast('AddNewTopic')
+            $scope.$broadcast('AddNewTopic');
             // and in directive, it will listen for this broadcast and run the defined "addNewTopic" function inside the directive
         };
         
@@ -269,10 +269,13 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             $mdDialog.cancel();
         };
         $scope.print = function () {
+            // expand all topics first
+            $scope.$broadcast('ControlAllTopicsExpand', { Action: true });
+
             var contentToPrint = document.getElementById('testprint').innerHTML;
             var windowPopup = $window.open('', '_blank', 'width=1500,height=1500');
             windowPopup.document.open();
-            windowPopup.document.write('<html><head><link rel="stylesheet" type="text/css" href="" /></head><body onload="window.print()">' + contentToPrint + '</body></html>');
+            windowPopup.document.write('<html><head><link rel="stylesheet" type="text/css" href="" /><style></style></head><body onload="window.print()">' + contentToPrint + '</body></html>');
             windowPopup.document.close();
         }
     };

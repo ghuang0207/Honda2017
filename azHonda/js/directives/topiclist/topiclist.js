@@ -43,8 +43,8 @@ app.directive('topiclist', ['$location', function () {
 
               // Topic ops (at dialog level access - Add)
               $scope.$on('AddNewTopic', function () {
-                  $scope.AddNewTopic()
-              })
+                  $scope.AddNewTopic();
+              });
               $scope.AddNewTopic = function () {
                   var newTopic = {
                       'TopicId': -1,
@@ -59,7 +59,11 @@ app.directive('topiclist', ['$location', function () {
                   console.log(newTopic);
               };
 
-              // Topics Expand All/Collapse All
+              // Topics Expand All/Collapse All 
+              $scope.$on('ControlAllTopicsExpand', function (event, args) {
+                  // http://stackoverflow.com/questions/19446755/on-and-broadcast-in-angular
+                  $scope.ControlAllTopicsExpand(args.Action);
+              });
               $scope.ControlAllTopicsExpand = function (Action) {
                   angular.forEach($scope.Topics, function (topic) {
                       topic.ctrl_IsExpand = Action
