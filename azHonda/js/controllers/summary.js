@@ -199,6 +199,10 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         });
     };
 
+    $scope.ShowStatuteDialog = function (ev, StateInfo, categoryId) {
+        alert('Under Construction');
+    }
+
 
     // Dialog scope directive ----------------------
     function DialogController($rootScope, $scope, $mdDialog, Info) {

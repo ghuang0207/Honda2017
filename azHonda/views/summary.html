@@ -45,8 +45,12 @@
 
             <md-tab label="Statutes" md-on-select="hideSearchResultView()">
                 <md-content class="md-padding cScreenOnly" style="min-height: 530px;" layout="column" layout-fill>
-                    <div>
-                        Under Construction
+                    <div layout="column" ng-if="!showSearchResult" layout-wrap style="max-height: 500px;" flex>
+                        <div ng-repeat="s in states | orderBy:'StateName'">
+                            <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStatuteDialog($event, s, category.CategoryId)">
+                                {{s.StateName}}
+                            </md-button>
+                        </div>
                     </div>
                 </md-content>
             </md-tab>
