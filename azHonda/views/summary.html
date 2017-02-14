@@ -9,17 +9,17 @@
 
     <md-content>
         <md-tabs md-border-bottom style="min-height: 600px;">
-            <md-tab label="{{c.Category}}" ng-repeat="c in categories" md-on-select="hideSearchResultView()">
+            <md-tab label="Summaries" md-on-select="hideSearchResultView()">
                 <md-content class="md-padding cScreenOnly" style="min-height: 530px;" layout="column" layout-fill>
                     
                     <div layout="row" flex="15">
                         <div flex="70">
-                            <h6 class="md-display">{{c.Category}}</h6>
+                            <h6 class="md-display">{{category.Category}}</h6>
                         </div>
                         <div flex>
                             <md-input-container md-no-float class="md-block" style="margin:0px;">
                                 <md-icon class="material-icons" style="color: dodgerblue">search</md-icon>
-                                <input ng-model="search" type="text" placeholder="Search topics" ng-keyup="onEnterSearch($event,search, c.CategoryId)">
+                                <input ng-model="search" type="text" placeholder="Search topics" ng-keyup="onEnterSearch($event,search, category.CategoryId)">
                             </md-input-container>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                     <!-- State buttons list -->
                     <div layout="column" ng-if="!showSearchResult" layout-wrap style="max-height: 500px;" flex>
                         <div ng-repeat="s in states | orderBy:'StateName'">
-                            <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStateTopicsDialog($event, s, c.CategoryId)">
+                            <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStateTopicsDialog($event, s, category.CategoryId)">
                                 {{s.StateName}}
                             </md-button>
                         </div>
@@ -43,28 +43,20 @@
                 </md-content>
             </md-tab>
 
+            <md-tab label="Statutes" md-on-select="hideSearchResultView()">
+                <md-content class="md-padding cScreenOnly" style="min-height: 530px;" layout="column" layout-fill>
+                    <div>
+                        Under Construction
+                    </div>
+                </md-content>
+            </md-tab>
+
             <md-tab label="Multi-State by Topic" md-on-select="hideSearchResultView()">
                 <md-content class="md-padding cScreenOnly">
 
                     <h6 class="md-display">Multi-State by Topic</h6>
 
                     <div layout="column">
-                        <hr />
-
-                        <div>
-                            <md-radio-group ng-model="select_Category.CategoryId" class="md-primary" layout="row" ng-model-options="{trackBy: '$value.CategoryId'}">
-
-                                <md-radio-button ng-repeat="c in categories"
-                                                 ng-value="c.CategoryId"
-                                                 class="md-align-top-left"
-                                                 aria-label="{{c.Category}}">
-                                    {{ c.Category }}<br />
-
-                                </md-radio-button>
-
-                            </md-radio-group>
-                        </div>
-
                         <div>
                             <md-input-container>
                                 <md-select ng-model="select_Subject" placeholder="Select Topic" class="md-no-underline" ng-model-options="{trackBy: '$value.Subject'}">
@@ -103,12 +95,19 @@
 
                         <!--multi state by topic filter results-->
                         <div layout="column" ng-if="showBySubjectResult">
-                            <!--<div flex ng-include="'views/topics.html'"></div>-->
                             <topiclist info="By_Subject_Topics_Info"></topiclist>
                         </div>
 
                     </div>
 
+                </md-content>
+            </md-tab>
+
+            <md-tab label="Recent Updates" md-on-select="hideSearchResultView()">
+                <md-content class="md-padding cScreenOnly" style="min-height: 530px;" layout="column" layout-fill>
+                    <div>
+                        Under Construction
+                    </div>
                 </md-content>
             </md-tab>
 

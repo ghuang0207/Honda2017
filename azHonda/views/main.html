@@ -54,16 +54,11 @@
 
             <!--Main Nav-->
             <div layout-wrap layout-align="center" class="cScreenOnly">
-                <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" class="cScreenOnly">
-                    <div layout="row" layout-align="center" class="cScreenOnly" flex>
-                        <md-nav-item class="cScreenOnly" md-nav-sref="hondaWeb.home" name="Summaries" value="Summaries">Summaries</md-nav-item>
+                <!--currentNavItem=> 'name'-->
+                <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" class="cScreenOnly"> 
+                    <div ng-repeat="c in categories" layout="row" layout-align="center" class="cScreenOnly" flex>
+                        <md-nav-item class="cScreenOnly" md-nav-sref="hondaWeb.home({ 'categoryId': {{c.CategoryId}} })" name="{{c.Category}}">{{c.Category}}</md-nav-item>
                     </div>
-                    <div layout="row" layout-align="center" class="cScreenOnly" flex>
-                        <md-nav-item class="cScreenOnly" md-nav-sref="hondaWeb.statutes" name="Statutes" value="Statutes">Statutes</md-nav-item>
-                    </div>
-                    <!--<div ng-if="isAdmin" layout="row" layout-align="center" class="cScreenOnly" flex>
-                        <md-nav-item class="cScreenOnly" md-nav-sref="hondaWeb.profile" name="Profile" value="Profile">My Profile</md-nav-item>
-                    </div>-->
                 </md-nav-bar>
             </div>
             

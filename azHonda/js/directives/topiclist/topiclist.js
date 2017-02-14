@@ -29,7 +29,7 @@ app.directive('topiclist', ['$location', function () {
                   }
                   // by topiclist
                   if ($scope.Info.hasOwnProperty("topics")) {
-                      // Stop binding; so that when expand/collapse won't trigger reload again
+                      // angular.copy() - Stop binding; so that when expand/collapse won't trigger reload again
                         // - stop binding is a must, so that all collapse/expand won't be override by initial settings
                       $scope.Topics = formatTopicLists(angular.copy($scope.Info['topics']));
                   }

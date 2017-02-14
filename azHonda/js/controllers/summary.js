@@ -2,9 +2,11 @@
 var app = angular.module("hondaApp");
 
 
-app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filter, $window, $q, $timeout) {
+app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filter, $window, $q, $timeout, $stateParams) {
+    //alert($stateParams.categoryId);
+
     $scope.states = [];
-    $scope.categories = [];
+    $scope.category = {};
     $scope.subjects = [];
     $scope.By_State_Topics_Info = {};
     $scope.By_Search_Topics_Info = {};
@@ -18,9 +20,11 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
 
     // Load init data
     SrvData.ListAllCategories().then(function (response) {
-        $scope.categories = response.data;
-        // set pre-select data
-        $scope.select_Category = {CategoryId: "1"};
+        $scope.category = $.grep(response.data, function (c) {
+            return c.CategoryId.toString() == $stateParams.categoryId.toString();
+        })[0];
+        // update subjects based on category
+        $scope.ListAllSubjects();
     }, function (err) {
         console.log(err);
     });
@@ -32,22 +36,14 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     $scope.ListAllSubjects = function () {
         SrvData.ListAllSubjects().then(function (response) {
             // List unique subject based on selected category
-            if ($scope.select_Category == undefined) {
-                $scope.select_Category = { CategoryId: "1" };
-            }
             $scope.subjects = $.grep(response.data, function (s) {
-                return s.Category.CategoryId.toString() == $scope.select_Category.CategoryId;
+                return s.Category.CategoryId.toString() == $scope.category.CategoryId.toString();
             });
             $scope.subjects = $filter('unique')($scope.subjects, 'Subject');
         }, function (err) {
             console.log(err);
         });
     };
-
-    $scope.$watch('select_Category', function (select_Category) {
-        // update subjects dropdown when category change
-        $scope.ListAllSubjects();
-    }, true);
 
     // centralized watch displayingSubjectTopics to update By_Subject_Topics_Info object to pass into Directive
     $scope.$watch('displayingSubjectTopics', function (displayingSubjectTopics) {
@@ -149,9 +145,9 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
 
     // multi-state by topic tab
     $scope.SearchTopics_by_Subject = function () {
-        if ($scope.select_Category && $scope.select_Subject) {
+        if ($scope.select_Subject) {
             // get data and filter it for $scope.displayingSubjectTopics
-            SrvData.GetTopics_by_Subject($scope.select_Subject.Subject, $scope.select_Category.CategoryId).then(function (response) {
+            SrvData.GetTopics_by_Subject($scope.select_Subject.Subject, $scope.category.CategoryId).then(function (response) {
                 var subjectTopics = response.data;
 
                 if (subjectTopics != "null") {
@@ -174,7 +170,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             });
         }
         else {
-            alert("please select a category and subject.");
+            alert("please select a subject.");
         }
     };
 

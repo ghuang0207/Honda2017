@@ -2,8 +2,8 @@
 'use strict';
 var app = angular.module("hondaApp");
 
-app.controller("MainCtrl", function ($rootScope, $scope, $location, authService, $interval) {
-    $scope.currentNavItem = "Summaries";
+app.controller("MainCtrl", function ($rootScope, $scope, $location, authService, $interval, SrvData) {
+    $scope.currentNavItem = "Marine";
     $scope.authService = authService;
 
     var stop;
@@ -28,17 +28,16 @@ app.controller("MainCtrl", function ($rootScope, $scope, $location, authService,
             console.log("interval stopped");
         }
     };
-
+    
     $scope.$watch('currentNavItem', function (current, old) {
-
         //localStorage.setItem('profile')
         if ($scope.isAuthenticated) {   
             switch (current) {
-                case "Statutes":
-                    $location.url("/statutes");
+                case "Marine":
+                    $location.url("/home/1");
                     break;
-                case "Summaries":
-                    $location.url("/home");
+                case "Power Equipment":
+                    $location.url("/home/2");
                     break;
                 case "Profile":
                     $location.url("/profile");
@@ -47,5 +46,11 @@ app.controller("MainCtrl", function ($rootScope, $scope, $location, authService,
         } else {
             $location.url("/login");
         }
+    });
+
+    SrvData.ListAllCategories().then(function (response) {
+        $scope.categories = response.data;
+    }, function (err) {
+        console.log(err);
     });
 });

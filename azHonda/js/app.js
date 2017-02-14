@@ -28,7 +28,7 @@ function ($stateProvider, $urlRouterProvider, lockProvider, jwtOptionsProvider, 
             templateUrl: 'views/main.html'
         })
         .state('hondaWeb.home', { //Summary page: Marine/power Equipment/Multi-state by Topic
-            url: '/home',
+            url: '/home/:categoryId',
             controller: 'SummaryCtrl',
             templateUrl: 'views/summary.html'
         })
@@ -83,14 +83,14 @@ function ($stateProvider, $urlRouterProvider, lockProvider, jwtOptionsProvider, 
             clientID: AUTH0_CLIENT_ID,
             domain: AUTH0_DOMAIN,
             responseType: 'token id_token',
-            redirectUri: '/home'
+            redirectUri: '/home/1'
         });
 
             // Remove the ! from the hash so that
             // auth0.js can properly parse it
         $locationProvider.hashPrefix('');
 
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/home/1');
        
     }])
     .config(function ($mdThemingProvider) {
