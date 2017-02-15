@@ -37,6 +37,13 @@
                         <div flex="5">
                             <a ng-click="hideSearchResultView()">Back to State List</a>
                         </div>
+
+                        <div ng-if="searching" style="padding: 5px; font-weight:bold;">Searching...</div>
+
+                        <div ng-if="!searching && By_Search_Topics_Info.topics.length == 0" style="color: darkred; padding: 5px; font-weight:bold;">
+                            No results found.
+                        </div>
+
                         <topiclist info="By_Search_Topics_Info"></topiclist>
                     </div>
 
@@ -71,11 +78,13 @@
                             </md-input-container>
                         </div>
 
-                        <div class="md-align-top-center">
+                        <div class="md-align-top-center" style="padding-bottom: 5px;">
                             <md-button class="md-primary md-raised" type="button" ng-click="SearchTopics_by_Subject()">
                                 Get Topics
                             </md-button>
                         </div>
+
+                        <div ng-if="loading" style="padding: 5px; font-weight:bold;">Loading...</div>
 
                         <div layout="column" layout-wrap flex ng-if="subjectTopicStates.length > 0">
                             <div flex-xs flex="10">

@@ -39,7 +39,8 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
             $scope.subjects = $.grep(response.data, function (s) {
                 return s.Category.CategoryId.toString() == $scope.category.CategoryId.toString();
             });
-            $scope.subjects = $filter('unique')($scope.subjects, 'Subject');
+            // Temp! Production should be filter by 'Subject', NOT categoryId
+            $scope.subjects = $filter('unique')($scope.subjects, 'Category.CategoryId');//$filter('unique')($scope.subjects, 'Subject');
         }, function (err) {
             console.log(err);
         });
@@ -121,11 +122,15 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     }
 
     $scope.onEnterSearch = function ($event, keyword, categoryId) {
-        debugger;
         $event.preventDefault();
 
         if ($event.keyCode == 13) {
+
+            $scope.showSearchResult = true;
+            $scope.searching = true;
+
             SrvData.ListAllTopics(categoryId).then(function (response) {
+                
                 var topics = response.data;
                 topics = $filter('filter')(topics, keyword);
                 
@@ -134,7 +139,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                 };
 
                 $scope.isAllowEdit = false;
-                $scope.showSearchResult = true;
+                $scope.searching = false;
 
                 console.log(topics);
             }, function (err) {
@@ -146,6 +151,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
     // multi-state by topic tab
     $scope.SearchTopics_by_Subject = function () {
         if ($scope.select_Subject) {
+            $scope.loading = true;
             // get data and filter it for $scope.displayingSubjectTopics
             SrvData.GetTopics_by_Subject($scope.select_Subject.Subject, $scope.category.CategoryId).then(function (response) {
                 var subjectTopics = response.data;
@@ -163,6 +169,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
                     $scope.displayingSubjectTopics = [];
                 }
 
+                $scope.loading = false;
                 $scope.showBySubjectResult = true;
                 $scope.isAllowEdit = false;
             }, function (err) {

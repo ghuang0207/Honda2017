@@ -198,7 +198,7 @@
         </a>
     </div>
 
-    <div ng-repeat="Topic in Topics | orderBy : ['OrderNumber','State.StateName']" class="typesDemo" layout="column">
+    <div ng-repeat="Topic in Topics | orderBy: topicOrderBy" class="typesDemo" layout="column">
 
         <md-subheader class="md-no-sticky Subsection cScreenOnly" ng-show="!isAllowEdit">
             {{Topic.State.StateName}}

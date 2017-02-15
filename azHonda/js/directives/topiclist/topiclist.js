@@ -11,6 +11,8 @@ app.directive('topiclist', ['$location', function () {
 
           controller: function ($rootScope, $scope, SrvData, $filter, $window, $q, $timeout) {
               // data initialization
+              $scope.topicOrderBy = 'OrderNumber'; //['OrderNumber','State.StateName']
+
               $scope.$watch('Info', function (Info) {
                   // get topiclist by state
                   if ($scope.Info.hasOwnProperty("categoryId")) {
@@ -32,6 +34,7 @@ app.directive('topiclist', ['$location', function () {
                       // angular.copy() - Stop binding; so that when expand/collapse won't trigger reload again
                         // - stop binding is a must, so that all collapse/expand won't be override by initial settings
                       $scope.Topics = formatTopicLists(angular.copy($scope.Info['topics']));
+                      $scope.topicOrderBy = 'State.StateName';
                   }
               }, true);
               $scope.isAdmin = $rootScope.isAdmin;
