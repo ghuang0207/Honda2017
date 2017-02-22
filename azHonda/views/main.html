@@ -46,8 +46,7 @@
                         <p>You are not yet authenticated. <a href="#/login">Log in.</a></p>
                     </div>
                     <div ng-if="isAuthenticated">
-                        <p>Thank you for logging in! <span style="margin-left:10px;" ng-if="isAdmin===true">Admin</span><md-button ng-click="authService.logout()">Logout</md-button></p>
-                        
+                        <p>Thank you for logging in! <span style="margin-left:10px;" ng-if="isAdmin===true"><a ui-sref="profile">Admin</a></span><md-button ng-click="authService.logout()">Logout</md-button></p>
                     </div>
                 </div>
             </div>

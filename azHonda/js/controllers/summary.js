@@ -2,9 +2,9 @@
 var app = angular.module("hondaApp");
 
 
-app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filter, $window, $q, $timeout, $stateParams) {
+app.controller("SummaryCtrl", function ($rootScope, $scope, $mdDialog, $sce, SrvData, $filter, $window, $q, $timeout, $stateParams) {
     //alert($stateParams.categoryId);
-
+    $scope.isAdmin = $rootScope.isAdmin;
     $scope.states = [];
     $scope.category = {};
     $scope.subjects = [];
@@ -23,6 +23,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         $scope.category = $.grep(response.data, function (c) {
             return c.CategoryId.toString() == $stateParams.categoryId.toString();
         })[0];
+
         // update subjects based on category
         $scope.ListAllSubjects();
     }, function (err) {
@@ -148,7 +149,7 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         }
     }
 
-    // multi-state by topic tab
+    // - Multi-state by Topic tab
     $scope.SearchTopics_by_Subject = function () {
         if ($scope.select_Subject) {
             $scope.loading = true;
@@ -206,10 +207,31 @@ app.controller("SummaryCtrl", function ($scope, $mdDialog, $sce, SrvData, $filte
         });
     };
 
+    // - Statute tab
     $scope.ShowStatuteDialog = function (ev, StateInfo, categoryId) {
         alert('Under Construction');
     }
 
+    // - Recent Updates tab
+    $scope.AddNewUpdate = function () { // shared State topic (StateCode = "XX")
+        // call the add new topic in topiclist directive
+        $scope.$broadcast('AddNewTopic');
+        // and in directive, it will listen for this broadcast and run the defined "addNewTopic" function inside the directive
+    };
+    $scope.showRecentUpdates = function () {
+        // usual tab click events -
+        $scope.hideSearchResultView();
+        // additional for init topic directives for Recent Updates
+        $scope.isAdmin = $rootScope.isAdmin;
+        $scope.Recent_Updates_Info = {
+            // Just init with State - Recent Updates (StateCode="XX", StateName="Recent Updates")
+            StateInfo: {
+                StateCode: 'XX',
+                StateName: 'Recent Updates'
+            },
+            categoryId: $scope.category.CategoryId
+        };
+    };
 
     // Dialog scope directive ----------------------
     function DialogController($rootScope, $scope, $mdDialog, Info) {

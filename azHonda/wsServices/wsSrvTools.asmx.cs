@@ -240,15 +240,48 @@ namespace azHonda.wsSrvTools
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public void ListAuthUsers()
+        {
+            try
+            {
+
+                SrvAuthManagementAPI api = new SrvAuthManagementAPI();
+                string result = api.ListAuthUsers();
+                Context.Response.Write(result);
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void CreateAuthUser(string userInfo)
+        {
+            try
+            {
+                UserVO user = new JavaScriptSerializer().Deserialize<UserVO>(userInfo);
+                SrvAuthManagementAPI api = new SrvAuthManagementAPI();
+                string result = api.CreateAuthUser(user.Email, user.Password);
+                Context.Response.Write(result);
+            }
+            catch (Exception ex)
+            {
+                Context.Response.Write(ex.Message);
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
         public string TestAsync(string subject)
         {
             try
             {
 
                 SrvAuthManagementAPI api = new SrvAuthManagementAPI();
-                //var result = api.testAPIAsync();
-                api.testRequest();
-                Context.Response.Write("Things ok");
+                string result = api.ListAuthUsers();
+                Context.Response.Write(result);
             }
             catch (Exception ex)
             {

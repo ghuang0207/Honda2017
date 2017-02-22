@@ -120,6 +120,26 @@
                     url: 'wsServices/wsSrvTools.asmx/DeleteNote_by_NoteId?noteId=' + noteId,
                     headers: { 'Content-Type': 'application/json' }
                 });
+            },
+            //User
+            CreateAuthUser: function (userInfo) {
+                var parameter = { 'userInfo': JSON.stringify(userInfo) };
+                return $http(
+                    {
+                        method: 'POST',
+                        url: 'wsServices/wsSrvTools.asmx/CreateAuthUser',
+                        data: parameter,
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+            },
+            ListAuthUsers: function () {
+                return $http(
+                    {
+                        method: 'GET',
+                        url: 'wsServices/wsSrvTools.asmx/ListAuthUsers',
+                        data: parameter,
+                        headers: { 'Content-Type': 'application/json' }
+                    });
             }
         }
     });

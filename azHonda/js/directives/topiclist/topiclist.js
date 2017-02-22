@@ -12,32 +12,35 @@ app.directive('topiclist', ['$location', function () {
           controller: function ($rootScope, $scope, SrvData, $filter, $window, $q, $timeout) {
               // data initialization
               $scope.topicOrderBy = 'OrderNumber'; //['OrderNumber','State.StateName']
-
+              
               $scope.$watch('Info', function (Info) {
-                  // get topiclist by state
-                  if ($scope.Info.hasOwnProperty("categoryId")) {
-                      $scope.isAllowEdit = true;
-                      $scope.StateInfo = $scope.Info.StateInfo;
-                      $scope.categoryId = $scope.Info.categoryId;
+                  if ($scope.Info) {
+                      $scope.isAdmin = $rootScope.isAdmin;
+                      // get topiclist by state
+                      if ($scope.Info.hasOwnProperty("categoryId")) {
+                          $scope.isAllowEdit = true;
 
-                      SrvData.GetTopics_by_State($scope.StateInfo.StateCode, $scope.categoryId).then(function (response) {
-                          if (response.data != "null") {
-                              $scope.Topics = formatTopicLists(response.data);
-                              console.log($scope.Topics);
-                          }
-                      }, function (err) {
-                          console.log(err);
-                      });
-                  }
-                  // by topiclist
-                  if ($scope.Info.hasOwnProperty("topics")) {
-                      // angular.copy() - Stop binding; so that when expand/collapse won't trigger reload again
-                        // - stop binding is a must, so that all collapse/expand won't be override by initial settings
-                      $scope.Topics = formatTopicLists(angular.copy($scope.Info['topics']));
-                      $scope.topicOrderBy = 'State.StateName';
+                          $scope.StateInfo = $scope.Info.StateInfo;
+                          $scope.categoryId = $scope.Info.categoryId;
+                          
+                          SrvData.GetTopics_by_State($scope.StateInfo.StateCode, $scope.categoryId).then(function (response) {
+                              if (response.data != "null") {
+                                  $scope.Topics = formatTopicLists(response.data);
+                                  console.log($scope.Topics);
+                              }
+                          }, function (err) {
+                              console.log(err);
+                          });
+                      }
+                      // by topiclist
+                      if ($scope.Info.hasOwnProperty("topics")) {
+                          // angular.copy() - Stop binding; so that when expand/collapse won't trigger reload again
+                            // - stop binding is a must, so that all collapse/expand won't be override by initial settings
+                          $scope.Topics = formatTopicLists(angular.copy($scope.Info['topics']));
+                          $scope.topicOrderBy = 'State.StateName';
+                      }
                   }
               }, true);
-              $scope.isAdmin = $rootScope.isAdmin;
               $scope.Topics = [];
               $scope.$watch('Topics', function (Topics) {
                   $scope.modelAsJson = angular.toJson(Topics, true);

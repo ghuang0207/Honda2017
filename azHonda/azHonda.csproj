@@ -239,6 +239,7 @@
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
     <Compile Include="objects\CategoryVO.cs" />
+    <Compile Include="objects\UserVO.cs" />
     <Compile Include="objects\NoteVO.cs" />
     <Compile Include="objects\StateVO.cs" />
     <Compile Include="objects\TopicVO.cs" />

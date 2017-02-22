@@ -13,10 +13,7 @@
                 <md-content class="md-padding cScreenOnly" style="min-height: 530px;" layout="column" layout-fill>
                     
                     <div layout="row" flex="15">
-                        <div flex="70">
-                            <h6 class="md-display">{{category.Category}}</h6>
-                        </div>
-                        <div flex>
+                        <div flex="35" flex-offset="65">
                             <md-input-container md-no-float class="md-block" style="margin:0px;">
                                 <md-icon class="material-icons" style="color: dodgerblue">search</md-icon>
                                 <input ng-model="search" type="text" placeholder="Search topics" ng-keyup="onEnterSearch($event,search, category.CategoryId)">
@@ -64,8 +61,6 @@
 
             <md-tab label="Multi-State by Topic" md-on-select="hideSearchResultView()">
                 <md-content class="md-padding cScreenOnly">
-
-                    <h6 class="md-display">Multi-State by Topic</h6>
 
                     <div layout="column">
                         <div>
@@ -116,10 +111,15 @@
                 </md-content>
             </md-tab>
 
-            <md-tab label="Recent Updates" md-on-select="hideSearchResultView()">
+            <md-tab label="Recent Updates" md-on-select="showRecentUpdates()">
                 <md-content class="md-padding cScreenOnly" style="min-height: 530px;" layout="column" layout-fill>
-                    <div>
-                        Under Construction
+                    <div flex="10" ng-show="isAdmin">
+                        <md-button class="md-primary md-raised" type="button" ng-click="AddNewUpdate()">
+                            Add New Update
+                        </md-button>
+                    </div>
+                    <div flex>
+                        <topiclist info="Recent_Updates_Info"></topiclist>
                     </div>
                 </md-content>
             </md-tab>

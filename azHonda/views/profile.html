@@ -1,11 +1,16 @@
 ﻿<div class="container-fluid" style="max-width:85vw;padding:0px !important">
     
     <md-content>
-        <md-tabs md-border-bottom style="min-height: 600px;">
-            <md-tab label="Profile">
+        <div layout-fill layout="column">
+            <div flex="15" style="padding: 5px;">
+                <a ui-sref="hondaWeb.home"> << Go Back to Site</a>
+            </div>
+
+            <md-tabs md-border-bottom style="min-height: 600px;" flex>
+                <!--<md-tab label="Profile">
                 <md-content class="md-padding" style="min-height: 530px;" layout="column" layout-fill>
-                    
-                    <!--<img [src]="auth.userProfile.picture" alt="" class="profile-img">-->
+
+                    <img [src]="auth.userProfile.picture" alt="" class="profile-img">
                     <div>
                         <h3>Profile</h3>
                         <p><strong>Name: </strong> {{profile.name}}</p>
@@ -15,9 +20,29 @@
                         <p><strong>Updated At: </strong> {{profile.updated_at}}</p>
                     </div>
                 </md-content>
-            </md-tab>
-        </md-tabs>
-    </md-content>
+            </md-tab>-->
+                <md-tab label="Admin">
+                    <md-content class="md-padding" style="min-height: 530px;" layout="column" layout-fill>
+                        <div>
+                            <md-input-container class="md-block">
+                                <label>Email</label>
+                                <input type="text" ng-model="NewUser.Email" />
+                            </md-input-container>
 
+                            <md-input-container class="md-block">
+                                <label>Password</label>
+                                <input type="password" ng-model="NewUser.Password" />
+                            </md-input-container>
+
+                            <md-button ng-show="isAdmin" class="md-primary md-raised" type="button" ng-click="AddNewUser()">
+                                Add User
+                            </md-button>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+
+        </div>
+    </md-content>
 
 </div>

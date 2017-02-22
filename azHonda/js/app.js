@@ -42,7 +42,7 @@ function ($stateProvider, $urlRouterProvider, lockProvider, jwtOptionsProvider, 
             controller: '',
             templateUrl: 'views/news.html'
         })
-        .state('hondaWeb.profile', {
+        .state('profile', {
             url: '/profile',
             controller: 'ProfileCtrl',
             templateUrl: 'views/profile.html'
