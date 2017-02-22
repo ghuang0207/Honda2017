@@ -117,8 +117,14 @@
                         <md-button class="md-primary md-raised" type="button" ng-click="AddNewUpdate()">
                             Add New Update
                         </md-button>
+                        <md-button ng-show="isAdmin" ng-click="NoteObj.ctrl_IsEdit = true">
+                            Edit Note
+                        </md-button>
                     </div>
                     <div flex>
+                        <!--State Note section-->
+                        <div ng-include="'views/statenote.html'"></div>
+
                         <topiclist info="Recent_Updates_Info"></topiclist>
                     </div>
                 </md-content>

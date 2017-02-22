@@ -223,15 +223,57 @@ app.controller("SummaryCtrl", function ($rootScope, $scope, $mdDialog, $sce, Srv
         $scope.hideSearchResultView();
         // additional for init topic directives for Recent Updates
         $scope.isAdmin = $rootScope.isAdmin;
+        var recent_update_StateCd = 'XX';
         $scope.Recent_Updates_Info = {
             // Just init with State - Recent Updates (StateCode="XX", StateName="Recent Updates")
             StateInfo: {
-                StateCode: 'XX',
+                StateCode: recent_update_StateCd,
                 StateName: 'Recent Updates'
             },
             categoryId: $scope.category.CategoryId
         };
+
+        // State Note (for 'XX' - Recent Update) -> To do: make it a stateNote directive!!
+        $scope.GetNote_by_State();
     };
+    // State Note (for 'XX' - Recent Update) -> To do: make it a stateNote directive!!
+    $scope.GetNote_by_State = function () {
+        SrvData.GetNote_by_State('XX', $scope.category.CategoryId).then(function (response) {
+            if (response.data != "null") {
+                $scope.NoteObj = response.data;
+                $scope.NoteObj.ctrl_IsEdit = false;
+
+                console.log($scope.NoteObj);
+            }
+            else {
+                $scope.NoteObj = {};
+                $scope.NoteObj.ctrl_IsEdit = false;
+                $scope.NoteObj.NoteId = -1;
+                $scope.NoteObj.Note = '';
+            }
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    $scope.EditNote = function () {
+        console.log(changedTopic)
+        $scope.NoteObj.ctrl_IsEdit = true;
+    };
+    $scope.SaveChangeNote = function () {
+        $scope.NoteObj.StateCode = 'XX';
+        $scope.NoteObj.CategoryId = $scope.category.CategoryId;
+        SrvData.AddUpdateNote($scope.NoteObj).then(function (response) {
+            $scope.NoteObj.NoteId = response.data;
+            $scope.NoteObj.ctrl_IsEdit = false;
+        }, function (err) {
+            console.log(err);
+            alert('Something went wrong when saving the note.');
+        });
+    };
+    $scope.CancelChangeNote = function () {
+        $scope.GetNote_by_State();
+    };
+
 
     // Dialog scope directive ----------------------
     function DialogController($rootScope, $scope, $mdDialog, Info) {
