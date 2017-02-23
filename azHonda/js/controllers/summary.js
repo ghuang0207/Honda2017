@@ -182,11 +182,12 @@ app.controller("SummaryCtrl", function ($rootScope, $scope, $mdDialog, $sce, Srv
         }
     };
 
-    $scope.ShowStateTopicsDialog = function (ev, StateInfo, categoryId) {
+    $scope.ShowStateTopicsDialog = function (ev, StateInfo, categoryId, topicType) {
         //Dialog Control Init
         $scope.By_State_Topics_Info = {
             StateInfo: StateInfo,
-            categoryId: categoryId
+            categoryId: categoryId,
+            topicType: topicType
         };
 
         $mdDialog.show({
@@ -207,11 +208,6 @@ app.controller("SummaryCtrl", function ($rootScope, $scope, $mdDialog, $sce, Srv
         });
     };
 
-    // - Statute tab
-    $scope.ShowStatuteDialog = function (ev, StateInfo, categoryId) {
-        alert('Under Construction');
-    }
-
     // - Recent Updates tab
     $scope.AddNewUpdate = function () { // shared State topic (StateCode = "XX")
         // call the add new topic in topiclist directive
@@ -230,7 +226,8 @@ app.controller("SummaryCtrl", function ($rootScope, $scope, $mdDialog, $sce, Srv
                 StateCode: recent_update_StateCd,
                 StateName: 'Recent Updates'
             },
-            categoryId: $scope.category.CategoryId
+            categoryId: $scope.category.CategoryId,
+            topicType: 'Summary'
         };
 
         // State Note (for 'XX' - Recent Update) -> To do: make it a stateNote directive!!
@@ -238,7 +235,7 @@ app.controller("SummaryCtrl", function ($rootScope, $scope, $mdDialog, $sce, Srv
     };
     // State Note (for 'XX' - Recent Update) -> To do: make it a stateNote directive!!
     $scope.GetNote_by_State = function () {
-        SrvData.GetNote_by_State('XX', $scope.category.CategoryId).then(function (response) {
+        SrvData.GetNote_by_State('XX', $scope.category.CategoryId, 'Summary').then(function (response) {
             if (response.data != "null") {
                 $scope.NoteObj = response.data;
                 $scope.NoteObj.ctrl_IsEdit = false;
@@ -250,6 +247,7 @@ app.controller("SummaryCtrl", function ($rootScope, $scope, $mdDialog, $sce, Srv
                 $scope.NoteObj.ctrl_IsEdit = false;
                 $scope.NoteObj.NoteId = -1;
                 $scope.NoteObj.Note = '';
+                $scope.NoteObj.NoteType = 'Summary';
             }
         }, function (err) {
             console.log(err);
@@ -282,7 +280,7 @@ app.controller("SummaryCtrl", function ($rootScope, $scope, $mdDialog, $sce, Srv
 
         //State Note section
         $scope.GetNote_by_State = function () {
-            SrvData.GetNote_by_State($scope.StateInfo.StateCode, $scope.categoryId).then(function (response) {
+            SrvData.GetNote_by_State($scope.StateInfo.StateCode, $scope.categoryId, $scope.topictype).then(function (response) {
                 if (response.data != "null") {
                     $scope.NoteObj = response.data;
                     $scope.NoteObj.ctrl_IsEdit = false;
@@ -294,6 +292,7 @@ app.controller("SummaryCtrl", function ($rootScope, $scope, $mdDialog, $sce, Srv
                     $scope.NoteObj.ctrl_IsEdit = false;
                     $scope.NoteObj.NoteId = -1;
                     $scope.NoteObj.Note = '';
+                    $scope.NoteObj.NoteType = $scope.topictype;
                 }
             }, function (err) {
                 console.log(err);
@@ -303,6 +302,7 @@ app.controller("SummaryCtrl", function ($rootScope, $scope, $mdDialog, $sce, Srv
         if (Info.hasOwnProperty("categoryId")) {
             $scope.StateInfo = $scope.Info.StateInfo;
             $scope.categoryId = $scope.Info.categoryId;
+            $scope.topictype = $scope.Info.topicType;
             $scope.title = $scope.StateInfo.StateName;
             $scope.isAllowEdit = true
 
@@ -339,15 +339,9 @@ app.controller("SummaryCtrl", function ($rootScope, $scope, $mdDialog, $sce, Srv
         $scope.CancelDialog = function () {
             $mdDialog.cancel();
         };
-        $scope.print = function () {
-            // expand all topics first
-            $scope.$broadcast('ControlAllTopicsExpand', { Action: true });
 
-            var contentToPrint = document.getElementById('testprint').innerHTML;
-            var windowPopup = $window.open('', '_blank', 'width=1500,height=1500');
-            windowPopup.document.open();
-            windowPopup.document.write('<html><head><link rel="stylesheet" type="text/css" href="" /><style></style></head><body onload="window.print()">' + contentToPrint + '</body></html>');
-            windowPopup.document.close();
-        }
+        $scope.PrintElement = function (printElementId) {
+            $scope.$broadcast('PrintElement', { printElementId: printElementId });
+        };
     };
 });

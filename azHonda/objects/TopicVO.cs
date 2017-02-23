@@ -15,6 +15,7 @@ namespace azHonda.objects
         public int OrderNumber { get; set; }
         public bool ctrl_IsEdit { get; set; }
         public bool ctrl_IsExpand { get; set; }
+        public string TopicType { get; set; }
     }
 
     public class SubjectCompare : IEqualityComparer<TopicVO>

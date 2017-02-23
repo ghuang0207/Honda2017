@@ -68,11 +68,11 @@ namespace azHonda.wsSrvTools
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
-        public void ListAllTopics(string categoryId)
+        public void ListAllTopics(string categoryId, string topicType)
         {
             try
             {
-                string result = new JavaScriptSerializer().Serialize(SrvTools.ListAllTopics(Convert.ToInt32(categoryId)));
+                string result = new JavaScriptSerializer().Serialize(SrvTools.ListAllTopics(Convert.ToInt32(categoryId), topicType));
                 Context.Response.Write(result);
             }
             catch (Exception ex)
@@ -83,11 +83,11 @@ namespace azHonda.wsSrvTools
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
-        public void GetTopics_by_State(string stateCode, string categoryId)
+        public void GetTopics_by_State(string stateCode, string categoryId, string topicType)
         {
             try
             {
-                string result = new JavaScriptSerializer().Serialize(SrvTools.GetTopics_by_State(stateCode, categoryId));
+                string result = new JavaScriptSerializer().Serialize(SrvTools.GetTopics_by_State(stateCode, categoryId, topicType));
                 Context.Response.Write(result);
             }
             catch (Exception ex)
@@ -98,11 +98,11 @@ namespace azHonda.wsSrvTools
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
-        public void GetNote_by_State(string stateCode, string categoryId)
+        public void GetNote_by_State(string stateCode, string categoryId, string noteType)
         {
             try
             {
-                string result = new JavaScriptSerializer().Serialize(SrvTools.GetNote_by_State(Convert.ToInt16(categoryId), stateCode));
+                string result = new JavaScriptSerializer().Serialize(SrvTools.GetNote_by_State(Convert.ToInt16(categoryId), stateCode, noteType));
                 Context.Response.Write(result);
             }
             catch (Exception ex)
@@ -238,13 +238,13 @@ namespace azHonda.wsSrvTools
             return obj.ToString();
         }
 
+        //Auth
         [WebMethod]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
         public void ListAuthUsers()
         {
             try
             {
-
                 SrvAuthManagementAPI api = new SrvAuthManagementAPI();
                 string result = api.ListAuthUsers();
                 Context.Response.Write(result);
@@ -254,7 +254,8 @@ namespace azHonda.wsSrvTools
                 Context.Response.Write(ex.Message);
             }
         }
-
+        
+        //Auth
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void CreateAuthUser(string userInfo)

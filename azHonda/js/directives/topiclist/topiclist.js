@@ -12,8 +12,10 @@ app.directive('topiclist', ['$location', function () {
           controller: function ($rootScope, $scope, SrvData, $filter, $window, $q, $timeout) {
               // data initialization
               $scope.topicOrderBy = 'OrderNumber'; //['OrderNumber','State.StateName']
-              
+              $scope.topictype = 'Summary'; //Summary; Statute
+
               $scope.$watch('Info', function (Info) {
+                  debugger;
                   if ($scope.Info) {
                       $scope.isAdmin = $rootScope.isAdmin;
                       // get topiclist by state
@@ -22,8 +24,9 @@ app.directive('topiclist', ['$location', function () {
 
                           $scope.StateInfo = $scope.Info.StateInfo;
                           $scope.categoryId = $scope.Info.categoryId;
+                          $scope.topictype = $scope.Info.topicType;
                           
-                          SrvData.GetTopics_by_State($scope.StateInfo.StateCode, $scope.categoryId).then(function (response) {
+                          SrvData.GetTopics_by_State($scope.StateInfo.StateCode, $scope.categoryId, $scope.topictype).then(function (response) {
                               if (response.data != "null") {
                                   $scope.Topics = formatTopicLists(response.data);
                                   console.log($scope.Topics);
@@ -59,7 +62,8 @@ app.directive('topiclist', ['$location', function () {
                       'Subject': '',
                       'tree_Subsections': [],
                       'ctrl_IsEdit': true,
-                      'ctrl_IsExpand': true
+                      'ctrl_IsExpand': true,
+                      'TopicType': $scope.topictype
                   };
                   $scope.Topics.push(newTopic);
                   console.log(newTopic);
@@ -75,6 +79,24 @@ app.directive('topiclist', ['$location', function () {
                       topic.ctrl_IsExpand = Action
                       topic.tree_Subsections = toggleTreeTopicChildElements(topic.tree_Subsections, Action, Action);
                   });
+              };
+
+              // Print by pass in element Id
+              $scope.$on('PrintElement', function (event, args) {
+                  // http://stackoverflow.com/questions/19446755/on-and-broadcast-in-angular
+                  $scope.PrintElement(args.printElementId);
+              });
+              $scope.PrintElement = function (printElementId) {
+                  // expand all topics first
+                  //$scope.$broadcast('ControlAllTopicsExpand', { Action: true });
+                  debugger;
+                  $scope.ControlAllTopicsExpand(true);
+                  
+                  var contentToPrint = document.getElementById(printElementId).innerHTML;
+                  var windowPopup = $window.open('', '_blank', 'width=1500,height=1500');
+                  windowPopup.document.open();
+                  windowPopup.document.write('<html><head><link rel="stylesheet" type="text/css" href="" /><style></style></head><body onload="window.print()">' + contentToPrint + '</body></html>');
+                  windowPopup.document.close();
               };
 
               // Topics Edit/save/cancel/delete

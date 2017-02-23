@@ -28,6 +28,7 @@ namespace azHonda.services
             cmd.Parameters.AddWithValue("@stateCode", topic.State.StateCode);
             cmd.Parameters.AddWithValue("@categoryId", topic.Category.CategoryId);
             cmd.Parameters.AddWithValue("@orderNumber", topic.OrderNumber);
+            cmd.Parameters.AddWithValue("@topicType", topic.TopicType);
 
             int topicId = 0;
             try
@@ -61,6 +62,7 @@ namespace azHonda.services
             cmd.Parameters.AddWithValue("@note", note.Note);
             cmd.Parameters.AddWithValue("@stateCode", note.StateCode);
             cmd.Parameters.AddWithValue("@categoryId", note.CategoryId);
+            cmd.Parameters.AddWithValue("@noteType", note.NoteType);
 
             int noteId = 0;
             try
@@ -218,13 +220,14 @@ namespace azHonda.services
             }
         }
 
-        public static List<TopicVO> ListAllTopics(int CategoryId)
+        public static List<TopicVO> ListAllTopics(int CategoryId, string topicType="Summary")
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
             SqlCommand cmd = new SqlCommand("list_all_topics", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@categoryId", CategoryId);
+            cmd.Parameters.AddWithValue("@topicType", topicType);
 
             try
             {
@@ -253,6 +256,7 @@ namespace azHonda.services
                                 Category = reader["name"].ToString()
                             },
                             OrderNumber = Convert.ToInt16(reader["orderNumber"].ToString()),
+                            TopicType = reader["topicType"].ToString(),
                             ctrl_IsEdit = false,
                             ctrl_IsExpand = true
                         });
@@ -277,7 +281,7 @@ namespace azHonda.services
         /// </summary>
         /// <param name="stateCode"></param>
         /// <returns>list topicVO</returns>
-        public static List<TopicVO> GetTopics_by_State(string stateCode, string categoryId)
+        public static List<TopicVO> GetTopics_by_State(string stateCode, string categoryId, string topicType="Summary")
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
             SqlCommand cmd = new SqlCommand("get_topics_by_state", conn);
@@ -285,6 +289,7 @@ namespace azHonda.services
 
             cmd.Parameters.AddWithValue("@stateCode", stateCode);
             cmd.Parameters.AddWithValue("@categoryId", Convert.ToInt16(categoryId));
+            cmd.Parameters.AddWithValue("@topicType", topicType);
 
             try
             {
@@ -311,7 +316,8 @@ namespace azHonda.services
                                 CategoryId = reader["categoryId"].ToString(),
                                 Category = reader["name"].ToString()
                             },
-                            OrderNumber = Convert.ToInt16(reader["orderNumber"].ToString())
+                            OrderNumber = Convert.ToInt16(reader["orderNumber"].ToString()),
+                            TopicType = reader["topicType"].ToString()
                         });
                     }
                 }
@@ -480,7 +486,7 @@ namespace azHonda.services
             }
         }
 
-        public static NoteVO GetNote_by_State(int categoryId, string stateCode)
+        public static NoteVO GetNote_by_State(int categoryId, string stateCode, string noteType="Summary")
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
             SqlCommand cmd = new SqlCommand("get_note_by_state", conn);
@@ -488,6 +494,7 @@ namespace azHonda.services
 
             cmd.Parameters.AddWithValue("@categoryId", categoryId);
             cmd.Parameters.AddWithValue("@stateCode", stateCode);
+            cmd.Parameters.AddWithValue("@noteType", noteType);
 
             try
             {
@@ -564,13 +571,14 @@ namespace azHonda.services
         /// </summary>
         /// <param name="subject"></param>
         /// <returns></returns>
-        public static Dictionary<string, List<TopicVO>> Get_subjectStatesDict(string subject)
+        public static Dictionary<string, List<TopicVO>> Get_subjectStatesDict(string subject, string topicType="Summary")
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
             SqlCommand cmd = new SqlCommand("get_unique_subjects_and_all_topics", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@subject", subject);
+            cmd.Parameters.AddWithValue("@topicType", topicType);
 
             try
             {

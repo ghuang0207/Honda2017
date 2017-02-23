@@ -11,5 +11,6 @@ namespace azHonda.objects
         public string Note { get; set; }
         public string StateCode { get; set; }
         public string CategoryId { get; set; }
+        public string NoteType { get; set; }
     }
 }

@@ -20,11 +20,11 @@
                     headers: { 'Content-Type': 'application/json' }
                 });
             },
-            ListAllTopics: function (categoryId) {
+            ListAllTopics: function (categoryId, topicType) {
                 return $http(
                 {
                     method: 'Get',
-                    url: 'wsServices/wsSrvTools.asmx/ListAllTopics?categoryId=' + categoryId,
+                    url: 'wsServices/wsSrvTools.asmx/ListAllTopics?categoryId=' + categoryId + '&topicType=' + topicType,
                     headers: { 'Content-Type': 'application/json' }
                 });
             },
@@ -36,11 +36,11 @@
                     headers: { 'Content-Type': 'application/json' }
                 });
             },
-            GetTopics_by_State: function (stateCode, categoryId) {
+            GetTopics_by_State: function (stateCode, categoryId, topicType) {
                 return $http(
                 {
                     method: 'Get',
-                    url: 'wsServices/wsSrvTools.asmx/GetTopics_by_State?stateCode=' + stateCode + '&categoryId=' + categoryId,
+                    url: 'wsServices/wsSrvTools.asmx/GetTopics_by_State?stateCode=' + stateCode + '&categoryId=' + categoryId + '&topicType=' + topicType,
                     headers: { 'Content-Type': 'application/json' }
                 });
             },
@@ -95,11 +95,11 @@
                 });
             },
             //Note
-            GetNote_by_State: function (stateCode, categoryId) {
+            GetNote_by_State: function (stateCode, categoryId, noteType) {
                 return $http(
                 {
                     method: 'Get',
-                    url: 'wsServices/wsSrvTools.asmx/GetNote_by_State?stateCode=' + stateCode + '&categoryId=' + categoryId,
+                    url: 'wsServices/wsSrvTools.asmx/GetNote_by_State?stateCode=' + stateCode + '&categoryId=' + categoryId + '&noteType=' + noteType,
                     headers: { 'Content-Type': 'application/json' }
                 });
             },

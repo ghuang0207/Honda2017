@@ -24,7 +24,7 @@
                     <!-- State buttons list -->
                     <div layout="column" ng-if="!showSearchResult" layout-wrap style="max-height: 500px;" flex>
                         <div ng-repeat="s in states | orderBy:'StateName'">
-                            <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStateTopicsDialog($event, s, category.CategoryId)">
+                            <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStateTopicsDialog($event, s, category.CategoryId, 'Summary')">
                                 {{s.StateName}}
                             </md-button>
                         </div>
@@ -51,7 +51,7 @@
                 <md-content class="md-padding cScreenOnly" style="min-height: 530px;" layout="column" layout-fill>
                     <div layout="column" ng-if="!showSearchResult" layout-wrap style="max-height: 500px;" flex>
                         <div ng-repeat="s in states | orderBy:'StateName'">
-                            <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStatuteDialog($event, s, category.CategoryId)">
+                            <md-button class="md-primary" style="text-align:left !important; margin:0px !important" ng-click="ShowStateTopicsDialog($event, s, category.CategoryId, 'Statute')">
                                 {{s.StateName}}
                             </md-button>
                         </div>
@@ -117,7 +117,7 @@
                         <md-button class="md-primary md-raised" type="button" ng-click="AddNewUpdate()">
                             Add New Update
                         </md-button>
-                        <md-button ng-show="isAdmin" ng-click="NoteObj.ctrl_IsEdit = true">
+                        <md-button class="md-primary md-raised" ng-show="isAdmin" ng-click="NoteObj.ctrl_IsEdit = true">
                             Edit Note
                         </md-button>
                     </div>
